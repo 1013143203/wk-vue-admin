@@ -1,0 +1,14 @@
+<?php
+
+namespace App\Models\Admin;
+
+class {{Name}} extends Base
+{
+    protected $table         = '{{tolowerName}}';		                // 为模型指定表名
+    protected $primaryKey    = 'id';
+
+    protected $fillable = [
+
+    ];
+
+}

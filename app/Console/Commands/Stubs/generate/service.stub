@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Services\Admin;
+
+use App\Exceptions\Exception;
+use App\Exceptions\AdminException;
+use App\Models\Admin\{{Name}};
+
+class UserService extends BaseService
+{
+    public function __construct({{Name}} ${{modelName}})
+    {
+        $this->model = ${{modelName}};
+    }
+
+    {{lists}}
+}

@@ -1,0 +1,4 @@
+public function edit($id)
+    {
+        return success($this->service->edit($id));
+    }

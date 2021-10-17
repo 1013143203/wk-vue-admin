@@ -1,0 +1,135 @@
+<?php
+namespace App\Services\Admin;
+
+use App\Exceptions\AdminException;
+use App\Models\Admin\Menu;
+class MenuService extends BaseService
+{
+    public function __construct(Menu $menu)
+    {
+        $this->model = $menu;
+    }
+    public static function Menus($input = []){
+        $model = new Menu();
+        $menu = $model
+            ->whereQ(function ($query){
+                if(isset($input['name'])){
+                    $query -> where('name', 'like', '%'.$input['name'].'%');
+                }
+                $query->where('status',1);
+            })
+            ->selectQ(['id','name as label','pid','type','status','icon'])
+            ->getAll(false);
+
+        return $menu;
+    }
+    public function lists(array $input)
+    {
+        $res['lst'] =self::getAllMenus(self::Menus($input));
+        $res['menus_nodes']=config('admin.menus_nodes');
+        $res['menus_types']=config('admin.menus_types');
+
+        $category = $this->model->where('type','<',3)->get()->toArray();
+        array_unshift($category, ['name'=>'顶级分类','id'=>0]);
+        $res['category']=$category;
+        return $res;
+    }
+    public static function getAllMenus($array, $pid =0){
+        $arr = array();
+        foreach ($array as $key => &$value) {
+            $value['type_']=config('admin.menus_types')[$value['type']-1]['name'];
+            if ($value['pid'] == $pid) {
+                $id = $value['id'];
+                unset($array[$key]);
+                if($children=self::getAllMenus($array, $id)) {
+                    $value['children']=$children;
+                }
+                $arr[] = $value;
+            }
+        }
+        return $arr;
+    }
+    public function edit($id)
+    {
+        $res=parent::edit($id);
+        $res['node_fun']=[];
+        if($res['type']==2){
+            $result = $this->model->wherePid($id)->get()->toArray();
+            $menus_nodes=config('admin.menus_nodes');
+            foreach ($result as $v){
+                $permission=explode(':',$v['permission']);
+                $per=$permission[count($permission)-1];
+                foreach ($menus_nodes as $n){
+                    if($n['data']==$per){
+                        $res['node_fun'][]=$n['id'];
+                    }
+                }
+            }
+        }
+        return $res;
+    }
+    public function create(array $input)
+    {
+
+        if($input['type']==1){
+            $input['path']=trim($input['path']);
+            $frist_path = substr( $input['path'], 0, 1 );
+            if($frist_path!='/'){
+                $input['path']='/'.$input['path'];
+            }
+        }
+        $id = parent::create($this->model->setFilterFields($input));
+
+        if($input['type']==2 && isset($input['node_fun'])){//如果节点存在
+            foreach ($input['node_fun'] as $v){
+                $child=[];
+                foreach (config('admin.menus_nodes') as $c){
+                    if($c['id']==$v){
+                        $child_permission=$input['permission'].":{$c['data']}";
+                        if(!$this->model->where($child)->first()){
+                            self::createnodesData($id,$c['name'],$child_permission);
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+    public function createnodesData($pid,$name,$permission){
+        $child['name']=$name;
+        $child['pid']=$pid;
+        $child['type']=3;
+        $child['status']=1;
+        $child['permission']=$permission;
+        parent::create($child);
+    }
+    public function update(array $input){
+
+        $node_fun = isset($input['node_fun']) ? $input['node_fun'] : [];
+
+        // 节点参数
+        $menus_nodes=config('admin.menus_nodes');
+        $node_ids = array_column($menus_nodes, 'id');
+        $node_intersect=array_intersect($node_ids,$node_fun);
+        $node_diff=array_diff($node_ids,$node_fun);
+        //处理选中的(交接)
+        foreach ($node_intersect as $n_i){
+            $node_permission=$input['permission'].':'.$menus_nodes[--$n_i]['data'];
+            if(!$this->model->wherePermission($node_permission)->first()){
+                self::createnodesData($input['id'],$menus_nodes[$n_i]['name'],$node_permission);
+            }
+        }
+        //处理未选中的(差集)
+        foreach ($node_diff as $n_d){
+            $node_permission=$input['permission'].':'.$menus_nodes[--$n_d]['data'];
+            $this->model->wherePermission($node_permission)->delete();
+        }
+
+        if($input['type']==1){
+            if(substr(trim($input['path']), 0, 1 )!='/'){
+                $input['path']='/'.$input['path'];
+            }
+        }
+        parent::update($input);
+    }
+}

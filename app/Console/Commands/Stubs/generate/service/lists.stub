@@ -1,0 +1,9 @@
+public function lists(array $input)
+    {
+        $this->model->getList();
+
+        return [
+            'lst'=>$this->model->lst,
+            'total'=>$this->model->total,
+        ];
+    }

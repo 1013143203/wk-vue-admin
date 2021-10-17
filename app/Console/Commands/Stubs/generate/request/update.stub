@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Http\Requests\Admin;
+
+class {{Name}}UpdateRequest extends Base
+{
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'id' => 'required|exists:{{TableName}},id|numeric',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'id.required' => 'ID不能为空',
+            'id.exists' => '数据不存在',
+        ];
+    }
+}

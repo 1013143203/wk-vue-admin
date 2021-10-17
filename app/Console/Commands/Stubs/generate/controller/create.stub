@@ -1,0 +1,4 @@
+public function create({{Name}}CreateRequest $request)
+    {
+        return success($this->service->create(request()->input()));
+    }

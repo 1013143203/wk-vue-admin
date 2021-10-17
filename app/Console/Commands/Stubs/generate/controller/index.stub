@@ -1,0 +1,4 @@
+public function index()
+    {
+        return success($this->service->lists(request()->input()));
+    }

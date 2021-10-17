@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Services\Admin\{{Name}}Service;
+{{requestCreate}}
+{{requestUpdate}}
+
+class {{Name}}Controller extends Base
+{
+    public function __construct({{Name}}Service ${{serviceName}}Service)
+    {
+        parent::__construct();
+        $this->service = ${{serviceName}}Service;
+    }
+
+    {{index}}
+    {{create}}
+    {{edit}}
+    {{update}}
+    {{delete}}
+}
