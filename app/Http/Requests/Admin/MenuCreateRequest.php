@@ -16,9 +16,13 @@ class MenuCreateRequest extends Base
             'name' => 'required|max:50',
             'permission' => 'required|numeric',
             'type' => 'required|numeric|in:1,2,3',
-            'path' => 'required|unique:menu,path|max:50',
         ];
-        if (request('pid')) $rules['pid'] ='required|numeric|exists:menu,id';
+        if (request('pid')) {
+            $rules['pid'] ='required|numeric|exists:menu,id';
+        }
+        if (in_array(request('type'),[1,2])){
+            $rules['path'] ='required|unique:menu,path|max:50';
+        }
 
         return $rules;
     }

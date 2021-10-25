@@ -38,6 +38,9 @@ class UserService extends BaseService
             foreach ($v['role'] as $r){
                 $role.=$r['name'].' | ';
             }
+            if ($v['id']==1){
+                $v['hidden'] = true;
+            }
             $v['role']=trim($role,' |');
         }
 
@@ -56,7 +59,7 @@ class UserService extends BaseService
     {
         $res = $this->model->withQ(['role'=>function($query){
             $query->where('status',1);
-        }])->whereQ(['id'=>$id])->getByItem();
+        }])->whereQ(['id'=>$id])->getItem();
         $res['role']=array_column($res['role'], 'id');
 
         return $res;

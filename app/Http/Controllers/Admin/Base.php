@@ -42,5 +42,8 @@ class Base extends Controller
         ];
         return success($this->service->status($data),'操作成功');
     }
-
+    public function delete($id)
+    {
+        return success($this->service->delete($id),'操作成功');
+    }
 }

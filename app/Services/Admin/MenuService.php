@@ -3,6 +3,8 @@ namespace App\Services\Admin;
 
 use App\Exceptions\AdminException;
 use App\Models\Admin\Menu;
+use App\Models\Admin\RoleMenu;
+
 class MenuService extends BaseService
 {
     public function __construct(Menu $menu)
@@ -16,11 +18,14 @@ class MenuService extends BaseService
                 if(isset($input['name'])){
                     $query -> where('name', 'like', '%'.$input['name'].'%');
                 }
-                $query->where('status',1);
             })
-            ->selectQ(['id','name as label','pid','type','status','icon'])
+            ->selectQ(['id','name as label','pid','type','status','icon','permission','path'])
             ->getAll(false);
-
+        foreach ($menu as &$m){
+            if ($m['type']==3){
+                $m['hidden']=true;
+            }
+        }
         return $menu;
     }
     public function lists(array $input)
@@ -78,16 +83,22 @@ class MenuService extends BaseService
                 $input['path']='/'.$input['path'];
             }
         }
+        if($input['type']==3){
+            $permission = $this->model->where('id',request('pid'))->value('permission');
+            $input['permission'] = $permission.':'.request('permission');
+        }
+
         $id = parent::create($this->model->setFilterFields($input));
+        $this->role_menu_create($id);
 
         if($input['type']==2 && isset($input['node_fun'])){//如果节点存在
             foreach ($input['node_fun'] as $v){
-                $child=[];
                 foreach (config('admin.menus_nodes') as $c){
                     if($c['id']==$v){
                         $child_permission=$input['permission'].":{$c['data']}";
-                        if(!$this->model->where($child)->first()){
-                            self::createnodesData($id,$c['name'],$child_permission);
+                        if(!$this->model->where('permission',$child_permission)->first()){
+                            $child_id = self::createnodesData($id,$c['name'],$child_permission);
+                            $this->role_menu_create($child_id);
                         }
                     }
                 }
@@ -95,13 +106,19 @@ class MenuService extends BaseService
             }
         }
     }
-    public function createnodesData($pid,$name,$permission){
+    protected function createnodesData($pid,$name,$permission){
         $child['name']=$name;
         $child['pid']=$pid;
         $child['type']=3;
         $child['status']=1;
         $child['permission']=$permission;
-        parent::create($child);
+        return parent::create($child);
+    }
+    protected function role_menu_create($id){
+        $roleMenuModel = new RoleMenu();
+        if(!$roleMenuModel->whereMenuId($id)->whereRoleId(1)->first()){
+            $roleMenuModel->create(['menu_id'=>$id,'role_id'=>1]);
+        }
     }
     public function update(array $input){
 
@@ -131,5 +148,21 @@ class MenuService extends BaseService
             }
         }
         parent::update($input);
+    }
+    public function delete($id){
+        $ids = $this->children($id);
+        $ids[] = $id;
+        $this->model->delItem($ids);
+    }
+    protected function children($id){
+        global $ids;
+        $res = $this->model->selectQ('id')->whereQ(['pid'=>$id])->getAll(false);
+        if ($res){
+            foreach ($res as $v){
+                $ids[] = $v['id'];
+                $this->children($v['id']);
+            }
+        }
+        return $ids;
     }
 }

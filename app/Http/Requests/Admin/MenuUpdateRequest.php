@@ -18,8 +18,12 @@ class MenuUpdateRequest extends Base
             'type' => 'required|numeric|in:1,2,3',
             'id' => 'required|exists:menu,id|numeric',
         ];
-        if (request('pid')) $rules['pid'] ='required|numeric|exists:menu,id';
-
+        if (request('pid')) {
+            $rules['pid'] ='required|numeric|exists:menu,id';
+        }
+        if (in_array(request('type'),[1,2])){
+            $rules['path'] ='required|max:50';
+        }
         return $rules;
     }
     public function messages()

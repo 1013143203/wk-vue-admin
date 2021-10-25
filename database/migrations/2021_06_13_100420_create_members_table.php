@@ -13,18 +13,19 @@ class CreateMembersTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('member')){
-             Schema::create('member', function (Blueprint $table) {
+        if (!Schema::hasTable('member')) {
+            Schema::create('member', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('avatar')->nullable();
                 $table->integer('agentid')->default(0)->index();
+                $table->integer('level')->default(0)->index();
                 $table->string('nickname')->nullable()->index();
                 $table->string('realname')->nullable()->index();
-                $table->integer('mobile')->unique();
+                $table->string('mobile',20)->unique();
                 $table->string('password')->nullable();
                 $table->decimal('credit1', 10, 2)->nullable()->comment('积分');
                 $table->decimal('credit2', 10, 2)->nullable()->comment('余额');
-                $table->integer('gender')->default(1)->comment('1男2女')->index();
+                $table->integer('sex')->default(1)->comment('1男2女')->index();
 
                 $table->integer('pid')->comment('省')->nullable()->index();
                 $table->integer('cid')->comment('市')->nullable()->index();
@@ -34,7 +35,7 @@ class CreateMembersTable extends Migration
 
 
                 $table->integer('status')->default(1)->nullable();
-
+                $table->softDeletes();
                 $table->string('description')->nullable();
                 $table->timestamps();
             });

@@ -15,9 +15,9 @@ class CrontabService extends BaseService
     }
     public function create(array $input)
     {
-        $this->model->createData($input);
+        $this->model->createItem($input);
     }
     public function update(array $input){
-        $this->model->updateData($input);
+        $this->model->updateItem($input);
     }
 }

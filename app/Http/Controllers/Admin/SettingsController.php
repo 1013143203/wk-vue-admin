@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Services\Admin\SettingsService;
-use Illuminate\Http\Request;
+use App\Http\Requests\Admin\SettingsUpdateRequest;
+use App\Http\Requests\Admin\SettingsCreateRequest;
 
 class SettingsController extends Base
 {
@@ -13,13 +14,20 @@ class SettingsController extends Base
         $this->service = $configService;
     }
 
-    public function create(Request $request)
+    public function create(SettingsCreateRequest $request)
     {
         return success($this->service->create($request->input()));
     }
 
-    public function update(Request $request)
+    public function edit($id)
     {
-        return success($this->service->update($request->input()));
+        $data = $this->service->edit($id);
+        $data['value'] = json_decode($data['value'],true);
+        return success($data);
+    }
+
+    public function update(SettingsUpdateRequest $request)
+    {
+        return success($this->service->update($request->only(['id','value','name','description'])));
     }
 }

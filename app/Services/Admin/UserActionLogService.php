@@ -19,7 +19,7 @@ class UserActionLogService extends BaseService
             }
         })->withQ(['user' => function($query){
             $query->select(['username','id']);
-        }])->getAll();
+        }])->paginate(PAGE,LIMIT)->getAll();
         foreach ($res['lst'] as &$v){
             $v['username']=$v['user']['username'];
         }

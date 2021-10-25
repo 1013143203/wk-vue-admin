@@ -12,9 +12,13 @@ class UserUpdateRequest extends Base
      */
     public function rules()
     {
-        return [
+        $rule = [
             'id' => 'required|exists:user,id|numeric',
         ];
+        if (request('password')){
+            $rule['password'] = 'required|min:5|max:15';
+        }
+        return $rule;
     }
     public function messages()
     {

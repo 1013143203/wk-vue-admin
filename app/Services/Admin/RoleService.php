@@ -24,7 +24,11 @@ class RoleService extends BaseService
                 $query->where('name', 'LIKE', '%' . trim($input['username']) . '%');
             }
         })->paginate(PAGE,LIMIT)->getAll();
-
+        foreach ($res['lst'] as &$v){
+            if ($v['id']==1){
+                $v['hidden'] = true;
+            }
+        }
         //权限
         $res['permission'] = MenuService::getAllMenus(MenuService::Menus($input));
         return $res;
@@ -32,7 +36,7 @@ class RoleService extends BaseService
     public function create(array $input)
     {
         if($id = parent::create($input)){
-            if ($permission=@$input['permission']){
+            if ($permission=$input['permission']){
                 self::permission($id,$permission);
             }
         }
@@ -68,7 +72,7 @@ class RoleService extends BaseService
                 $query->where('id',$id);
             })
             ->withQ('menu')
-            ->getByItem();
+            ->getItem();
         $data['menu']=array_column($data['menu'], 'id')??[];
         return $data;
     }

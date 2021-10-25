@@ -14,7 +14,7 @@ trait MysqlTable
     private $selectQ = ['*'];
     private $withQ = [];
     private $withCountQ = [];
-    private $sortQ = [['id', 'asc']];
+    private $sortQ = [['id', 'desc']];
     private $pageQ;
     private $limitQ;
 
@@ -44,7 +44,7 @@ trait MysqlTable
         return $this;
     }
 
-    public function whereHasQuery($whereHas = []){
+    public function whereHasQ($whereHas = []){
         if (!empty($whereHas)) foreach ($whereHas as $key => $val) {
             $this->whereHas($key, function ($query) use ($val) {
                 $query->where($val);
@@ -53,7 +53,7 @@ trait MysqlTable
         return $this;
     }
 
-    public function whereHasInQuery($whereHasIn = []){
+    public function whereHasInQ($whereHasIn = []){
         if (!empty($whereHasIn)) foreach ($whereHasIn as $key => $val) {
             $this->whereHas($key, function ($query) use ($val) {
                 $query->whereIn($val);
@@ -62,14 +62,14 @@ trait MysqlTable
         return $this;
     }
 
-    public function whereInQuery($whereIn = []){
+    public function whereInQ($whereIn = []){
         if (!empty($whereIn)) foreach ($whereIn as $val) {
             $this->whereIn($val[0], $val[1]);
         }
         return $this;
     }
 
-    public function orwhereQuery($orwhere = []){
+    public function orwhereQ($orwhere = []){
         if (!empty($orwhere)) foreach ($orwhere as $val) {
             $this->orWhere($val);
         }
@@ -114,7 +114,7 @@ trait MysqlTable
         return $lst;
     }
 
-    public function getById(int $id)
+    public function getItemById(int $id)
     {
         return $this->select($this->selectQ)
             ->with($this->withQ)
@@ -122,7 +122,7 @@ trait MysqlTable
             ->find($id)->toArray();
     }
 
-    public function getByItem()
+    public function getItem()
     {
         return $this->select($this->selectQ)
             ->with($this->withQ)
@@ -157,7 +157,7 @@ trait MysqlTable
      *
      * @return mixed
      */
-    public function updateData(array $params)
+    public function updateItem(array $params)
     {
         $model = $this::query();
 
@@ -175,7 +175,7 @@ trait MysqlTable
         }
 
     }
-    public function createData(array $params){
+    public function createItem(array $params){
         $model = $this::query();
 
         DB::beginTransaction();
@@ -189,5 +189,15 @@ trait MysqlTable
             DB::rollBack();
             throw new AdminException(401,$e->getMessage());
         }
+    }
+    public function delItem($ids){
+        $model = $this::query();
+        if (!is_array($ids)) {
+            $ids = [$ids];
+        }
+        $model->whereIn('id', $ids)->delete();
+//        withTrashed() 显示所有数据
+//            onlyTrashed() 显示删除数所
+//            restore()还原数据
     }
 }

@@ -13,7 +13,7 @@ class BaseService
 
     public function edit($id)
     {
-        return $this->model->getById($id);
+        return $this->model->getItemById($id);
     }
 
     /*
@@ -25,16 +25,20 @@ class BaseService
      */
     public function update(array $params)
     {
-        return $this->model->updateData($params);
+        return $this->model->updateItem($params);
     }
 
     public function status(array $params)
     {
-        return $this->model->updateData($params);
+        return $this->model->updateItem($params);
     }
 
     public function create(array $params)
     {
-        return $this->model->createData($params);
+        return $this->model->createItem($params);
+    }
+    public function delete($id)
+    {
+        return $this->model->delItem($id);
     }
 }

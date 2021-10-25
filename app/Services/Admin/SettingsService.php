@@ -18,9 +18,11 @@ class SettingsService extends BaseService
     }
     public function create(array $input)
     {
-        $this->model->createData($input);
+        $input['value'] = json_encode($input['value'],JSON_UNESCAPED_UNICODE);
+        $this->model->createItem($input);
     }
     public function update(array $input){
-        $this->model->updateData($input);
+        $input['value'] = json_encode($input['value'],JSON_UNESCAPED_UNICODE);
+        $this->model->updateItem($input);
     }
 }

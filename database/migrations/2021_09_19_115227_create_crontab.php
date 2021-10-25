@@ -24,6 +24,7 @@ class CreateCrontab extends Migration
                 $table->integer('day')->default(0);
                 $table->integer('hour')->default(0);
                 $table->integer('minute')->default(0);
+                $table->softDeletes();
                 $table->timestamps();
             });
         }

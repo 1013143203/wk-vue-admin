@@ -19,7 +19,12 @@ class MenuController extends Base
     }
     public function create(MenuCreateRequest $request)
     {
-        return success($this->service->create($request->input()));
+        if (in_array(request('type'),[1,2])){
+            $data = $request->input();
+        }else{
+            $data = $request->only(['id','permission','pid','type','name']);
+        }
+        return success($this->service->create($data));
     }
     public function edit($id)
     {
@@ -27,6 +32,11 @@ class MenuController extends Base
     }
     public function update(MenuUpdateRequest $request)
     {
-        return success($this->service->update($request->input()));
+        if (in_array(request('type'),[1,2])){
+            $data = $request->input();
+        }else{
+            $data = $request->only(['id','permission','pid','type','name']);
+        }
+        return success($this->service->update($data));
     }
 }
