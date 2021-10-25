@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'reference' => NULL,
+        'name' => '__root__',
+        'dev' => true,
+    ),
+    'versions' => array(
+        '__root__' => array(
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'reference' => NULL,
+            'dev_requirement' => false,
+        ),
+        'jaeger/phpquery-single' => array(
+            'pretty_version' => '0.9.9',
+            'version' => '0.9.9.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../jaeger/phpquery-single',
+            'aliases' => array(),
+            'reference' => '6c12e3a1648dc619f16920f96082f397d74e0127',
+            'dev_requirement' => false,
+        ),
+        'jaeger/querylist' => array(
+            'pretty_version' => 'V3.2.1',
+            'version' => '3.2.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../jaeger/querylist',
+            'aliases' => array(),
+            'reference' => '1a7864dcf8d979d6d57a2a3508f2dd62ce3233d6',
+            'dev_requirement' => false,
+        ),
+    ),
+);
