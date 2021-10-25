@@ -2,20 +2,8 @@
 
 namespace App\Http\Requests\Admin;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class MemberLevelCreateRequest.php extends FormRequest
+class MemberLevelCreateRequest extends Base
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return false;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,7 +12,17 @@ class MemberLevelCreateRequest.php extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|max:50',
+            'level' => 'required|unique:member_level,level|numeric',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'name.required' => '菜单名称不能为空',
+            'level.required' => '等级不能为空',
+            'level.unique' => '等级已存在',
+            'level.numeric' => '等级只能为数字',
         ];
     }
 }

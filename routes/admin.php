@@ -65,4 +65,12 @@ Route::group(['middleware'=>'admin'], function () {
         Route::get('edit/{id}', ['uses'=>'Admin\MemberController@edit','permission'=>'member:edit']);
         Route::put('update/{id}', ['uses'=>'Admin\MemberController@update','permission'=>'member:update']);
     });
+    Route::group(['prefix'=>'memberLevel'], function ($router) {
+        Route::get('index', ['uses'=>'Admin\MemberLevelController@index','permission'=>'memberLevel:index']);
+        Route::post('create', ['uses'=>'Admin\MemberLevelController@create','permission'=>'memberLevel:create']);
+        Route::put('status/{id}/{status}', ['uses'=>'Admin\MemberLevelController@status','permission'=>'memberLevel:status']);
+        Route::get('edit/{id}', ['uses'=>'Admin\MemberLevelController@edit','permission'=>'memberLevel:edit']);
+        Route::put('update/{id}', ['uses'=>'Admin\MemberLevelController@update','permission'=>'memberLevel:update']);
+        Route::delete('delete/{id}', ['uses'=>'Admin\MemberLevelController@delete','permission'=>'memberLevel:delete']);
+    });
 });

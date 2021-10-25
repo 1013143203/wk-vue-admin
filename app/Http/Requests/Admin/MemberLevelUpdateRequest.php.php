@@ -2,19 +2,8 @@
 
 namespace App\Http\Requests\Admin;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class MemberLevelUpdateRequest.php extends FormRequest
+class MemberLevelUpdateRequest extends Base
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return false;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -24,7 +13,15 @@ class MemberLevelUpdateRequest.php extends FormRequest
     public function rules()
     {
         return [
-            //
+            'id' => 'required|exists:member_level,id|numeric',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'id.required' => '数据不存在',
+            'id.exists' => '数据不存在',
+            'id.numeric' => '数据不存在',
         ];
     }
 }

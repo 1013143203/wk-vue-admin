@@ -2,9 +2,8 @@
 
 namespace App\Models\Admin;
 
-use Illuminate\Database\Eloquent\Model;
 
-class MemberLevel extends Model
+class MemberLevel extends Base
 {
     protected $table         = 'member_level';		                // 为模型指定表名
     protected $primaryKey    = 'id';

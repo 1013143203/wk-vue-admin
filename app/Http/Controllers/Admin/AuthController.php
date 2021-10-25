@@ -20,7 +20,7 @@ class AuthController extends Base
             'userInfo'=>$request->user
         ]);
     }
-    public function login(LoginRequest $request){
+    public function login(){
 
         return success([
             'token'=>$this->service->login()

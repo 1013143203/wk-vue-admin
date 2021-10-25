@@ -23,7 +23,7 @@ class CreateMemberLevelTable extends Migration
                 $table->timestamps();
             });
         }
-        \DB::statement("ALTER TABLE `crontab` comment'计划任务'"); // 表注释
+        \DB::statement("ALTER TABLE `member_level` comment'用户等级'"); // 表注释
     }
 
     /**

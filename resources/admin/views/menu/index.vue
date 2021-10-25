@@ -1,0 +1,182 @@
+<template>
+  <div class="app-container" >
+    <el-card class="show">
+      <wk-search
+        :query = "search.query"
+        :cols = "search.cols"
+        @queryClick="queryClick"
+      ></wk-search>
+      <wk-table-btn
+        :btn = "table.btn"
+      >
+      </wk-table-btn>
+      <wk-table
+        v-auth="'menu:index'"
+        :cols="table.cols"
+        :data="table.lst"
+        :options="table.options"
+        ref="table"
+      ></wk-table>
+    </el-card>
+    <detail ref="edit" :menus_types="menus_types" :category="category" :menus_nodes="menus_nodes"></detail>
+  </div>
+</template>
+<script>
+import { index, status, edit ,del} from "@/api/menu";
+import detail from "./components/detail";
+import { confirm } from "@/utils/message-box.js";
+export default {
+  inject:['reload'],
+  components: {detail},
+  data() {
+    return {
+      table: {
+        cols: [
+          {label:'菜单名称', prop: "label"},
+          {label:'图标', prop: "icon" ,type: "icon"},
+          {label:'类型', prop: "type_" },
+          {label:'菜单地址', prop: "path"},
+          {label:'权限标识', prop: "permission"},
+          {
+            label:'状态',
+            prop: "status",
+            type: "switch" ,
+            auth: "menu:status" ,
+            switchData: {
+              active:1,
+              inactive:2,
+            },
+            switch:(val,id)=>{
+              status(val,id)
+                .then((response) => {
+                  console.log(response);
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            }
+          },
+          {
+            label:'操作',
+            type: "btn",
+            btn:[
+              {
+                label:'编辑',
+                auth:'menu:edit',
+                click:(index , item)=>{
+                  edit(item.id).then((response) => {
+                    const { data } = response;
+                    this.$refs.edit.showEdit(data)
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+                }
+              },
+              {
+                label: "删除" ,type: "danger" , auth:'menu:delete',
+                click:(index , item)=>{
+                  let fn = () => {
+                    del(item.id).then((response) => {
+                      this.$message({
+                        type: 'info',
+                        message: response.msg
+                      });
+                      this.reload("global");
+                    }).catch((error) => {
+                      console.log(error);
+                    })
+                  }
+                  confirm("是否永久删除该数据？", fn);
+                }
+              },
+              {
+                label: "添加" ,
+                type: "primary" ,
+                auth:'menu:create',
+                click:(index , item)=>{
+                  this.add(item)
+                },
+                hidden:true
+              }
+            ], width:250
+          },
+        ],
+        lst: [],
+        total: 0,
+        options:{
+        },
+        btn:[
+          {
+            label:'添加',
+            auth:'menu:create',
+            click:()=>{
+              this.add()
+            }
+          },
+          {
+            label: "全部展开" ,
+            auth:'menu:expandAll',
+            click:()=>{
+              this.expandChange(true)
+            }
+          },
+          {
+            label: "全部折叠" ,
+            auth:'menu:foldAll',
+            click:()=>{
+              this.expandChange(false)
+            }
+          }
+        ]
+      },
+      search:{
+        query:{
+        },
+        cols:[
+          {type:'input',label:'菜单',prop:'name',width:'180px',placeholder:'请输入菜单名称'},
+        ],
+      },
+      menus_nodes:[],
+      menus_types:[],
+      category:[],
+    }
+  },
+  created() {
+    this.index();
+  },
+  methods: {
+    index() {
+      index(this.search.query)
+        .then((response) => {
+          const { data } = response;
+          const { lst, total, menus_nodes, menus_types ,category} = data;
+          this.table.lst = lst;
+          this.table.total = total;
+          this.menus_nodes = menus_nodes;
+          this.menus_types = menus_types;
+          this.category = category;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    queryClick(query){
+      this.search.query=query
+      this.index()
+    },
+    expandChange(e){
+      this.$refs.table.expendChange(e);
+    },
+    add(item){
+      const obj={}
+      if(item){
+        obj.permission=item.permission
+        obj.pid=item.id
+        // obj.type = ++item.type
+      }
+      this.$refs.edit.add(obj);
+    },
+  },
+};
+</script>

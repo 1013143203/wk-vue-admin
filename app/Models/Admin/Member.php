@@ -12,6 +12,6 @@ class Member extends Base
         'nickname', 'avatar','level', 'agentid', 'realname', 'mobile', 'password' , 'credit1' ,'credit2','sex','pid','cid','aid','sid','address_info','status','description',
     ];
     public function level(){
-        return $this->hasOne(MemberLevel::class, 'id', 'level');
+        return $this->hasOne(MemberLevel::class, 'level', 'level');
     }
 }
