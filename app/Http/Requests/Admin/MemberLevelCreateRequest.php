@@ -13,7 +13,7 @@ class MemberLevelCreateRequest extends Base
     {
         return [
             'name' => 'required|max:50',
-            'level' => 'required|unique:member_level,level|numeric',
+            'level' => 'required|unique:member_level,level|numeric|min:1|max:10',
         ];
     }
     public function messages()

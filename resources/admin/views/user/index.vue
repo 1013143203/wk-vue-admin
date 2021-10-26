@@ -43,12 +43,12 @@ export default {
             prop: "username", //字段名
             placeholder: "请填写用户名", //提示内容
             rules: [
-              { required: true, message: "请输入用户名", trigger: "blur" },
+              { required: true, message: "请输入用户名", trigger: "change" },
               {
                 min: 5,
                 max: 10,
                 message: "长度在 5 到 10 个字符",
-                trigger: "blur",
+                trigger: "change",
               },
             ],
           },
@@ -57,12 +57,12 @@ export default {
             prop: "password",
             type: "password",
             rules: [
-              { required: true, message: "请输入密码", trigger: "blur" },
+              { required: true, message: "请输入密码", trigger: "change" },
               {
                 min: 5,
                 max: 15,
                 message: "长度在 5 到 15 个字符",
-                trigger: "blur",
+                trigger: "change",
               },
             ],
           },
@@ -173,12 +173,12 @@ export default {
             click:()=>{
               this.form.cols.username.disabled = false;
               this.form.cols.password.rules=[
-                { required: true, message: "请输入密码", trigger: "blur" },
+                { required: true, message: "请输入密码", trigger: "change" },
                 {
                   min: 5,
                   max: 15,
                   message: "长度在 5 到 15 个字符",
-                  trigger: "blur",
+                  trigger: "change",
                 },
               ]
               this.$refs.form.handle({});

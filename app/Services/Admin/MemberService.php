@@ -32,16 +32,21 @@ class MemberService extends BaseService
                     $query->whereBetween('created_at', $input['date']);
                 }
             })
-            ->withQ('level')
+            ->withQ(['level'=>function($query){
+                $query->select('id','name');
+            }])
             ->paginate(PAGE,LIMIT)
             ->getAll();
-
+        foreach ($res['lst'] as &$r){
+            $r['level_name'] = $r['level']['name'];
+        }
         return $res;
     }
-    public function edit($id)
-    {
-        return $res;
-    }
+//    public function edit($id)
+//    {
+//        $res = $this->model->getItemById($id);
+//        return $res;
+//    }
     public function update(array $input)
     {
 

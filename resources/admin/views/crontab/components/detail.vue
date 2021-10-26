@@ -126,16 +126,16 @@
         },
         rules: {
           name: [
-            {required: true, message: "请输入任务名称", trigger: "blur"},
+            {required: true, message: "请输入任务名称", trigger: "change"},
           ],
           sType: [
-            {required: true, message: "请选择任务类型", trigger: "blur"},
+            {required: true, message: "请选择任务类型", trigger: "change"},
           ],
           sBody: [
-            {required: true, message: "请输入任务内容", trigger: "blur"},
+            {required: true, message: "请输入任务内容", trigger: "change"},
           ],
           day: [
-            {required: true, message: "请输入日", trigger: "blur"},
+            {required: true, message: "请输入日", trigger: "change"},
           ],
         },
         week__:false,

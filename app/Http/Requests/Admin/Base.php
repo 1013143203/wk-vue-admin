@@ -24,7 +24,7 @@ class Base extends FormRequest
     {
         // 此处自定义您想要返回的数据类型
         $data = [
-            'code' => 203,
+            'code' => 204,
             'msg' => $validator->errors()->first(),
         ];
         throw new HttpResponseException(response()->json($data));

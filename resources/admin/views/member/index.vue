@@ -43,7 +43,7 @@
             {label:'用户名', prop: "realname" },
             {label:'昵称', prop: "nickname" },
             {label:'手机号', prop: "mobile" },
-            {label:'等级', prop: "level" },
+            {label:'等级', prop: "level_name" },
             {label:'加入时间', prop: "created_at" },
             {
               label:'操作',
@@ -58,13 +58,7 @@
                       edit(item.id)
                         .then((response) => {
                           const { data } = response;
-                          this.form.cols.username.disabled = true;
-                          this.form.data.username = data.username;
-                          this.form.data.status = data.status;
-                          this.form.data.id = item.id;
-                          this.form.data.role=data.role
-                          this.form.cols.password.rules=[]
-                          that.$refs.form.handle(this.form.data);
+                          that.$refs.form.handle(data);
                         })
                         .catch((error) => {
                           console.log(error);

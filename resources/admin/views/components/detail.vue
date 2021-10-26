@@ -24,8 +24,18 @@
             v-if="col.type === 'password'"
             :disabled="col.disabled ? col.disabled : false"
             v-model="formData[col.prop]"
+            show-password
             autocomplete="off"
           ></el-input>
+          <!-- inupt数字框 -->
+          <el-input-number
+            v-if="col.type === 'number'"
+            :disabled="col.disabled ? col.disabled : false"
+            v-model="formData[col.prop]"
+            :min="col.min"
+            :max="col.max"
+            onKeypress="return (/[\d\.]/.test(String.fromCharCode(event.keyCode)))"
+          ></el-input-number>
           <!-- textarea输入框 -->
           <el-input
             type="textarea"

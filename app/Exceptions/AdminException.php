@@ -8,9 +8,10 @@ use Illuminate\Http\Request;
 class AdminException extends Exception
 {
     protected $msg =array(
-        401 => '操作失败',
-        402 => '密码错误！',
-        403 => '账号已被锁定请联系管理员',
+        201 => '操作失败',
+        202 => '密码错误！',
+        203 => '账号已被锁定请联系管理员',
+        204 => '验证未通过',
     );
     public function __construct($code,$msg='')
     {

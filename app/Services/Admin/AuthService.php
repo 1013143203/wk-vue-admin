@@ -18,11 +18,11 @@ class AuthService extends BaseService
     public function login(){
         $credentials = request(['username', 'password']);
         if (! $token = auth('admin')->attempt($credentials)) {
-            throw new AdminException(402);
+            throw new AdminException(202);
         }
         $user=auth('admin')->user();
         if($user['status']==2){
-            throw new AdminException(403);
+            throw new AdminException(203);
         }
         UserActionLog::record($user->id,'登陆成功');
 

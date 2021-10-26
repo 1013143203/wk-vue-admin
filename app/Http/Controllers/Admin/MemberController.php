@@ -13,4 +13,9 @@ class MemberController extends Base
 
         $this->service = $memberService;
     }
+
+    public function edit($id)
+    {
+        return success($this->service->edit($id));
+    }
 }

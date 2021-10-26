@@ -95,12 +95,12 @@
               prop: "name", //字段名
               placeholder: "请填写配置名称", //提示内容,
               rules: [
-                { required: true, message: "请输入配置名称", trigger: "blur" },
+                { required: true, message: "请输入配置名称", trigger: "change" },
                 {
                   min: 1,
                   max: 10,
                   message: "长度在 1 到 10 个字符",
-                  trigger: "blur",
+                  trigger: "change",
                 },
               ],
             },
@@ -109,8 +109,8 @@
               label: "配置内容", //字段
               prop: "value", //字段名
               rules: [
-                { required: true, message: "请输入JSON数据", trigger: "blur" },
-                { validator: validatorJSON, trigger: 'blur'},
+                { required: true, message: "请输入JSON数据", trigger: "change" },
+                { validator: validatorJSON, trigger: 'change'},
               ],
             },
             description:{
@@ -123,7 +123,7 @@
                   min: 1,
                   max: 50,
                   message: "长度在 1 到 50 个字符",
-                  trigger: "blur",
+                  trigger: "change",
                 },
               ],
             },

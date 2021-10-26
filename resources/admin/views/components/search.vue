@@ -25,7 +25,9 @@
             type="daterange"
             range-separator="至"
             start-placeholder="开始日期"
-            end-placeholder="结束日期">
+            end-placeholder="结束日期"
+            value-format="yyyy-MM-dd"
+          >
           </el-date-picker>
           <!-- 开关 -->
           <el-switch v-if="item.type==='switch'" v-model="query[item.prop]" ></el-switch>

@@ -12,7 +12,7 @@
       </wk-table-btn>
       <el-row :gutter="15">
         <wk-table
-          v-auth="'member:index'"
+          v-auth="'memberLevel:index'"
           :total="table.total"
           :cols="table.cols"
           :data="table.lst"
@@ -20,46 +20,96 @@
         ></wk-table>
       </el-row>
     </el-card>
+    <wk-detail
+      ref="form"
+      @submit="submit"
+      :cols="form.cols"
+    ></wk-detail>
   </div>
 </template>
 
 <script>
   import { index, status, edit, update, create ,del} from "@/api/member-level";
+  import { confirm } from "@/utils/message-box.js";
   export default {
     name: "level",
+    inject:['reload'],
     data() {
       return {
         form: {
-          cols: {},
+          cols: {
+            name:{
+              type: "input",
+              label: "名称", //字段
+              prop: "name", //字段名
+              placeholder: "请填写名称", //提示内容
+              rules: [
+                { required: true, message: "请输入名称", trigger: "change" },
+                {
+                  min: 2,
+                  max: 10,
+                  message: "长度在 2 到 10 个字符",
+                  trigger: "change",
+                },
+              ],
+            },
+            level:{
+              label: "等级",
+              prop: "level",
+              type: "number",
+              rules: [
+                { required: true, message: "请输入等级", trigger: "change" },
+              ],
+              min: 1,
+              max: 10,
+            },
+            status:{
+              label: "状态",
+              prop: "status",
+              type: "switch",
+              active: 1,
+              inactive: 2,
+            },
+          },
         },
         table: {
           cols: [
             {label:'ID', prop: "id" },
-            {label:'用户名', prop: "realname" },
-            {label:'昵称', prop: "nickname" },
-            {label:'手机号', prop: "mobile" },
+            {label:'名称', prop: "name" },
             {label:'等级', prop: "level" },
-            {label:'加入时间', prop: "created_at" },
+            {
+              label:'状态',
+              prop: "status",
+              type: "switch" ,
+              switchData: {
+                active:1,
+                inactive:2,
+              },
+              switch:(val,id)=>{
+                status(val,id)
+                  .then((response) => {
+                    console.log(response);
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              }
+            },
             {
               label:'操作',
               type: "btn",
               btn:[
                 {
                   label:'查看',
-                  auth:'member:edit',
+                  auth:'memberLevel:edit',
                   click:(index , item)=>{
                     const that = this;
                     if (item.id) {
                       edit(item.id)
                         .then((response) => {
                           const { data } = response;
-                          this.form.cols.username.disabled = true;
-                          this.form.data.username = data.username;
-                          this.form.data.status = data.status;
-                          this.form.data.id = item.id;
-                          this.form.data.role=data.role
-                          this.form.cols.password.rules=[]
-                          that.$refs.form.handle(this.form.data);
+                          this.form.cols.level.disabled = true;
+                          that.$refs.form.handle(data);
                         })
                         .catch((error) => {
                           console.log(error);
@@ -67,11 +117,41 @@
                     }
                   },
                 },
+                {
+                  label: "删除" ,type: "danger",auth:'memberLevel:delete',
+                  click:(index , item)=>{
+                    const that = this
+                    let fn = () => {
+                      del(item.id).then((response) => {
+                        this.$message({
+                          type: 'info',
+                          message: response.msg,
+                        });
+                        that.table.lst.splice(index, 1)
+                        that.table.total = that.table.total-1
+                      }).catch((error) => {
+                        console.log(error);
+                      })
+                    }
+                    confirm("是否永久删除该数据？", fn);
+                  },
+                  hidden:true
+                }
               ], width:150
             },
           ],
           lst: [],
           total: 0,
+          btn:[
+            {
+              label:'添加',
+              auth:'memberLevel:create',
+              click:()=>{
+                this.form.cols.level.disabled = false;
+                this.$refs.form.handle({});
+              }
+            },
+          ],
         },
         search:{
           query:{},
@@ -90,11 +170,9 @@
         index(this.search.query)
           .then((response) => {
             const { data } = response;
-            const { lst, total , permission} = data;
+            const { lst, total } = data;
             this.table.lst = lst;
             this.table.total = total;
-
-            this.form.cols.permission.data= permission;
           })
           .catch((error) => {
             console.log(error);
@@ -107,6 +185,18 @@
       queryClick(query){
         this.search.query=query
         this.index()
+      },
+      submit(form) {
+        const l = form.id ? update(form) : create(form);
+        l.then((response) => {
+          this.$message({
+            type: 'success',
+            message: response.msg
+          });
+          this.reload();
+        }).catch((error) => {
+          console.log(error);
+        });
       },
     }
   }

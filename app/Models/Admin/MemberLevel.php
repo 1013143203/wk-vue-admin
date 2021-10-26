@@ -10,6 +10,6 @@ class MemberLevel extends Base
     protected $datas = ['deleted_at'];
 
     protected $fillable = [
-        'name','level',
+        'name','level','status'
     ];
 }

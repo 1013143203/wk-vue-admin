@@ -116,19 +116,21 @@ trait MysqlTable
 
     public function getItemById(int $id)
     {
-        return $this->select($this->selectQ)
+        $data = $this->select($this->selectQ)
             ->with($this->withQ)
             ->withCount($this->withCountQ)
-            ->find($id)->toArray();
+            ->find($id);
+        return $data ? $data->toArray() : false;
     }
 
     public function getItem()
     {
-        return $this->select($this->selectQ)
+        $data = $this->select($this->selectQ)
             ->with($this->withQ)
             ->withCount($this->withCount)
             ->where($this->whereQ)
-            ->first()->toArray();
+            ->first();
+        return $data ? $data->toArray() : false;
     }
 
     /*

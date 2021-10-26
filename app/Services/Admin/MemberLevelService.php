@@ -4,6 +4,7 @@ namespace App\Services\Admin;
 
 use App\Exceptions\Exception;
 use App\Exceptions\AdminException;
+use App\Models\Admin\Member;
 use App\Models\Admin\MemberLevel;
 
 
@@ -32,18 +33,19 @@ class MemberLevelService extends BaseService
 
         return $res;
     }
-    public function edit($id)
-    {
 
-        return $res;
-    }
-    public function update(array $input)
-    {
-
-        parent::update($input);
-    }
     public function create(array $input)
     {
+        $this->model->createItem($input);
+    }
 
+    public function delete($id)
+    {
+        $member = new Member();
+        if (!$member->whereQ(['level'=>$id])->getItem()){
+            return $this->model->delItem($id);
+        }else{
+            throw new AdminException(201,'会员存在此等级');
+        }
     }
 }
