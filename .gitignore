@@ -8,6 +8,10 @@
 .env
 .env.backup
 .phpunit.result.cache
+package.lock
+composer.lock
+.htaccess
+nginx.htaccess
 Homestead.json
 Homestead.yaml
 npm-debug.log
