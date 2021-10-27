@@ -127,7 +127,7 @@
               prop: "name", //字段名
               placeholder: "请填写任务名称", //提示内容
               rules: [
-                { required: true, message: "请输入任务名称", trigger: "change" },
+                { required: true, message: "请输入任务名称", trigger: "blur" },
               ],
             },
             tType:{

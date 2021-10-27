@@ -123,7 +123,7 @@ export default {
             prop: "name", //字段名
             placeholder: "请填写角色名", //提示内容
             rules: [
-              { required: true, message: "请输入角色名", trigger: "change" },
+              { required: true, message: "请输入角色名", trigger: "blur" },
               {
                 min: 3,
                 max: 10,

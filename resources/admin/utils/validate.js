@@ -136,3 +136,8 @@ export function validateObjectJSON(obj){
     return false;
   }
 }
+//判断输入的手机号格式是否正确
+export function validateMobile(mobile){
+  const reg =/^0?1[3|4|5|6|7|8][0-9]\d{8}$/;
+  return reg.test(mobile)
+}

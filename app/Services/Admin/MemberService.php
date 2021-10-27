@@ -5,6 +5,7 @@ namespace App\Services\Admin;
 use App\Exceptions\Exception;
 use App\Exceptions\AdminException;
 use App\Models\Admin\Member;
+use App\Models\Admin\MemberLevel;
 
 
 class MemberService extends BaseService
@@ -42,11 +43,13 @@ class MemberService extends BaseService
         }
         return $res;
     }
-//    public function edit($id)
-//    {
-//        $res = $this->model->getItemById($id);
-//        return $res;
-//    }
+    public function edit($id)
+    {
+        $res['data'] = $this->model->getItemById($id);
+        $res['level'] = MemberLevel::where('status',1)->get(['id as value','name as label'])->toArray();
+
+        return $res;
+    }
     public function update(array $input)
     {
 

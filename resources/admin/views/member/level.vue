@@ -44,7 +44,7 @@
               prop: "name", //字段名
               placeholder: "请填写名称", //提示内容
               rules: [
-                { required: true, message: "请输入名称", trigger: "change" },
+                { required: true, message: "请输入名称", trigger: "blur" },
                 {
                   min: 2,
                   max: 10,
@@ -58,7 +58,7 @@
               prop: "level",
               type: "number",
               rules: [
-                { required: true, message: "请输入等级", trigger: "change" },
+                { required: true, message: "请输入等级", trigger: "blur" },
               ],
               min: 1,
               max: 10,

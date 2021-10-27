@@ -45,7 +45,7 @@ class MemberLevelService extends BaseService
         if (!$member->whereQ(['level'=>$id])->getItem()){
             return $this->model->delItem($id);
         }else{
-            throw new AdminException(201,'会员存在此等级');
+            throw new AdminException(201,'该等级存在会员');
         }
     }
 }
