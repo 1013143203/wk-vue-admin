@@ -14,7 +14,7 @@ class MemberLevelService extends BaseService
     {
         $this->model = $member_level;
     }
-    public function lists(array $input)
+    public function lists(array $input = [])
     {
         $res = $this->model
             ->selectQ("*")
@@ -26,6 +26,9 @@ class MemberLevelService extends BaseService
                 }
                 if (!empty($input['date'])){
                     $query->whereBetween('created_at', $input['date']);
+                }
+                if (!empty($input['status'])){
+                    $query->where('status', $input['status']);
                 }
             })
             ->paginate(PAGE,LIMIT)

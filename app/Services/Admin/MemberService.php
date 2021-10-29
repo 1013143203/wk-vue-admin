@@ -45,8 +45,10 @@ class MemberService extends BaseService
     }
     public function edit($id)
     {
+
         $res['data'] = $this->model->getItemById($id);
-        $res['level'] = MemberLevel::where('status',1)->get(['id as value','name as label'])->toArray();
+        $level = (new MemberLevelService(new MemberLevel()))->lists(['status'=>1]);
+        $res['level'] = $level['lst'];
 
         return $res;
     }
@@ -54,9 +56,5 @@ class MemberService extends BaseService
     {
 
         parent::update($input);
-    }
-    public function create(array $input)
-    {
-
     }
 }
