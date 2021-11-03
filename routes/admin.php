@@ -73,4 +73,10 @@ Route::group(['middleware'=>'admin'], function () {
         Route::put('update/{id}', ['uses'=>'Admin\MemberLevelController@update','permission'=>'memberLevel:update']);
         Route::delete('delete/{id}', ['uses'=>'Admin\MemberLevelController@delete','permission'=>'memberLevel:delete']);
     });
+    Route::group(['prefix'=>'file'], function ($router) {
+        Route::get('index', ['uses'=>'Admin\FileController@index']);
+        Route::post('chunk', ['uses'=>'Admin\FileController@chunk']);
+        Route::post('merge', ['uses'=>'Admin\FileController@merge']);
+        Route::delete('delete/{id}', ['uses'=>'Admin\FileController@delete']);
+    });
 });

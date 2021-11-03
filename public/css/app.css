@@ -24,6 +24,7 @@ var map = {
 	"./system/city/index.vue": "./resources/admin/views/system/city/index.vue",
 	"./system/code.vue": "./resources/admin/views/system/code.vue",
 	"./system/settings.vue": "./resources/admin/views/system/settings.vue",
+	"./upload.vue": "./resources/admin/views/upload.vue",
 	"./user/index.vue": "./resources/admin/views/user/index.vue"
 };
 

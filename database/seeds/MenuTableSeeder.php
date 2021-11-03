@@ -425,7 +425,7 @@ class MenuTableSeeder extends Seeder
             ],
             [
                 'name'=>'用户管理',
-                'icon'=>'',
+                'icon'=>'fa fa-user-circle',
                 'path'=>'/member',
                 'permission'=>'',
                 'redirect'=>'/member/index',
