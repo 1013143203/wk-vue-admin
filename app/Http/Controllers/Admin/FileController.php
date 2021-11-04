@@ -14,7 +14,7 @@ class FileController extends Base
     }
 
     public function chunk()
-    {var_dump(123);die;
+    {
         return success();
     }
 

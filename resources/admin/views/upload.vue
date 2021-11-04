@@ -48,7 +48,6 @@
       dealUpload(){
         initUpload({
           files: this.uploadList,
-          pieceSize: 5,
           progress: (num) => {
             this.progress = '上传进度' + num + '%'
           },

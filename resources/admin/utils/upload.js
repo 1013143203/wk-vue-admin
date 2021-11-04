@@ -5,7 +5,6 @@ import { chunk , merge } from "@/api/upload";
 * 分片上传函数 支持多个文件
 * @param options
 * options.file 表示源文件
-* options.pieceSize 表示需要分片的大小 默认是5m
 * options.chunk 分片上传的后端地址
 * options.merge 整个文件的上传地址
 * progress 进度回调
@@ -13,7 +12,7 @@ import { chunk , merge } from "@/api/upload";
 * error 失败回调
 *
 */
-export const initUpload = ({files, pieceSize = 5, progress, success, error}) => {
+export const initUpload = ({files, progress, success, error}) => {
   if (!files || !files.length) return
 
   let fileList = [] // 总文件列表
@@ -21,6 +20,7 @@ export const initUpload = ({files, pieceSize = 5, progress, success, error}) => 
   let successAllCount = 0 // 上传成功的片数
   let AllChunk = 0 // 所有文件的chunk数之和
   let AllFileSize = 0 // 所有文件size
+  let chunkSize = 0 // 所有文件size
 
   const readFileMD5 = (files) => {
     // 读取每个文件的md5
@@ -39,10 +39,23 @@ export const initUpload = ({files, pieceSize = 5, progress, success, error}) => 
       }, false)
     })
   }
+  // 根据文件大小，分配上传分片大小
+  const  updateCchunkSize = (file) =>{
+    if (file.size > 2000 * 1024 * 1024) {
+        chunkSize = 1024 * 1024 * 15;
+    } else if (file.size > 1000 * 1024 * 1024) {
+        chunkSize = 1024 * 1024 * 10;
+    } else if (file.size > 500 * 1024 * 1024) {
+        chunkSize = 1024 * 1024 * 8;
+    } else {
+        chunkSize = 2 * 1024 * 1024;
+    }
+    return chunkSize
+  }
   // 针对每个文件进行chunk处理
   const readChunkMD5 = (fileList) => {
     fileList.map((currentFile, fileIndex) => {
-      const chunkSize = pieceSize * 1024 * 1024 // 5MB一片
+      const chunkSize = updateCchunkSize(currentFile.file)
       const chunkCount = Math.ceil(currentFile.file.size / chunkSize) // 总片数
       AllChunk = AllChunk + chunkCount // 计算全局chunk数
       // let fileSize = currentFile.file.size // 文件大小
@@ -87,6 +100,7 @@ export const initUpload = ({files, pieceSize = 5, progress, success, error}) => 
         }
       }
     }).catch(e => {
+        uploadChunk(currentFile, chunkInfo, fileIndex);
       error && error(e)
     })
   }
