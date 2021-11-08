@@ -28,7 +28,7 @@
   </div>
 </template>
 <script>
-import { index, status, edit, update, create, del} from "@/api/user";
+import { index, status, edit, update, create, del } from "@/api/user";
 import { confirm } from "@/utils/message-box.js";
 export default {
   inject:['reload'],

@@ -11,6 +11,7 @@ export function merge(data) {
   return request({
     url: 'file/merge',
     method: 'post',
+    headers:{'Content-Type':'multipart/form-data'},
     data
   })
 }

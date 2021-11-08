@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Services\Admin\FileService;
+use Illuminate\Http\Request;
 
 class FileController extends Base
 {
@@ -14,7 +15,7 @@ class FileController extends Base
     }
 
     public function chunk()
-    {var_dump(123);die;
+    {var_dump(request()->input());die;
         return success();
     }
 
