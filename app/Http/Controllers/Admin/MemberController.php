@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Services\Admin\MemberService;
 use App\Http\Requests\Admin\MemberUpdateRequest;
 

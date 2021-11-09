@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Services\Admin\UserActionLogService;
-use Illuminate\Http\Request;
 
 class ActionLogController extends Base
 {

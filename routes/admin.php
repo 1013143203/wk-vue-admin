@@ -75,7 +75,7 @@ Route::group(['middleware'=>'admin'], function () {
     });
     Route::group(['prefix'=>'file'], function ($router) {
         Route::get('index', ['uses'=>'Admin\FileController@index']);
-        Route::match(['get', 'post'], 'Admin\FileController@chunk');
+        Route::match(['get', 'post'], 'chunk',['uses'=>'Admin\FileController@chunk']);
         Route::post('merge', ['uses'=>'Admin\FileController@merge']);
         Route::delete('delete/{id}', ['uses'=>'Admin\FileController@delete']);
     });
