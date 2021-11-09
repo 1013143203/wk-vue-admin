@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function chunk(data) {
+export function upload(data) {
   return request({
-    url: 'file/chunk',
+    url: 'file/md5',
     method: 'post',
     data
   })

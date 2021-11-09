@@ -58,7 +58,7 @@
   import { getToken } from "../../utils/auth";
   import SparkMD5 from 'spark-md5';
   // 这两个是我自己项目中用的，请忽略
-  import { chunk } from "@/api/upload";
+  import { merge } from "@/api/upload";
   export default {
     props: {
       target: String,
@@ -117,6 +117,7 @@
       onFileSuccess(rootFile, file, response, chunk) {
         let res = JSON.parse(response);
         // 服务器自定义的错误（即虽返回200，但是是错误的情况），这种错误是Uploader无法拦截的
+        console.log(res)
         if (!res.result) {
           this.$message({ message: res.message, type: 'error' });
           // 文件状态设为“失败”
@@ -127,7 +128,7 @@
         if (res.needMerge) {
           // 文件状态设为“合并中”
           this.statusSet(file.id, 'merging');
-          chunk({
+          merge({
             tempName: res.tempName,
             fileName: file.name,
             ...this.params,

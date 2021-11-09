@@ -2,9 +2,9 @@
   <div>
     <el-button @click="upload">上传</el-button>
     <wk-uploader
-            tenantId="1"
-            target="file/chunk"
-            ref="upload"
+      tenantId="1"
+      target="file/chunk"
+      ref="upload"
     ></wk-uploader>
 
   </div>
