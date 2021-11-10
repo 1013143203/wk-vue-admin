@@ -10,4 +10,15 @@ class FileService extends BaseService
     {
         $this->model = $file_systems;
     }
+    public function chunk()
+    {
+        if ($_GET['identifier']){
+            if ($this->model->where('md5',$_GET['identifier'])->first()){
+                return ['skipUpload'=>true];
+            }
+            return ['skipUpload'=>true];
+        }else{
+
+        }
+    }
 }

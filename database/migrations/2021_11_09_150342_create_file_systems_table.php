@@ -15,14 +15,15 @@ class CreateFileSystemsTable extends Migration
     {
         if (!Schema::hasTable('file_systems')) {
             Schema::create('file_systems', function (Blueprint $table) {
-                $table->increments('id')->comment('文件id');
+                $table->increments('file_id')->comment('文件id');
+                $table->integer('user_id')->default(0)->comment('添加id');
                 $table->string('url')->comment('文件地址');
                 $table->string('type')->comment('文件类型');
                 $table ->string('name')->nullable()->comment('文件名');
                 $table ->string('ext')->nullable()->comment('文件扩展名');
                 $table->string('md5')->nullable()->unique()->comment('文件md5');
                 $table->integer('size')->default(0)->comment('文件大小');
-                $table->string('disk')->default('local')->comment('存储位置');
+                $table->string('storage')->default('local')->comment('存储方式');
                 $table->softDeletes();
                 $table->timestamps();
             });
