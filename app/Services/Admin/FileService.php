@@ -18,7 +18,7 @@ class FileService extends BaseService
             }
             return ['skipUpload'=>true];
         }else{
-
+            return ['skipUpload'=>true];
         }
     }
 }
