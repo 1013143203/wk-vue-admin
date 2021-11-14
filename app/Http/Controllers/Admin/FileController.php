@@ -16,12 +16,12 @@ class FileController extends Base
 
     public function chunk(FileRequest $request)
     {
-        return success($this->service->chunk($request->input()));
+        return success($this->service->chunk($request));
     }
 
 
-    public function merge()
+    public function merge(FileRequest $request)
     {
-        return success();
+        return success($this->service->merge($request));
     }
 }

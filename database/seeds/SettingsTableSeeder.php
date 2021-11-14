@@ -14,9 +14,9 @@ class SettingsTableSeeder extends Seeder
     {
         $data = [
             [
-                'name'=>'attachment',
+                'name'=>'file_systems',
                 'value'=>[
-                    'disk'=>'local',
+                    'storage'=>'local',
                     "img"=>[
                         'size'=>5000,
                         'ext'=>['gif','jpg','jpeg','png'],
