@@ -7,11 +7,17 @@ export function upload(data) {
     data
   })
 }
-export function merge(data) {
+export function merge(data,md5) {
   return request({
     url: 'file/merge',
     method: 'post',
-    headers:{'Content-Type':'multipart/form-data'},
     data
+  })
+}
+export function index(params) {
+  return request({
+    url: 'file/index',
+    method: 'get',
+    params:params
   })
 }

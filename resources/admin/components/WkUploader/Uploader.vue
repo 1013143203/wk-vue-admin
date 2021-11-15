@@ -72,12 +72,13 @@
           maxChunkRetries: 3,
           testChunks: true,   //是否开启服务器分片校验
           // 服务器分片校验函数，秒传及断点续传基础
-          checkChunkUploadedByResponse: function (chunk, message) {
-            let objMessage = JSON.parse(message);
-            if (objMessage.skipUpload) {
+          checkChunkUploadedByResponse: function (chunk, res) {
+            let objMessage = JSON.parse(res);
+            const { data } = objMessage
+            if (data.skipUpload) {
               return true;
             }
-            return (objMessage.uploaded || []).indexOf(chunk.offset + 1) >= 0
+            return (data.uploaded || []).indexOf(chunk.offset + 1) >= 0
           },
           headers: {
             Authorization : "Bearer " + getToken()
@@ -117,22 +118,25 @@
       onFileSuccess(rootFile, file, response, chunk) {
         let res = JSON.parse(response);
         // 服务器自定义的错误（即虽返回200，但是是错误的情况），这种错误是Uploader无法拦截的
-        console.log(res)
-        if (!res.result) {
-          this.$message({ message: res.message, type: 'error' });
+        if (!res.data) {
+          this.$message({ message: res.msg, type: 'error' });
           // 文件状态设为“失败”
           this.statusSet(file.id, 'failed');
           return
         }
         // 如果服务端返回需要合并
-        if (res.needMerge) {
+        if (res.data.needMerge) {
           // 文件状态设为“合并中”
           this.statusSet(file.id, 'merging');
           merge({
-            tempName: res.tempName,
-            fileName: file.name,
-            ...this.params,
+            size: file.size,
+            name: file.name,
+            ext: file.name.substring(file.name.indexOf('.')+1).toLowerCase(),
+            identifier: res.data.identifier,
+            fileType: file.fileType,
+            totalChunks: res.data.totalChunks,
           }).then((response) => {
+            console.log(response)
             // 文件合并成功
             this.$emit('fileSuccess');
             this.statusRemove(file.id);
