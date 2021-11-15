@@ -173,7 +173,7 @@ trait MysqlTable
             return $id;
         } catch (\Exception $e) {
             DB::rollBack();
-            throw new AdminException(401,$e->getMessage());
+            throw new AdminException(201,$e->getMessage());
         }
 
     }
@@ -189,7 +189,7 @@ trait MysqlTable
             return $res->id;
         } catch (\Exception $e) {
             DB::rollBack();
-            throw new AdminException(401,$e->getMessage());
+            throw new AdminException(201,$e->getMessage());
         }
     }
     public function delItem($ids){

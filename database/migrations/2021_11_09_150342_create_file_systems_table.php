@@ -18,8 +18,8 @@ class CreateFileSystemsTable extends Migration
                 $table->increments('file_id')->comment('文件id');
                 $table->integer('create_id')->default(0)->comment('创建id');
                 $table->string('url')->comment('文件地址');
-                $table->string('fileType')->comment('文件类型');
-                $table->string('type')->comment('类型');
+                $table->string('fileType')->nullable()->comment('文件类型');
+                $table->string('type')->nullable()->comment('类型');
                 $table ->string('name')->nullable()->comment('文件名');
                 $table ->string('ext')->nullable()->comment('文件扩展名');
                 $table->string('md5')->nullable()->unique()->comment('文件md5');

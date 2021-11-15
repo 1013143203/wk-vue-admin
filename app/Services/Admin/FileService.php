@@ -12,6 +12,37 @@ class FileService extends BaseService
     {
         $this->model = $file_systems;
     }
+
+    public function lists(array $input)
+    {
+        $res = $this->model
+            ->selectQ(["file_id","url","name"])
+            ->whereQ(function($query) use ($input){
+                // 按照名称进行搜索
+                if (!empty($input['query'])){
+                    $queryQ = '%' . trim($input['query']) . '%';
+                    $query->where('name', 'LIKE', $queryQ);
+                }
+                if (!empty($input['date'])){
+                    $query->whereBetween('created_at', $input['date']);
+                }
+            })
+            ->sortQ([['file_id', 'desc']])
+            ->paginate(PAGE,LIMIT)
+            ->getAll();
+        foreach ($res['lst'] as &$v){
+            $v['thumb'] = $v['url'] = $this->getUrl($v['url']);
+        }
+        return $res;
+    }
+
+    protected function getUrl($url,$storage = 'local')
+    {
+        if ($storage == 'local'){
+            return request()->getSchemeAndHttpHost().DIRECTORY_SEPARATOR.$url;
+        }
+    }
+
     public function chunk($request)
     {
         $md5 = $request->input('identifier');
@@ -55,11 +86,11 @@ class FileService extends BaseService
 
         $tmpDir = $this->tmpDir($md5);
         $fileDir = $this->fileDir($md5);
-        $filepath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.$fileDir.$md5.$ext;
+        $filepath = 'upload'.DIRECTORY_SEPARATOR.$fileDir.$md5.$ext;
         for ($i=1;$i<=(int)$request->input('totalChunks');$i++){
             if ($this->fileExists($tmpDir.$i)){//分块已存在
                 $blob = $this->fileContent($tmpDir.$i);
-                file_put_contents($filepath,$blob,FILE_APPEND);
+                file_put_contents(public_path().DIRECTORY_SEPARATOR.$filepath,$blob,FILE_APPEND);
             }else{
                 $this->fileDelete($fileDir.$ext);
                 throw new AdminException(201,'文件合并失败');
@@ -74,7 +105,7 @@ class FileService extends BaseService
             'url'=>$filepath,
             'create_id' =>request('user')->id,
             'fileType'=>$request->input('fileType'),
-            'type'=>$request->input('fileType'),
+            'type'=>$request->input('type'),
             'md5'=>$request->input('identifier'),
             'name'=>$request->input('name'),
             'size'=>$request->input('size'),
