@@ -19,6 +19,13 @@
             v-model="formData[col.prop]"
             :placeholder="col.placeholder"
           ></el-input>
+          <!-- 上传图片 -->
+          <upload
+            v-if="col.type == 'upload'"
+            v-model="formData[col.prop]"
+            :type="col.fileType"
+            @activeFile = "col.active(url)"
+          ></upload>
           <!-- inupt密码框 -->
           <el-input
             v-if="col.type === 'password'"
@@ -175,6 +182,7 @@
 
 <script>
   import vueJsonEditor from 'vue-json-editor'
+  import upload from './upload'
 export default {
   props: {
     cols: {
@@ -183,7 +191,8 @@ export default {
     },
   },
   components: {
-    vueJsonEditor
+    vueJsonEditor,
+    upload
   },
   data() {
     return {

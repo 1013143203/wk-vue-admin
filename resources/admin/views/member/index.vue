@@ -46,9 +46,13 @@
         form: {
           cols: {
             avatar:{
-              type: "avatar",
+              type: "upload",
               label: "头像", //字段
               prop: "avatar", //字段名
+              fileType: 'image',
+              active:(url)=>{
+console.log(url)
+              }
             },
             nickname:{
               type: "input",

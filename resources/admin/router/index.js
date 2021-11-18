@@ -72,19 +72,6 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/upload',
-    component: Layout,
-    redirect: '/upload',
-    children: [
-      {
-        path: 'upload',
-        component: () => import('@/views/upload'),
-        name: 'Dashboard',
-        meta: { title: 'upload', icon: 'upload', affix: true }
-      }
-    ]
-  },
   // {
   //   path: '/icon',
   //   component: Layout,

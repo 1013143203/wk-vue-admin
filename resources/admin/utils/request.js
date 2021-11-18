@@ -3,7 +3,7 @@ import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
-  process.env.VUE_APP_BASE_API = window.location.origin + window.location.pathname;
+//   process.env.VUE_APP_BASE_API = window.location.origin + window.location.pathname;
 
 // create an axios instance
 const service = axios.create({
