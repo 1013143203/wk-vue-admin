@@ -46,9 +46,9 @@
 <script>
   /**
    *   全局上传插件
-   *   调用方法：this.$emit('openUploader', {}) 打开文件选择框，参数为需要传递的额外参数
-   *   监听函数：this.$on('fileAdded', fn); 文件选择后的回调
-   *            this.$on('fileSuccess', fn); 文件上传成功的回调
+   *   调用方法：Bus.$emit('openUploader', {}) 打开文件选择框，参数为需要传递的额外参数
+   *   监听函数：Bus.$on('fileAdded', fn); 文件选择后的回调
+   *            Bus.$on('fileSuccess', fn); 文件上传成功的回调
    */
   import Vue from 'vue'
   import uploader from 'vue-simple-uploader'
@@ -93,12 +93,16 @@
       }
     },
     mounted() {
-      this.$on('openUploader', query => {
+      this.$bus.$off('openUploader');
+      this.$bus.$on('openUploader', query => {
         this.params = query || {};
         if (this.$refs.uploadBtn) {
           $('#global-uploader-btn').click();
         }
       });
+    },
+    destroyed() {
+      this.$bus.$off('openUploader');
     },
     computed: {
       //Uploader实例
@@ -110,7 +114,7 @@
       onFileAdded(file) {
         this.panelShow = true;
         this.computeMD5(file);
-        this.$emit('fileAdded');
+        this.$bus.$emit('fileAdded');
       },
       onFileProgress(rootFile, file, chunk) {
         console.log(`上传中 ${file.name}，chunk：${chunk.startByte / 1024 / 1024} ~ ${chunk.endByte / 1024 / 1024}`)
@@ -136,16 +140,15 @@
             fileType: file.fileType,
             totalChunks: res.data.totalChunks,
           }).then((response) => {
-            console.log(response)
             // 文件合并成功
-            this.$emit('fileSuccess');
+            this.$emit('fileSuccess',response);
             this.statusRemove(file.id);
           }).catch((error) => {
             console.log(error);
           });
           // 不需要合并
         } else {
-          this.$emit('fileSuccess');
+          this.$emit('fileSuccess',JSON.parse(response));
           console.log('上传成功');
         }
       },
@@ -282,7 +285,7 @@
 <style scoped lang="scss">
   #global-uploader {
     position: fixed;
-    z-index: 20;
+    z-index: 2002;
     right: 15px;
     bottom: 15px;
     .uploader-app {

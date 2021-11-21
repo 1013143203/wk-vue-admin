@@ -16,7 +16,7 @@ class FileService extends BaseService
     public function lists(array $input)
     {
         $res = $this->model
-            ->selectQ(["file_id","url","name"])
+            ->selectQ(["file_id","url","name","storage"])
             ->whereQ(function($query) use ($input){
                 // 按照名称进行搜索
                 if (!empty($input['query'])){
@@ -31,7 +31,7 @@ class FileService extends BaseService
             ->paginate(PAGE,LIMIT)
             ->getAll();
         foreach ($res['lst'] as &$v){
-            $v['thumb'] = $v['url'] = $this->getUrl($v['url']);
+            $v['thumb'] = $v['url'] = $this->getUrl($v['url'],$v['storage']);
         }
         return $res;
     }
@@ -48,8 +48,11 @@ class FileService extends BaseService
         $md5 = $request->input('identifier');
         $tmpDir = $this->tmpDir($md5);
         if ($_GET['identifier']){
-            if ($this->model->where('md5',$md5)->first()){
-                return ['skipUpload'=>true];//文件已存在
+            if ($data = $this->model->where('md5',$md5)->first(['name','storage','url'])){
+                $data['url'] = $this->getUrl($data['url'],$data['storage']);
+                $data['skipUpload'] = true;
+                $data['thumb'] = $data['url'];
+                return $data;//文件已存在
             }
             $uploaded = [];
             for ($i=1;$i<=$request->input('totalChunks');$i++){
@@ -100,6 +103,7 @@ class FileService extends BaseService
             $this->fileDelete($tmpDir.$i);
         }
 
+        $storage = 'local';
         //存入数据库
         $id = $this->model->createItem([
             'url'=>$filepath,
@@ -110,13 +114,16 @@ class FileService extends BaseService
             'name'=>$request->input('name'),
             'size'=>$request->input('size'),
             'ext'=>$request->input('ext'),
-            'storage'=>'local',
+            'storage'=>$storage,
         ]);
 
 
         return [
             'msg'=>'合并成功',
-            'id'=>$id
+            'add'=>true,
+            'url'=>$this->getUrl($filepath,$storage),
+            'thumb'=>$this->getUrl($filepath,$storage),
+            'name'=>$request->input('name'),
         ];
     }
 

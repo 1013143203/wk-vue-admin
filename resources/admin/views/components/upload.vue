@@ -1,13 +1,13 @@
 <template>
   <div>
     <el-input placeholder="请选择文件"  readonly>
-      <el-button slot="append" @click="select">选择</el-button>
+      <el-button slot="append" @click="chooseFile">选择</el-button>
     </el-input>
     <div class="demo-image__preview">
       <el-image
         style="width: 100px; height: 100px;margin: 0 2px"
         :src="item"
-        v-for="item in activelst"
+        v-for="item in items"
       >
         <div slot="placeholder" class="image-slot">
           加载中<span class="dot">...</span>
@@ -19,11 +19,12 @@
       :visible.sync="lstVisible"
       center
       width="90%"
+      :modal="false"
     >
       <el-card class="show">
         <div slot="header" class="clearfix">
           <div class="ces-search">
-            <el-button @click="upload">上传</el-button>
+            <el-button @click="openUploader">上传</el-button>
           </div>
         </div>
         <div class="source">
@@ -35,7 +36,7 @@
                   <i class="el-icon-zoom-in" @click="preview(item)"></i>
                 </span>
                 <span class="el-upload-list__item-delete">
-                  <i class="el-icon-position" @click="active(item)"></i>
+                  <i class="el-icon-position" @click="selected(item)"></i>
                 </span>
                 <span class="el-upload-list__item-delete">
                   <i class="el-icon-delete"></i>
@@ -55,6 +56,7 @@
       :title="dialog.name"
       :visible.sync="detailVisible"
       center
+      :modal="false"
     >
       <div v-if="type=='video'">
         <video :src="dialog.url" style="width: 100%;height: 100%"></video>
@@ -68,6 +70,7 @@
       tenantId="1"
       target="file/chunk"
       ref="upload"
+      @fileSuccess="fileSuccess"
     ></wk-uploader>
 
   </div>
@@ -84,7 +87,7 @@
     },
     props: {
       type: String,
-      activelst:{
+      fileLst:{
         type: Array,
         default: function () {
           return []
@@ -93,6 +96,7 @@
     },
     data() {
       return {
+        items:this.fileLst,
         dialog:{
           url:'',
           name:''
@@ -105,6 +109,9 @@
         },
         total:0
       }
+    },
+    destroyed() {
+      this.$bus.$off('fileAdded');
     },
     methods: {
       index() {
@@ -129,8 +136,8 @@
             console.log(error);
           });
       },
-      upload() {
-        this.$refs.upload.$emit('openUploader', {
+      openUploader() {
+        this.$bus.$emit('openUploader', {
            // 传入的参数
         })
       },
@@ -138,12 +145,15 @@
         this.detailVisible=true
         this.dialog = item
       },
-      active(item){
+      selected(item){
         this.detailVisible = false
         this.lstVisible = false
-        this.$emit('activeFile',item.url)
+        this.$emit('selected',{
+          url:item.url,
+          name:item.name,
+        })
       },
-      select(){
+      chooseFile(){
         this.query.page = 1
         this.index();
         this.lstVisible=true
@@ -152,15 +162,20 @@
         this.query.page = val
         this.index()
       },
+      fileSuccess(res){
+        if (res.data){
+          this.lst.unshift(res.data)
+          if (res.data.add){
+            this.total = this.total + 1
+          }
+        }
+      }
     },
     mounted() {
+      this.$bus.$off('fileAdded');
       // 文件选择后的回调
-      this.$on('fileAdded', () => {
+      this.$bus.$on('fileAdded', () => {
         console.log('文件已选择')
-      });
-      // 文件上传成功的回调
-      this.$on('fileSuccess', () => {
-        console.log('文件上传成功')
       });
     },
   }

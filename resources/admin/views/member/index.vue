@@ -50,12 +50,12 @@
               label: "头像", //字段
               prop: "avatar", //字段名
               fileType: 'image',
-              active:(url)=>{
-console.log(url)
+              selected:(item)=>{
+                this.$refs.form.formData.avatar = [item]
               }
             },
             nickname:{
-              type: "input",
+              type: "upload",
               label: "昵称", //字段
               prop: "nickname", //字段名
               placeholder: "请填写名称", //提示内容
@@ -170,6 +170,7 @@ console.log(url)
           },
           data:{
             level: '',
+            avatar:[]
           }
         },
         table: {

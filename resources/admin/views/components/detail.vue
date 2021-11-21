@@ -24,7 +24,7 @@
             v-if="col.type == 'upload'"
             v-model="formData[col.prop]"
             :type="col.fileType"
-            @activeFile = "col.active(url)"
+            @selected = "(res) => col.selected(res)"
           ></upload>
           <!-- inupt密码框 -->
           <el-input
