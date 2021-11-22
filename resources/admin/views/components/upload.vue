@@ -1,15 +1,15 @@
 <template>
   <div>
-    <el-input placeholder="请选择文件"  readonly>
-      <el-button slot="append" @click="chooseFile">选择</el-button>
+    <el-input placeholder="请选择文件" :value="'已选'+ values.length +'个文件'" readonly>
+      <el-button slot="append" @click="chooseClick">选择</el-button>
     </el-input>
     <div class="demo-image__preview">
       <el-image
         style="width: 100px; height: 100px;margin: 0 2px"
         :src="item"
-        v-for="(item,index) in items"
+        v-for="(item,index) in values"
         :key="index"
-        v-if="items.length>0"
+        v-if="values.length>0"
       >
         <div slot="placeholder" class="image-slot">
           加载中<span class="dot">...</span>
@@ -88,13 +88,13 @@
       WkUploader
     },
     watch:{
-      fileLst:{
+      value:{
         handler(val, oldVal){
           this.$nextTick(() => {
             if (typeof val == 'string'){
               val = [val]
             }
-            this.items = val
+            this.values = val
           })
         },
         deep:true //true 深度监听
@@ -102,11 +102,11 @@
     },
     props: {
       type: String,
-      fileLst:[String, Array],
+      value:[String, Array],
     },
     data() {
       return {
-        items:[],
+        values:[],
         dialog:{
           url:'',
           name:''
@@ -148,6 +148,7 @@
       },
       openUploader() {
         this.$bus.$emit('openUploader', {
+          type:this.type
            // 传入的参数
         })
       },
@@ -163,7 +164,7 @@
           name:item.name,
         })
       },
-      chooseFile(){
+      chooseClick(){
         this.query.page = 1
         this.index();
         this.lstVisible=true

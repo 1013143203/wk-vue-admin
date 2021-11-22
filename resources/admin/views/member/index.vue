@@ -51,7 +51,7 @@
               label: "头像", //字段
               prop: "avatar", //字段名
               fileType: 'image',
-              selected:(item)=>{
+              choose:(item)=>{
                 this.form.data.avatar = item.url;
               }
             },

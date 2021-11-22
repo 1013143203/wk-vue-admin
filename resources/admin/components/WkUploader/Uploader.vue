@@ -135,7 +135,7 @@
           merge({
             size: file.size,
             name: file.name,
-            ext: file.name.substring(file.name.indexOf('.')+1).toLowerCase(),
+            ext: file.name.substring((file.name.lastIndexOf("."))+1).toLowerCase(),
             identifier: res.data.identifier,
             fileType: file.fileType,
             totalChunks: res.data.totalChunks,
