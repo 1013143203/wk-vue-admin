@@ -13,12 +13,13 @@
       <wk-table
         v-auth="'menu:index'"
         :cols="table.cols"
-        :data="table.lst"
+        :lst="table.lst"
         :options="table.options"
+        :expand="table.expand"
         ref="table"
       ></wk-table>
     </el-card>
-    <detail ref="edit" :menus_types="menus_types" :category="category" :menus_nodes="menus_nodes"></detail>
+    <detail ref="edit" :data="formData" :menus_types="menus_types" :category="category" :menus_nodes="menus_nodes"></detail>
   </div>
 </template>
 <script>
@@ -66,7 +67,7 @@ export default {
                 click:(index , item)=>{
                   edit(item.id).then((response) => {
                     const { data } = response;
-                    this.$refs.edit.showEdit(data)
+                    this.formData = data
                   })
                   .catch((error) => {
                     console.log(error);
@@ -95,7 +96,12 @@ export default {
                 type: "primary" ,
                 auth:'menu:create',
                 click:(index , item)=>{
-                  this.add(item)
+                  const obj={}
+                  if(item){
+                    obj.permission=item.permission
+                    obj.pid=item.id
+                  }
+                  this.formData = obj
                 },
                 hidden:true
               }
@@ -111,24 +117,25 @@ export default {
             label:'添加',
             auth:'menu:create',
             click:()=>{
-              this.add()
+              this.formData = {}
             }
           },
           {
             label: "全部展开" ,
             auth:'menu:expandAll',
             click:()=>{
-              this.expandChange(true)
+              this.table.expand = true
             }
           },
           {
             label: "全部折叠" ,
             auth:'menu:foldAll',
             click:()=>{
-              this.expandChange(false)
+              this.table.expand = false
             }
           }
-        ]
+        ],
+        expand:false
       },
       search:{
         query:{
@@ -140,6 +147,7 @@ export default {
       menus_nodes:[],
       menus_types:[],
       category:[],
+      formData:{},
     }
   },
   created() {
@@ -164,18 +172,6 @@ export default {
     queryClick(query){
       this.search.query=query
       this.index()
-    },
-    expandChange(e){
-      this.$refs.table.expendChange(e);
-    },
-    add(item){
-      const obj={}
-      if(item){
-        obj.permission=item.permission
-        obj.pid=item.id
-        // obj.type = ++item.type
-      }
-      this.$refs.edit.add(obj);
     },
   },
 };

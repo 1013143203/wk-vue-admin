@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     :visible.sync="dialogVisible"
-    @close="(dialogVisible = false , formData= {}), close()"
+    @close="(formData= {}), close()"
     :width="dialogWidth"
   >
     <el-form :model="formData" ref="ruleForm" label-width="80px">
@@ -174,7 +174,7 @@
       </div>
       <el-form-item>
         <el-button type="primary" @click="submitForm">确定</el-button>
-        <el-button @click="handle">取消</el-button>
+        <el-button @click="(formData= {}), close()">取消</el-button>
       </el-form-item>
     </el-form>
   </el-dialog>
@@ -189,6 +189,10 @@ export default {
       type: Object,
       default: () => {},
     },
+    data: {
+      type: Object,
+      default: () => {},
+    },
   },
   components: {
     vueJsonEditor,
@@ -196,15 +200,18 @@ export default {
   },
   data() {
     return {
-      formData:{},
+      formData:this.data,
       dialogVisible: false,
       dialogWidth:'65%',
     };
   },
   watch:{
-    formData:{
+    data:{
       handler(val, oldVal){
-        this.formData=val
+        this.$nextTick(() => {
+          this.formData=val
+        })
+        this.dialogVisible = true;
       },
       deep:true //true 深度监听
     }
@@ -231,10 +238,6 @@ export default {
         this.dialogWidth = def + 'px'
       }
     },
-    handle(formData) {
-      this.dialogVisible = !this.dialogVisible;
-      this.formData=formData
-    },
     //提交时验证表单，直接在父级调用
     submitForm() {
       this.$refs.ruleForm.validate((valid) => {
@@ -245,6 +248,7 @@ export default {
     },
     close() {
       this.$emit('close')
+      this.dialogVisible = false
     },
     selectChildren(data,ref) {
       data && data.children && data.children.map(item => {

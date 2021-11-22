@@ -14,15 +14,12 @@
         v-auth="'crontab:index'"
         :total="table.total"
         :cols="table.cols"
-        :data="table.lst"
+        :lst="table.lst"
         :options="table.options"
         ref="table"
       ></wk-table>
     </el-card>
-    <detail
-      :sTypes="form.cols.sType.options"
-      :tTypes="form.cols.tType.options"
-      ref="edit" ></detail>
+    <detail :data="form.data" ref="edit" ></detail>
   </div>
 </template>
 
@@ -71,7 +68,7 @@
                   click:(index , item)=>{
                     edit(item.id).then((response) => {
                       const { data } = response;
-                      this.$refs.edit.add(data)
+                      this.form.data = data
                     })
                       .catch((error) => {
                         console.log(error);
@@ -79,26 +76,20 @@
                   }
                 },
                 {label: "删除" ,type: "danger" , auth:'menu:delete'},
-                {
-                  label: "添加" ,
-                  type: "primary" ,
-                  auth:'menu:create',
-                  click:(index , item)=>{
-                    if(item.type==3){
-                      this.$message({
-                        type: 'error',
-                        message: '不可添加节点'
-                      });
-                      return
-                    }
-                    this.add(item)
-                  }
-                }
               ], width:250,
             },
           ],
           lst: [],
           total: 0,
+          btn:[
+            {
+              label:'添加',
+              auth:'crontab:create',
+              click:()=>{
+                this.form.data = {}
+              }
+            },
+          ],
         },
         search:{
 
@@ -109,16 +100,6 @@
               label: "任务类型",
               prop: "sType",
               type: "select",
-              options: [
-                {
-                  id:1,
-                  name:'Shell脚本'
-                },
-                {
-                  id:2,
-                  name:'访问URL'
-                }
-              ],
             },
             name:{
               type: "input",
@@ -133,28 +114,6 @@
             tType:{
               prop: "tType",
               type: "select",
-              options: [
-                {
-                  id:1,
-                  name:'N天'
-                },
-                {
-                  id:2,
-                  name:'N小时'
-                },
-                {
-                  id:3,
-                  name:'N分钟'
-                },
-                {
-                  id:4,
-                  name:'每周'
-                },
-                {
-                  id:5,
-                  name:'每月'
-                },
-              ],
             },
             week:{
               prop: "week",
@@ -170,7 +129,8 @@
               type: "select",
               options: [],
             },
-          }
+          },
+          data:{}
         }
       }
     },

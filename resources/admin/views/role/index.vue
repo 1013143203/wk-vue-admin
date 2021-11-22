@@ -15,7 +15,7 @@
           v-auth="'role:index'"
           :total="table.total"
           :cols="table.cols"
-          :data="table.lst"
+          :lst="table.lst"
           @pageChange="pageChange"
         ></wk-table>
       </el-row>
@@ -24,6 +24,7 @@
       ref="form"
       @submit="submit"
       :cols="form.cols"
+      :data="form.data"
       @close="close"
     ></wk-detail>
   </div>
@@ -66,7 +67,6 @@ export default {
                 label:'编辑',
                 auth:'role:edit' ,
                 click:(index , item)=>{
-                  const that = this;
                   if (item.id) {
                     edit(item.id)
                       .then((response) => {
@@ -75,7 +75,6 @@ export default {
                         this.form.data.status = data.status;
                         this.form.data.id = item.id;
                         this.form.data.permission=data.menu
-                        that.$refs.form.handle(this.form.data);
                       })
                       .catch((error) => {
                         console.log(error);
@@ -110,7 +109,7 @@ export default {
             label:'添加',
             auth:'role:create',
             click:()=>{
-              this.$refs.form.handle({});
+              this.form.data = {};
             }
           },
         ]
@@ -150,6 +149,7 @@ export default {
           name: "",
           permission: [],
           status: 2,
+          id:0
         },
       },
       search:{

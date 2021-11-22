@@ -3,7 +3,7 @@
     <el-card class="show">
       <el-row :gutter="15" class="row">
         <el-button
-          @click="$refs.form.handle({value:{}})"
+          @click="form.value={}"
           v-auth="'settings:create'"
         >添加</el-button>
       </el-row>
@@ -11,7 +11,7 @@
         <wk-table
           v-auth="'settings:index'"
           :cols="table.cols"
-          :data="table.lst"
+          :lst="table.lst"
         ></wk-table>
       </el-row>
     </el-card>
@@ -19,6 +19,7 @@
       ref="form"
       @submit="submit"
       :cols="form.cols"
+      :data="form.data"
       @close="close"
     ></wk-detail>
   </div>
@@ -56,7 +57,7 @@
                     edit(item.id).then((response) => {
                       const { data } = response;
                       this.form.cols.name.disabled = true
-                      this.$refs.form.handle(data)
+                      this.form.data = data
                     })
                       .catch((error) => {
                         console.log(error);
@@ -130,7 +131,7 @@
           },
           data: {
             name: "",
-            value: "",
+            value: {},
             description: '',
           },
         }
@@ -141,10 +142,7 @@
     },
     methods: {
       close(){
-        this.$refs.form.handle({
-          value:{}
-        })
-        this.$refs.form.dialogVisible=false
+        this.$refs.form.formData.value = {}
       },
       index() {
         index()

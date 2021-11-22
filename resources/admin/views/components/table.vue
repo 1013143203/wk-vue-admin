@@ -2,12 +2,12 @@
   <el-card class="show">
     <el-row :gutter="15">
       <el-table
-        :data="data"
+        :data="lst"
         size="medium"
         @cell-click="cellClick"
         @row-click="rowClick"
         row-key="id"
-        :default-expand-all="expand"
+        :default-expand-all="expands"
         v-if="refreshTable"
       >
         <!-- 是否多选 -->
@@ -123,16 +123,8 @@
 
 export default {
   name: "wk-table",
-  watch:{
-    cityName: {
-      handler(newName, oldName) {
-        // ...
-      },
-      immediate: true
-    }
-  },
   props: {
-    data: {
+    lst: {
       type: Array,
       default: () => [],
     },
@@ -163,10 +155,26 @@ export default {
         return [];
       },
     },
+    expand: {
+      type: Boolean,
+      default:false,
+    },
+  },
+  watch:{
+    expand:{
+      handler(val, oldVal){
+        this.refreshTable = false;
+        this.$nextTick(() => {
+          this.expands=val
+          this.refreshTable = true;
+        })
+      },
+      deep:true //true 深度监听
+    }
   },
   data() {
     return {
-      expand:false,
+      expands:false,
       refreshTable:true
     };
   },
@@ -183,13 +191,6 @@ export default {
     pageChange(val) {
       this.$emit("pageChange", val);
     },
-    expendChange(e=false){
-      this.refreshTable = false;
-      this.expand = e;
-      this.$nextTick(() => {
-        this.refreshTable = true;
-      });
-    }
   },
 };
 </script>

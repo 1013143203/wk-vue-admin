@@ -15,7 +15,7 @@
           v-auth="'memberLevel:index'"
           :total="table.total"
           :cols="table.cols"
-          :data="table.lst"
+          :lst="table.lst"
           @pageChange="pageChange"
         ></wk-table>
       </el-row>
@@ -24,6 +24,7 @@
       ref="form"
       @submit="submit"
       :cols="form.cols"
+      :data="form.data"
     ></wk-detail>
   </div>
 </template>
@@ -103,13 +104,12 @@
                   label:'查看',
                   auth:'memberLevel:edit',
                   click:(index , item)=>{
-                    const that = this;
                     if (item.id) {
                       edit(item.id)
                         .then((response) => {
                           const { data } = response;
                           this.form.cols.level.disabled = true;
-                          that.$refs.form.handle(data);
+                          this.form.data = data;
                         })
                         .catch((error) => {
                           console.log(error);
@@ -148,7 +148,7 @@
               auth:'memberLevel:create',
               click:()=>{
                 this.form.cols.level.disabled = false;
-                this.$refs.form.handle({});
+                this.form.data = {} ;
               }
             },
           ],

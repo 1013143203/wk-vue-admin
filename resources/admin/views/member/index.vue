@@ -15,7 +15,7 @@
           v-auth="'member:index'"
           :total="table.total"
           :cols="table.cols"
-          :data="table.lst"
+          :lst="table.lst"
           @pageChange="pageChange"
         ></wk-table>
       </el-row>
@@ -24,6 +24,7 @@
       ref="form"
       @submit="submit"
       :cols="form.cols"
+      :data="form.data"
     ></wk-detail>
   </div>
 </template>
@@ -51,7 +52,7 @@
               prop: "avatar", //字段名
               fileType: 'image',
               selected:(item)=>{
-                this.$refs.form.formData.avatar = [item]
+                this.form.data.avatar.push(item);
               }
             },
             nickname:{
@@ -189,7 +190,6 @@
                   label:'查看',
                   auth:'member:edit',
                   click:(index , item)=>{
-                    const that = this;
                     if (item.id) {
                       edit(item.id)
                         .then((response) => {
@@ -197,7 +197,7 @@
                           const { data , level } = res
                           this.form.cols.level.options=level
                           this.form.cols.password.rules=[]
-                          that.$refs.form.handle(data);
+                          this.form.data = data;
                         })
                         .catch((error) => {
                           console.log(error);

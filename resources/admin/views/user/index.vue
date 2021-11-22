@@ -15,7 +15,7 @@
           v-auth="'user:index'"
           :total="table.total"
           :cols="table.cols"
-          :data="table.lst"
+          :lst="table.lst"
           @pageChange="pageChange"
         ></wk-table>
       </el-row>
@@ -24,6 +24,7 @@
       ref="form"
       @submit="submit"
       :cols="form.cols"
+      :data="form.data"
     ></wk-detail>
   </div>
 </template>
@@ -133,7 +134,6 @@ export default {
                         this.form.data.id = item.id;
                         this.form.data.role=data.role
                         this.form.cols.password.rules=[]
-                        that.$refs.form.handle(this.form.data);
                       })
                       .catch((error) => {
                         console.log(error);
@@ -181,7 +181,7 @@ export default {
                   trigger: "change",
                 },
               ]
-              this.$refs.form.handle({});
+              this.form.data = {}
             }
           },
         ],

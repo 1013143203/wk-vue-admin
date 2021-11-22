@@ -110,7 +110,23 @@
   export default {
     inject: ['reload'],
     name: "edit",
-    props: ["tTypes", 'sTypes'],
+    props: {
+      data: {
+        type: Object,
+        default: () => {},
+      },
+    },
+    watch:{
+      data:{
+        handler(val, oldVal){
+          this.$nextTick(() => {
+            this.formData=val
+          })
+          this.dialogFormVisible = true;
+        },
+        deep:true //true 深度监听
+      }
+    },
     data() {
       return {
         dialogWidth: '',
@@ -144,6 +160,38 @@
         minute__:false,
         shell__:false,
         url__:false,
+        tTypes: [
+          {
+            id:1,
+            name:'N天'
+          },
+          {
+            id:2,
+            name:'N小时'
+          },
+          {
+            id:3,
+            name:'N分钟'
+          },
+          {
+            id:4,
+            name:'每周'
+          },
+          {
+            id:5,
+            name:'每月'
+          },
+        ],
+        sTypes:[
+          {
+            id:1,
+            name:'Shell脚本'
+          },
+          {
+            id:2,
+            name:'访问URL'
+          }
+        ]
       }
     },
     mounted() {

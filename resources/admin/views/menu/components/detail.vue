@@ -83,7 +83,36 @@
   export default {
     inject:['reload'],
     name: "edit",
-    props: ["menus_nodes", 'menus_types' ,'category'],
+    props: {
+      menus_nodes:{
+        type: Array,
+        default: () => [],
+      },
+      menus_types:{
+        type: Array,
+        default: () => [],
+      },
+      category:{
+        type: Array,
+        default: () => [],
+      },
+      data:{
+        type: Object,
+        default: () => {},
+      },
+    },
+    watch:{
+      data:{
+        handler(val, oldVal){
+          this.$nextTick(() => {
+            this.formData = val
+            this.type = val.type
+          })
+          this.dialogFormVisible=true
+        },
+        deep:true //true 深度监听
+      }
+    },
     data() {
       return {
         dialogWidth:'',
@@ -161,15 +190,6 @@
         } else {
           this.dialogWidth = def + 'px'
         }
-      },
-      add(obj) {
-        this.formData = obj
-        this.dialogFormVisible=true
-      },
-      showEdit(data){
-        this.dialogFormVisible=true
-        this.type=data.type
-        this.formData=data
       },
       submitForm() {
         this.$refs.form.validate((valid) => {

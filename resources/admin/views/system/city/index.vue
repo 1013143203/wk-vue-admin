@@ -9,7 +9,7 @@
       <el-row :gutter="15">
         <div id="tableList">
           <el-table
-            :data="table.lst"
+            :lst="table.lst"
             size="medium"
             row-key="code"
             v-if="table.refreshTable"

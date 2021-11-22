@@ -10,7 +10,7 @@
       :total="table.total"
       :currentPage="search.query.page"
       :cols="table.cols"
-      :data="table.lst"
+      :lst="table.lst"
       @pageChange="pageChange"
       ref="table"
     ></wk-table>
