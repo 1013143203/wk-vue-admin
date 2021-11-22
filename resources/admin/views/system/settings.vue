@@ -3,7 +3,7 @@
     <el-card class="show">
       <el-row :gutter="15" class="row">
         <el-button
-          @click="form.value={}"
+          @click="(form.data={},form.data.value={})"
           v-auth="'settings:create'"
         >添加</el-button>
       </el-row>
