@@ -135,12 +135,12 @@
         },
         rules: {
           name: [
-            {required: true, message: "请输入菜单名称", trigger: "change"},
+            {required: true, message: "请输入菜单名称", trigger: 'blur'},
             {
               min: 1,
               max: 15,
               message: "长度在 1 到 15 个字符",
-              trigger: "change",
+              trigger: 'blur',
             },
           ],
           permission: [
@@ -153,21 +153,21 @@
             {required: true, message: "请选择类型"},
           ],
           path: [
-            {required: true, message: "请输入连接", trigger: "change"},
+            {required: true, message: "请输入连接", trigger: 'blur'},
             {
               min: 1,
               max: 30,
               message: "长度在 1 到 30 个字符",
-              trigger: "change",
+              trigger: 'blur',
             },
           ],
           component: [
-            {required: true, message: "请输入组件", trigger: "change"},
+            {required: true, message: "请输入组件", trigger: 'blur'},
             {
               min: 1,
               max: 30,
               message: "长度在 1 到 30 个字符",
-              trigger: "change",
+              trigger: 'blur',
             },
           ],
         },

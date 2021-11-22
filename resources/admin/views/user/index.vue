@@ -49,7 +49,7 @@ export default {
                 min: 5,
                 max: 10,
                 message: "长度在 5 到 10 个字符",
-                trigger: "change",
+                trigger: 'blur',
               },
             ],
           },
@@ -63,7 +63,7 @@ export default {
                 min: 5,
                 max: 15,
                 message: "长度在 5 到 15 个字符",
-                trigger: "change",
+                trigger: 'blur',
               },
             ],
           },
@@ -178,7 +178,7 @@ export default {
                   min: 5,
                   max: 15,
                   message: "长度在 5 到 15 个字符",
-                  trigger: "change",
+                  trigger: 'blur',
                 },
               ]
               this.form.data = {}
