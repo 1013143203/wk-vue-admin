@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     :visible.sync="dialogFormVisible"
-    @close="(dialogFormVisible = false)"
+    @close="(dialogFormVisible = false,$refs.form.resetFields())"
     :width="dialogWidth"
   >
     <el-form ref="form" :model="formData" :rules="rules" label-width="80px">
@@ -71,7 +71,7 @@
 
       <el-form-item>
         <el-button type="primary" @click="submitForm">确定</el-button>
-        <el-button @click="(dialogFormVisible = false)">取消</el-button>
+        <el-button @click="(dialogFormVisible = false,$refs.form.resetFields())">取消</el-button>
       </el-form-item>
 
     </el-form>
@@ -110,7 +110,6 @@
           })
           this.dialogFormVisible=true
         },
-        deep:true //true 深度监听
       }
     },
     data() {

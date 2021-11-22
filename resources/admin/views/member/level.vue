@@ -72,6 +72,7 @@
               inactive: 2,
             },
           },
+          data:{}
         },
         table: {
           cols: [

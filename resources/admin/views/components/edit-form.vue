@@ -213,7 +213,7 @@ export default {
         })
         this.dialogVisible = true;
       },
-      deep:true //true 深度监听
+      // deep:true //true 深度监听
     }
   },
   created() {
@@ -221,7 +221,6 @@ export default {
     // console.log(this.formData);
   },
   mounted() {
-    const that=this
     window.onresize = () => {
       return (() => {
         this.setDialogWidth()
@@ -247,8 +246,9 @@ export default {
       });
     },
     close() {
-      this.$emit('close')
+      this.$refs.ruleForm.resetFields();
       this.dialogVisible = false
+      this.$emit('close')
     },
     selectChildren(data,ref) {
       data && data.children && data.children.map(item => {
