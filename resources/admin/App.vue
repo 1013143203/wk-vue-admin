@@ -18,8 +18,9 @@ export default {
     }
   },
   methods:{
-    reload (e='local'){
-      if(e=='local'){
+    //global全局local本页面
+    reload (type='local'){
+      if(type=='local'){
         this.isRouterAlive = false
         this.$nextTick(function(){
           this.isRouterAlive = true
