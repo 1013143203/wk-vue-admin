@@ -94,7 +94,9 @@
             if (typeof val == 'string'){
               val = [val]
             }
-            this.values = val
+            if (val){
+              this.values = val
+            }
           })
         },
         deep:true //true 深度监听

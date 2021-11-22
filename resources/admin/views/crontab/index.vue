@@ -19,17 +19,17 @@
         ref="table"
       ></wk-table>
     </el-card>
-    <detail :data="form.data" ref="edit" ></detail>
+    <edit-form :data="form.data" ref="edit" ></edit-form>
   </div>
 </template>
 
 <script>
   import { index, status, edit } from "@/api/crontab";
-  import detail from "./components/detail";
+  import editForm from "./components/edit-form";
   export default {
     name: "crontab",
     components: {
-      detail
+      editForm
     },
     data() {
       return {

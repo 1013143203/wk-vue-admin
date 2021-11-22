@@ -19,16 +19,16 @@
         ref="table"
       ></wk-table>
     </el-card>
-    <detail ref="edit" :data="formData" :menus_types="menus_types" :category="category" :menus_nodes="menus_nodes"></detail>
+    <edit-form ref="edit" :data="formData" :menus_types="menus_types" :category="category" :menus_nodes="menus_nodes"></edit-form>
   </div>
 </template>
 <script>
 import { index, status, edit ,del} from "@/api/menu";
-import detail from "./components/detail";
+import editForm from "./components/edit-form";
 import { confirm } from "@/utils/message-box.js";
 export default {
   inject:['reload'],
-  components: {detail},
+  components: {editForm},
   data() {
     return {
       table: {

@@ -20,13 +20,13 @@
         ></wk-table>
       </el-row>
     </el-card>
-    <wk-detail
+    <wk-edit-form
       ref="form"
       @submit="submit"
       :cols="form.cols"
       :data="form.data"
       @close="close"
-    ></wk-detail>
+    ></wk-edit-form>
   </div>
 </template>
 <script>

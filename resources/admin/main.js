@@ -21,8 +21,8 @@ import * as filters from './filters' // global filters
 
 import WkTable from './views/components/table.vue';//列表
 Vue.component('wk-table',WkTable)
-import Wkdetail from './views/components/detail.vue';//详情
-Vue.component('wk-detail',Wkdetail)
+import WkEditForm from './views/components/edit-form.vue';//详情
+Vue.component('wk-edit-form',WkEditForm)
 import Wksearch from './views/components/search.vue';//搜索
 Vue.component('wk-search',Wksearch)
 import WktableBtn from './views/components/table-btn.vue';//列表按钮
