@@ -7,7 +7,9 @@
       <el-image
         style="width: 100px; height: 100px;margin: 0 2px"
         :src="item"
-        v-for="item in items"
+        v-for="(item,index) in items"
+        :key="index"
+        v-if="items.length>0"
       >
         <div slot="placeholder" class="image-slot">
           加载中<span class="dot">...</span>
@@ -85,18 +87,26 @@
     components: {
       WkUploader
     },
+    watch:{
+      fileLst:{
+        handler(val, oldVal){
+          this.$nextTick(() => {
+            if (typeof val == 'string'){
+              val = [val]
+            }
+            this.items = val
+          })
+        },
+        deep:true //true 深度监听
+      }
+    },
     props: {
       type: String,
-      fileLst:{
-        type: Array,
-        default: function () {
-          return []
-        }
-      },
+      fileLst:[String, Array],
     },
     data() {
       return {
-        items:this.fileLst,
+        items:[],
         dialog:{
           url:'',
           name:''

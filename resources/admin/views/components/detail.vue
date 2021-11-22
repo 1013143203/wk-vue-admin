@@ -23,6 +23,7 @@
           <upload
             v-if="col.type == 'upload'"
             v-model="formData[col.prop]"
+            :fileLst="formData[col.prop]"
             :type="col.fileType"
             @selected = "(res) => col.selected(res)"
           ></upload>

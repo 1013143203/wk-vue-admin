@@ -52,11 +52,11 @@
               prop: "avatar", //字段名
               fileType: 'image',
               selected:(item)=>{
-                this.form.data.avatar.push(item);
+                this.form.data.avatar = item.url;
               }
             },
             nickname:{
-              type: "upload",
+              type: "input",
               label: "昵称", //字段
               prop: "nickname", //字段名
               placeholder: "请填写名称", //提示内容
