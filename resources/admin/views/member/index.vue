@@ -52,7 +52,7 @@
               prop: "avatar", //字段名
               fileType: 'image',
               choose:(item)=>{
-                this.form.data.avatar = item.url;
+                this.form.data.avatar = item;
               }
             },
             nickname:{
@@ -171,7 +171,7 @@
           },
           data:{
             level: '',
-            avatar:''
+            avatar:{}
           }
         },
         table: {

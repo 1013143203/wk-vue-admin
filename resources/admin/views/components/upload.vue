@@ -6,8 +6,8 @@
     <div class="demo-image__preview">
       <el-image
         style="width: 100px; height: 100px;margin: 0 2px"
-        :src="item"
         v-for="(item,index) in values"
+        :src="item.thumb"
         :key="index"
         v-if="values.length>0"
       >
@@ -91,11 +91,15 @@
       value:{
         handler(val, oldVal){
           this.$nextTick(() => {
-            if (typeof val == 'string'){
+            if (typeof val == 'object'){
               val = [val]
+            }else if (typeof val == 'string'){
+              val = [{thumb:val}]
             }
             if (val){
               this.values = val
+            }else{
+              this.values = []
             }
           })
         },
@@ -104,7 +108,7 @@
     },
     props: {
       type: String,
-      value:[String, Array],
+      value:[String, Array, Object],
     },
     data() {
       return {
@@ -164,6 +168,7 @@
         this.$emit('selected',{
           url:item.url,
           name:item.name,
+          thumb:item.thumb,
         })
       },
       chooseClick(){
