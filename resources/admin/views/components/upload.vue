@@ -1,11 +1,11 @@
 <template>
   <div>
-    <el-input placeholder="请选择文件" :value="'已选'+ values.length +'个文件'" readonly>
+    <el-input placeholder="请选择文件" :value="values.length==1?values[0].name:'已选'+ values.length +'个文件'" readonly>
       <el-button slot="append" @click="chooseClick">选择</el-button>
     </el-input>
     <div class="demo-image__preview">
       <el-image
-        style="width: 100px; height: 100px;margin: 0 2px"
+        style="width: 100px; height: 100px;margin: 0 2px;border-radius: 5px"
         v-for="(item,index) in values"
         :src="item.thumb"
         :key="index"
@@ -31,7 +31,7 @@
         </div>
         <div class="source">
           <ul class="el-upload-list el-upload-list--picture-card">
-            <li v-for="(item,index) in lst" :tabindex="index" class="el-upload-list__item is-ready" style="border: 0">
+            <li v-for="(item,index) in lst" :tabindex="index" class="el-upload-list__item is-ready" style="border: 0;width: 100px;height: 100px">
               <img :src="item.thumb" alt="" class="el-upload-list__item-thumbnail">
               <span class="el-upload-list__item-actions">
                 <span class="el-upload-list__item-preview">
@@ -91,15 +91,17 @@
       value:{
         handler(val, oldVal){
           this.$nextTick(() => {
-            if (typeof val == 'object'){
-              val = [val]
-            }else if (typeof val == 'string'){
-              val = [{thumb:val}]
-            }
-            if (val){
-              this.values = val
-            }else{
-              this.values = []
+            if (val != null){
+              if (typeof val == 'object'){
+                val = [val]
+              }else if (typeof val == 'string'){
+                val = [{thumb:val}]
+              }
+              if (val){
+                this.values = val
+              }else{
+                this.values = []
+              }
             }
           })
         },

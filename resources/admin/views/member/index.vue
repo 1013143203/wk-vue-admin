@@ -52,8 +52,11 @@
               prop: "avatar", //字段名
               fileType: 'image',
               choose:(item)=>{
-                this.form.data.avatar = item;
-              }
+                this.form.data.avatar = item.url;
+              },
+              rules: [
+                { required: true, message: "请选择头像", trigger: "blur" },
+              ]
             },
             nickname:{
               type: "input",
@@ -171,7 +174,7 @@
           },
           data:{
             level: '',
-            avatar:{}
+            avatar:''
           }
         },
         table: {
