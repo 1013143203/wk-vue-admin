@@ -1,7 +1,7 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
-
+import avatar from '@/assets/9150e4e5gw1f9hjjuo3bzg201s01swed.gif'
 const state = {
   token: getToken(),
   name: '',
@@ -66,7 +66,7 @@ const actions = {
           reject('Verification failed, please Login again.')
         }
         const userInfo =  data.userInfo
-        const { auths, name, avatar, introduction } = userInfo
+        const { auths, name, introduction } = userInfo
 
         // auths must be a non-empty array
         if (!auths || auths.length <= 0) {
