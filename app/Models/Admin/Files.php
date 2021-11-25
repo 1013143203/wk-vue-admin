@@ -2,9 +2,9 @@
 
 namespace App\Models\Admin;
 
-class FileSystems extends Base
+class Files extends Base
 {
-    protected $table         = 'file_systems';		                // 为模型指定表名
+    protected $table         = 'files';		                // 为模型指定表名
     protected $primaryKey    = 'file_id';
     protected $datas = ['deleted_at'];
 

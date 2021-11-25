@@ -2,13 +2,13 @@
 namespace App\Services\Admin;
 
 use App\Exceptions\AdminException;
-use App\Models\Admin\FileSystems;
+use App\Models\Admin\Files;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
-class FileService extends BaseService
+class FilesService extends BaseService
 {
-    public function __construct(FileSystems $file_systems)
+    public function __construct(Files $file_systems)
     {
         $this->model = $file_systems;
     }

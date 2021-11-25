@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 
-class FileRequest extends Base
+class FilesRequest extends Base
 {
     /**
      * Get the validation rules that apply to the request.

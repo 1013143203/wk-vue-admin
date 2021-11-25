@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFileSystemsTable extends Migration
+class CreateFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateFileSystemsTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('file_systems')) {
-            Schema::create('file_systems', function (Blueprint $table) {
+        if (!Schema::hasTable('files')) {
+            Schema::create('files', function (Blueprint $table) {
                 $table->increments('file_id')->comment('文件id');
                 $table->integer('create_id')->default(0)->comment('创建id');
                 $table->string('url')->comment('文件地址');
@@ -29,7 +29,7 @@ class CreateFileSystemsTable extends Migration
                 $table->timestamps();
             });
         }
-        \DB::statement("ALTER TABLE `file_systems` comment'文件管理'"); // 表注释
+        \DB::statement("ALTER TABLE `files` comment'文件管理'"); // 表注释
     }
 
     /**
@@ -39,6 +39,6 @@ class CreateFileSystemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('file_systems');
+        Schema::dropIfExists('files');
     }
 }

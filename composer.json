@@ -42,7 +42,8 @@
             "app/Plugin/Wechat"
         ],
         "files":[
-            "app/Helpers/functions.php"
+            "app/Helpers/functions.php",
+            "app/Helpers/validate.php"
         ]
     },
     "autoload-dev": {
