@@ -6,7 +6,7 @@ class UserActionLog extends Base
 {
     protected $table         = 'user_action_log';		                // 为模型指定表名
     protected $primaryKey    = 'id';
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -37,7 +37,7 @@ class UserActionLog extends Base
                  'url' => request()->url(true), // 获取完成URL
                  'params' => json_encode($params),
                  'title' => !empty($title) ? $title : '操作日志',
-                 'ip' => wk_getClientIp(),
+                 'ip' => get_client_ip(),
                  'timing' => round(microtime(true)-LARAVEL_START,3),
                  'user_agent' => request()->server('HTTP_USER_AGENT'),
              ];
