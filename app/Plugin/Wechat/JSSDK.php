@@ -47,7 +47,7 @@ class JSSDK
         if ($data->expire_time < time() || !$data) {
             $accessToken = $this->getAccessToken();
             $url = str_replace('{{ACCESSTOKEN}}',$accessToken,$this->ticketUri);
-            $res = json_decode(request_post($url));
+            $res = json_decode(curl_get($url));
             $ticket = $res->ticket;
             if ($ticket) {
                 $data->expire_time = time() + 7000;
@@ -73,7 +73,7 @@ class JSSDK
                 $this->appId,
                 $this->appSecret,
             ],$this->tokenUri);
-            $res = json_decode(request_post($url));
+            $res = json_decode(curl_get($url));
             $access_token = $res->access_token;
             if ($access_token) {
                 $data = new stdClass();
