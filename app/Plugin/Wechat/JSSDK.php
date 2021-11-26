@@ -3,10 +3,21 @@ class JSSDK
 {
     private $appId;
     private $appSecret;
+    private $ticketUri;
+    private $tokenUri;
 
-    public function __construct($appId, $appSecret) {
+
+    public function __construct($appId, $appSecret, $enterprise = false) {
         $this->appId = $appId;
         $this->appSecret = $appSecret;
+        if ($enterprise){
+            //如果是企业号
+            $this->ticketUri = 'https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket?access_token={{ACCESSTOKEN}}';
+            $this->tokenUri = 'https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={{APPID}}&corpsecret={{APPSECRET}}';
+        }else{
+            $this->ticketUri = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token={{ACCESSTOKEN}}';
+            $this->tokenUri = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={{APPID}}&secret={{APPSECRET}}';
+        }
     }
 
     public function getSignPackage($url) {
@@ -35,9 +46,7 @@ class JSSDK
         $data = json_decode(file_get_contents($token_file));
         if ($data->expire_time < time() || !$data) {
             $accessToken = $this->getAccessToken();
-            // 如果是企业号用以下 URL 获取 ticket
-            // $url = "https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket?access_token=$accessToken";
-            $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$accessToken";
+            $url = str_replace('{{ACCESSTOKEN}}',$accessToken,$this->ticketUri);
             $res = json_decode(request_post($url));
             $ticket = $res->ticket;
             if ($ticket) {
@@ -57,8 +66,13 @@ class JSSDK
         $data = json_decode(file_get_contents($access_token_file));
         if (empty($data) || $data->expire_time < time()) {
             // 如果是企业号用以下URL获取access_token
-            // $url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=$this->appId&corpsecret=$this->appSecret";
-            $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appId&secret=$this->appSecret";
+            $url = str_replace([
+                '{{APPID}}',
+                '{{APPSECRET}}',
+            ],[
+                $this->appId,
+                $this->appSecret,
+            ],$this->tokenUri);
             $res = json_decode(request_post($url));
             $access_token = $res->access_token;
             if ($access_token) {
