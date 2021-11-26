@@ -233,7 +233,7 @@ if ( !function_exists('get_client_info') ) {
  *
  * @return                               array              [description]
  */
-function request_post(string $url = '', array $post_data = [], $ispost = true, $type = 'json')
+function request_post(string $url = '', array $post_data = [], $ispost = true, $https = true, array $header = array("content-type: application/json"), $timeout = 5)
 {
     @header("Content-type: text/html; charset=utf-8");
     if ( empty($url) ) return false;
@@ -251,9 +251,15 @@ function request_post(string $url = '', array $post_data = [], $ispost = true, $
         $curlPost = 'key=' . $key;
     }
     $ch = curl_init();//初始化curl
+    if($https){
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);//https请求 不验证证书
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);//https请求 不验证HOST
+    }
     curl_setopt($ch, CURLOPT_URL, $url);//抓取指定网页
     curl_setopt($ch, CURLOPT_HEADER, 0);//设置header
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//要求结果为字符串且输出到屏幕上
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $header); //模拟的header头
+    curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
     if ( $ispost ) {
         curl_setopt($ch, CURLOPT_POST, 1);//post提交方式
         curl_setopt($ch, CURLOPT_POSTFIELDS, $curlPost);
