@@ -220,57 +220,62 @@ if ( !function_exists('get_client_info') ) {
     }
 }
 
-/**
- * [request_post 模拟post进行url请求]
- *
- * @Author           :1013143203@qq.com
- * @模拟post进行url请求
- *
- * @param  string   $url        [url地址]
- * @param  array    $post_data  [提交的数据]
- * @param  boolean  $ispost     [是否是post请求]
- * @param  string   $type       [返回格式]
- *
- * @return                               array              [description]
- */
-function request_post(string $url = '', array $post_data = [], $ispost = true, $https = true, array $header = array("content-type: application/json"), $timeout = 5)
-{
-    @header("Content-type: text/html; charset=utf-8");
-    if ( empty($url) ) return false;
-    $o = "";
-    if ( !empty($post_data) ) {
-        foreach ($post_data as $k => $v) $o .= "$k=" . urlencode($v) . "&";
-        $post_data = substr($o, 0, -1);
-        $key = md5(base64_encode($post_data));
-    } else $key = 'key';
-    if ( $ispost ) {
-        $url = $url;
-        $curlPost = $post_data;
-    } else {
-        $url = $url . '?' . implode(',', $post_data);
-        $curlPost = 'key=' . $key;
-    }
-    $ch = curl_init();//初始化curl
-    if($https){
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);//https请求 不验证证书
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);//https请求 不验证HOST
-    }
-    curl_setopt($ch, CURLOPT_URL, $url);//抓取指定网页
-    curl_setopt($ch, CURLOPT_HEADER, 0);//设置header
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//要求结果为字符串且输出到屏幕上
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $header); //模拟的header头
-    curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
-    if ( $ispost ) {
-        curl_setopt($ch, CURLOPT_POST, 1);//post提交方式
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $curlPost);
-    }
-    $data = curl_exec($ch);//运行curl
-    curl_close($ch);
-    $object = json_decode($data);
-    $return = object_to_array($object);
-    return $return;
+function curl_post($url, $headers, $params){
+    return curlRequest($url,'POST',$headers,$params);
 }
+function curl_get($url, $headers, $params){
+    return curlRequest($url,'GET',$headers,$params);
+}
+/**
+ * 提交数据
+ * @param  string $url 请求Url
+ * @param  string $method 请求方式
+ * @param  array/string $headers Headers信息
+ * @param  array/string $params 请求参数
+ * @return 返回的
+ */
+function curlRequest($url, $method, $headers, $params){
+    if (is_array($params)) {
+        $requestString = http_build_query($params);
+    } else {
+        $requestString = $params ? : '';
+    }
+    if (empty($headers)) {
+        $headers = array('Content-type: text/json');
+    } elseif (!is_array($headers)) {
+        parse_str($headers,$headers);
+    }
+    // setting the curl parameters.
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_VERBOSE, 1);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    // turning off the server and peer verification(TrustManager Concept).
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    // setting the POST FIELD to curl
+    switch ($method){
+        case "GET" : curl_setopt($ch, CURLOPT_HTTPGET, 1);break;
+        case "POST": curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $requestString);break;
+        case "PUT" : curl_setopt ($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $requestString);break;
+        case "DELETE":  curl_setopt ($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $requestString);break;
+    }
+    // getting response from server
+    $response = curl_exec($ch);
 
+    //close the connection
+    curl_close($ch);
+
+    //return the response
+    if (stristr($response, 'HTTP 404') || $response == '') {
+        return array('Error' => '请求错误','data'=>$response);
+    }
+    return $response;
+}
 
 /**
  * [object_to_array 对象转为数组]
