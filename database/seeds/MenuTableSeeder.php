@@ -533,6 +533,72 @@ class MenuTableSeeder extends Seeder
                         ]
                     ]
                 ]
+            ],
+            [
+                'name'=>'微信配置',
+                'icon'=>'fa fa-user-circle',
+                'path'=>'/weixin',
+                'permission'=>'weixin',
+                'redirect'=>'/weixin/wechat',
+                'component'=>'#',
+                'type'=>1,
+                'status'=>1,
+                "children"=>[
+                    [
+                        'name'=>'公众号配置',
+                        'icon'=>'',
+                        'path'=>'wechat',
+                        'permission'=>'weixin:wechat',
+                        'component'=>'weixin/wechat',
+                        'type'=>2,
+                        'status'=>1,
+                        "children"=>[
+                            [
+                                'name'=>'保存',
+                                'icon'=>'',
+                                'permission'=>'weixin:wechat:update',
+                                'type'=>3,
+                                'status'=>1,
+                            ],
+                        ]
+                    ],
+                    [
+                        'name'=>'小程序配置',
+                        'icon'=>'',
+                        'path'=>'wxapp',
+                        'permission'=>'weixin:wxapp:index',
+                        'component'=>'weixin/wxapp',
+                        'type'=>2,
+                        'status'=>1,
+                        "children"=>[
+                            [
+                                'name'=>'保存',
+                                'icon'=>'',
+                                'permission'=>'weixin:wxapp:update',
+                                'type'=>3,
+                                'status'=>1,
+                            ],
+                        ]
+                    ],
+                    [
+                        'name'=>'支付配置',
+                        'icon'=>'',
+                        'path'=>'pay',
+                        'permission'=>'weixin:pay:index',
+                        'component'=>'weixin/pay',
+                        'type'=>2,
+                        'status'=>1,
+                        "children"=>[
+                            [
+                                'name'=>'保存',
+                                'icon'=>'',
+                                'permission'=>'weixin:pay:update',
+                                'type'=>3,
+                                'status'=>1,
+                            ],
+                        ]
+                    ]
+                ]
             ]
         ];
         $menu = $this->recursion($menu);
