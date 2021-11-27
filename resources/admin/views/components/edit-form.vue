@@ -24,7 +24,7 @@
             v-if="col.type == 'upload'"
             v-model="formData[col.prop]"
             :type="col.fileType"
-            @selected = "(res) => col.choose(res)"
+            @current = "(res) => col.current(res)"
           ></upload>
           <!-- inupt密码框 -->
           <el-input
@@ -51,6 +51,12 @@
             v-model="formData[col.prop]"
             :placeholder="col.placeholder"
           ></el-input>
+          <!-- 上传图片 -->
+          <region
+            v-if="col.type == 'region'"
+            v-model="formData[col.prop]"
+            @current = "(res) => col.current(res)"
+          ></region>
           <!-- select选择器 -->
           <el-select
             v-if="col.type == 'select'"
@@ -181,8 +187,9 @@
 </template>
 
 <script>
-  import vueJsonEditor from 'vue-json-editor'
-  import upload from './upload'
+import vueJsonEditor from 'vue-json-editor'
+import upload from './upload'
+import region from './region'
 export default {
   props: {
     cols: {
@@ -196,7 +203,8 @@ export default {
   },
   components: {
     vueJsonEditor,
-    upload
+    upload,
+    region
   },
   data() {
     return {

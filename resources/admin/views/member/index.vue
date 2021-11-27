@@ -51,7 +51,7 @@
               label: "头像", //字段
               prop: "avatar", //字段名
               fileType: 'image',
-              choose:(item)=>{
+              current:(item)=>{
                 this.form.data.avatar = item.url;
               },
               rules: [
@@ -139,30 +139,18 @@
               active: 1,
               inactive: 2,
             },
-            pid:{
-              type: "select",
-              label: "省", //字段
-              prop: "pid", //字段名
-            },
-            cid:{
-              type: "select",
-              label: "市", //字段
-              prop: "cid", //字段名
-            },
-            aid:{
-              type: "select",
-              label: "区", //字段
-              prop: "aid", //字段名
-            },
-            sid:{
-              type: "select",
-              label: "街道(镇)", //字段
-              prop: "sid", //字段名
+            region:{
+              type: "region",
+              label: "省市区", //字段
+              prop: 'region', //字段名
             },
             address_info:{
               type: "input",
               label: "具体地址", //字段
               prop: "address_info", //字段名
+              current:(item)=>{
+                console.log(123)
+              },
             },
             status:{
               type: "switch",

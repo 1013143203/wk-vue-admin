@@ -8,7 +8,7 @@ import Element from 'element-ui'
 import './styles/element-variables.scss'
 
 import '@/styles/index.scss' // global css
-
+import "./assets/style/global.css";
 import App from './App'
 import store from './store'
 import router from './router'

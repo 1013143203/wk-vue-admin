@@ -39,7 +39,7 @@
                   <i class="el-icon-zoom-in" @click="preview(item)"></i>
                 </span>
                 <span class="el-upload-list__item-delete">
-                  <i class="el-icon-position" @click="selected(item)"></i>
+                  <i class="el-icon-position" @click="current(item)"></i>
                 </span>
                 <span class="el-upload-list__item-delete">
                   <i class="el-icon-delete"></i>
@@ -70,7 +70,7 @@
 
     </el-dialog>
     <wk-uploader
-      target="file/chunk"
+      target="files/chunk"
       ref="upload"
       @fileSuccess="fileSuccess"
     ></wk-uploader>
@@ -166,10 +166,10 @@
         this.detailVisible=true
         this.dialog = item
       },
-      selected(item){
+      current(item){
         this.detailVisible = false
         this.lstVisible = false
-        this.$emit('selected',{
+        this.$emit('current',{
           url:item.url,
           name:item.name,
           thumb:item.thumb,

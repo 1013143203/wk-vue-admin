@@ -1,9 +1,8 @@
 import request from '@/utils/request'
 
-export function index(params) {
+export function index(code,type) {
   return request({
-    url: 'address/index',
+    url: `region/lists/${code}/${type}`,
     method: 'get',
-    params: params
   })
 }

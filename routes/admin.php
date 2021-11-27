@@ -44,8 +44,8 @@ Route::group(['middleware'=>'admin'], function () {
     });
     Route::get('actionlog', ['uses'=>'Admin\ActionLogController@index','permission'=>'actionlog']);
 
-    Route::group(['prefix' => 'address'], function () {
-        Route::get('index', ['uses'=>'Admin\CityPickerController@index','permission'=>'city:index']);
+    Route::group(['prefix' => 'region'], function () {
+        Route::get('lists/{code}/{type}', ['uses'=>'Admin\RegionPickerController@lists','permission'=>'region:index']);
     });
     Route::group(['prefix' => 'general'], function () {
         Route::post('code', ['uses'=>'Admin\GeneralController@code','permission'=>'code']);
