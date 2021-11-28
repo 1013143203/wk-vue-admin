@@ -11,6 +11,36 @@ use App\Models\Common\Street;
 
 class RegionPickerService extends BaseService
 {
+    public function loadProvince($input)
+    {
+        $province = $this->lists(0,0);
+        $province_ids = array_column($province, 'id');
+
+        if ($pid = $input['pid']){
+            $pindex = array_search($pid,$province_ids);
+            $currentProvince = $province[$pindex];
+        }
+        if ($cid = $input['cid']){
+            $city = $this->lists($currentProvince['code'],1);
+            $city_ids = array_column($city, 'id');
+            $province[$pindex]['children'] = $city;
+            $cindex = array_search($cid,$city_ids);
+            $currentCity = $city[$cindex];
+        }
+        if ($aid = $input['aid']){
+            $area = $this->lists($currentCity['code'],2);
+            $area_ids = array_column($area, 'id');
+            $province[$pindex]['children'][$cindex]['children'] = $area;
+            $aindex = array_search($aid,$area_ids);
+            $currentArea = $area[$aindex];
+        }
+        if ($sid = $input['sid']){
+            $street = $this->lists($currentArea['code'],3);
+            $province[$pindex]['children'][$cindex]['children'][$aindex]['children'] = $street;
+        }
+
+        return $province;
+    }
     public function lists($code,$type)
     {
         $arr = [
@@ -46,9 +76,15 @@ class RegionPickerService extends BaseService
         })
         ->getAll(false);
         foreach ($res as &$l){
-            if ($type<3) $l['hasChildren']=true;
+            if ($type<3) {
+                $l['hasChildren']=true;
+            }else{
+                $l['leaf']=true;
+            }
             $l['type']=$type;
             $l['level_name']=$current['name'];
+            $l['value']=$l['id'];
+            $l['label']=$l['short_name'];
             $l['color']=$current['color'];
         }
         return $res;

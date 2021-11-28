@@ -46,6 +46,7 @@ Route::group(['middleware'=>'admin'], function () {
 
     Route::group(['prefix' => 'region'], function () {
         Route::get('lists/{code}/{type}', ['uses'=>'Admin\RegionPickerController@lists','permission'=>'region:index']);
+        Route::get('loadProvince', ['uses'=>'Admin\RegionPickerController@loadProvince']);
     });
     Route::group(['prefix' => 'general'], function () {
         Route::post('code', ['uses'=>'Admin\GeneralController@code','permission'=>'code']);

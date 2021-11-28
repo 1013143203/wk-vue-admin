@@ -1,54 +1,81 @@
 <template>
   <div>
-    <el-cascader :props="props"></el-cascader>
+    <el-cascader
+      :props="props"
+      :options="options"
+      v-model="currentArr"
+      v-if="cascaderShow"
+    ></el-cascader>
   </div>
 </template>
 
 <script>
-  import { index } from "@/api/region";
+  import { index, loadProvince } from "@/api/region";
   export default {
     name: "region",
     props: {
-      value:[String, Array, Object],
+      value:Object,
+  // {
+  //   pid:4,
+  //     cid:21,
+  //   aid:276,
+  //   sid:3806,
+  // }
     },
     data() {
       return {
+        cascaderShow:false,
+        currentArr:[],
+        options: [],
         props: {
           lazy: true,
           lazyLoad (node, resolve) {
-            console.log(node)
-            var code = 0,type = 0;
-            if (node.data){
-              code = node.data.code
-              type = ++node.data.type
+            if (node.level > 0 ) {
+              index(node.data.code,node.level).then(response=>{
+                const { data } = response;
+                // 通过调用resolve将子节点数据返回，通知组件数据加载完成
+                resolve(data);
+              })
             }
-            index(code,type).then(response=>{
-              const { data } = response;
-              const nodes = data.map(item => ({
-                  value:item.id,
-                  label: item.short_name,
-                  type: item.type,
-                  code: item.code,
-                  leaf: type >= 3
-              }));
-              console.log(nodes)
-              // 通过调用resolve将子节点数据返回，通知组件数据加载完成
-              resolve(nodes);
-            })
           }
         },
-        provinces:[],
-        citys:[],
-        areas:[],
-        streets:[],
       }
+    },
+    methods:{
+      async getProvince() {//获取1级省列表
+        let that = this
+        let { data, code } = await loadProvince(this.value);
+        if (code === 200) {
+          that.$set(that, 'options',data)
+        }
+      },
     },
     watch:{
       value:{
         handler(val, oldVal){
           console.log(val)
+          this.cascaderShow = false
           this.$nextTick(() => {
+            if (val){
+              if (val.pid){
+                this.currentArr.push(val.pid)
+              }
+              if (val.cid){
+                this.currentArr.push(val.cid)
+              }
+              if (val.aid){
+                this.currentArr.push(val.aid)
+              }
+              if (val.sid){
+                this.currentArr.push(val.sid)
+              }
+            }else{
+              this.currentArr = []
+            }
+            this.getProvince()
+            this.cascaderShow = true
           })
+
         },
         deep:true //true 深度监听
       }

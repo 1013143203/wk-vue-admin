@@ -6,3 +6,10 @@ export function index(code,type) {
     method: 'get',
   })
 }
+export function loadProvince(params) {
+  return request({
+    url: 'region/loadProvince',
+    method: 'get',
+    params: params
+  })
+}

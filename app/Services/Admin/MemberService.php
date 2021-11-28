@@ -47,6 +47,12 @@ class MemberService extends BaseService
     {
 
         $res['data'] = $this->model->getItemById($id);
+        $res['data']['region'] = [
+            'pid' => $res['data']['pid'],
+            'cid' => $res['data']['cid'],
+            'aid' => $res['data']['aid'],
+            'sid' => $res['data']['sid'],
+        ];
         $level = (new MemberLevelService(new MemberLevel()))->lists(['status'=>1]);
         $res['level'] = $level['lst'];
 

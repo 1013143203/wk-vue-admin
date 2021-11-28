@@ -65,7 +65,7 @@
     },
     methods: {
       load(tree, treeNode, resolve) {
-        index(tree.code,tree.type).then(response=>{
+        index(tree.code,++tree.type).then(response=>{
           const { data } = response;
           if (data && data.length > 0) {
             resolve(data);

@@ -16,4 +16,8 @@ class RegionPickerController extends Base
     {
         return success($this->service->lists($code,$type));
     }
+    public function loadProvince()
+    {
+        return success($this->service->loadProvince(request()->input()));
+    }
 }
