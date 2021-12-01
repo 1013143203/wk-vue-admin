@@ -43,6 +43,7 @@
         ],
         "files":[
             "app/Helpers/functions.php",
+            "app/Helpers/builtin-functions.php",
             "app/Helpers/validate.php"
         ]
     },

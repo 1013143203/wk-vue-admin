@@ -143,14 +143,18 @@
               type: "region",
               label: "省市区", //字段
               prop: 'region', //字段名
+              current:(item)=>{
+                this.form.data.pid = item.pid;
+                this.form.data.cid = item.cid;
+                this.form.data.aid = item.aid;
+                this.form.data.sid = item.sid;
+                console.log(item)
+              },
             },
             address_info:{
               type: "input",
               label: "具体地址", //字段
               prop: "address_info", //字段名
-              current:(item)=>{
-                console.log(123)
-              },
             },
             status:{
               type: "switch",

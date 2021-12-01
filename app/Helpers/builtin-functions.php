@@ -17,3 +17,9 @@ function modifyEnv(array $data)
     $content = implode($contentArray->toArray(), "\n");
     \Illuminate\Support\Facades\File::put($envPath, $content);
 }
+function modifyConfig($name,$value)
+{
+    $config = \Illuminate\Support\Facades\Config::get($name);
+    $path = base_path()  . DIRECTORY_SEPARATOR . 'config'.DIRECTORY_SEPARATOR."$name.php";
+    file_put_contents($path, "<?php \n return ".var_export($value, true)  . ";");
+}

@@ -83,8 +83,6 @@ class RegionPickerService extends BaseService
             }
             $l['type']=$type;
             $l['level_name']=$current['name'];
-            $l['value']=$l['id'];
-            $l['label']=$l['short_name'];
             $l['color']=$current['color'];
         }
         return $res;

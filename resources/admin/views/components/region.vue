@@ -5,6 +5,8 @@
       :options="options"
       v-model="currentArr"
       v-if="cascaderShow"
+      @change = 'change'
+      clearable
     ></el-cascader>
   </div>
 </template>
@@ -37,7 +39,9 @@
                 resolve(data);
               })
             }
-          }
+          },
+          value:'id',
+          label:'short_name'
         },
       }
     },
@@ -49,11 +53,26 @@
           that.$set(that, 'options',data)
         }
       },
+      change(value){
+        let obj = {}
+        if(value[0]){
+          obj.pid = value[0]
+        }
+        if(value[1]){
+          obj.cid = value[1]
+        }
+        if(value[2]){
+          obj.aid = value[2]
+        }
+        if(value[3]){
+          obj.sid = value[3]
+        }
+        this.$emit('current',obj)
+      }
     },
     watch:{
       value:{
         handler(val, oldVal){
-          console.log(val)
           this.cascaderShow = false
           this.$nextTick(() => {
             if (val){

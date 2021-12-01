@@ -80,4 +80,7 @@ Route::group(['middleware'=>'admin'], function () {
         Route::post('merge', ['uses'=>'Admin\FilesController@merge']);
         Route::delete('delete/{id}', ['uses'=>'Admin\FilesController@delete']);
     });
+    Route::group(['prefix'=>'weixin'], function ($router) {
+        Route::post('wechat', ['uses'=>'Admin\WeixinController@wechat']);
+    });
 });
