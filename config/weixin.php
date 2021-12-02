@@ -2,10 +2,18 @@
  return array (
   'wechat' => 
   array (
-    'Token' => 213132,
-    'AppId' => 213132,
-    'AppSecret' => 213132,
-    'AesKey' => 213132,
-    'PushApi' => 213132,
+    'appid' => '2222222222222222',
+    'appsecret' => '22222222222222222222222222222222',
+    'token' => '2222',
+    'pushApi' => '22222222222222222',
+    'aesKey' => '222222222222222222222222',
+  ),
+  'weixin' => 
+  array (
+    'wxapp' => 
+    array (
+      'appid' => '1111111',
+      'appsecret' => '111111111111111',
+    ),
   ),
 );

@@ -81,6 +81,8 @@ Route::group(['middleware'=>'admin'], function () {
         Route::delete('delete/{id}', ['uses'=>'Admin\FilesController@delete']);
     });
     Route::group(['prefix'=>'weixin'], function ($router) {
+        Route::get('load/{name}', ['uses'=>'Admin\WeixinController@load']);
         Route::post('wechat', ['uses'=>'Admin\WeixinController@wechat']);
+        Route::post('wxapp', ['uses'=>'Admin\WeixinController@wxapp']);
     });
 });
