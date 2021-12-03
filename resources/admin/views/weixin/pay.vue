@@ -12,9 +12,11 @@
         </el-form-item>
         <el-form-item label="apiclient_cert.pem" prop="apiclient_cert">
           <el-input v-model="form.apiclient_cert"  type="textarea"></el-input>
+          <span class="desc">使用文本编辑器打开apiclient_cert.pem文件，将文件的全部内容复制进来</span>
         </el-form-item>
         <el-form-item label="apiclient_key.pem" prop="apiclient_key">
           <el-input v-model="form.apiclient_key"  type="textarea"></el-input>
+          <span class="desc">使用文本编辑器打开apiclient_key.pem文件，将文件的全部内容复制进来</span>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">保存配置</el-button>
