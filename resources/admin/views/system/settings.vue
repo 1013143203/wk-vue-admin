@@ -9,7 +9,6 @@
       </el-row>
       <el-row :gutter="15" class="row">
         <wk-table
-          v-auth="'settings:index'"
           :cols="table.cols"
           :lst="table.lst"
         ></wk-table>

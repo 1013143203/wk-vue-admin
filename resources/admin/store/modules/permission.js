@@ -35,7 +35,13 @@ export function generaMenu(data) {
   return data
 }
 export function loadComponent(component) {
-  return component === '#' ? Layout : loadView(component)
+  if (component === '#' ){
+    return Layout;
+  }else if(component === '##' ){
+    return loadView('components/nested');
+  }else{
+    return loadView(component);
+  }
 }
 
 /**

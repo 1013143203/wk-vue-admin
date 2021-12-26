@@ -4,11 +4,14 @@
       <div slot="header" class="clearfix">
       </div>
       <el-form :rules="rules" ref="form" :model="form" >
-        <el-form-item label="微信支付商户号MCHID" prop="mchid">
+        <el-form-item label="微信支付商户号" prop="mchid">
           <el-input v-model="form.mchid"></el-input>
         </el-form-item>
-        <el-form-item label="微信支付密钥KEY" prop="key">
+        <el-form-item label="微信支付密钥" prop="key">
           <el-input v-model="form.key"></el-input>
+        </el-form-item>
+        <el-form-item label="微信回调地址" prop="notify_url">
+          <el-input v-model="form.notify_url"></el-input>
         </el-form-item>
         <el-form-item label="apiclient_cert.pem" prop="apiclient_cert">
           <el-input v-model="form.apiclient_cert"  type="textarea"></el-input>
@@ -19,7 +22,7 @@
           <span class="desc">使用文本编辑器打开apiclient_key.pem文件，将文件的全部内容复制进来</span>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">保存配置</el-button>
+          <el-button type="primary" v-auth="'weixin:pay'" @click="onSubmit">保存配置</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -37,6 +40,7 @@
           key: '',
           apiclient_cert: '',
           apiclient_key:'',
+          notify_url:''
         },
         rules: {
           mchid: [
@@ -57,7 +61,9 @@
     created() {
       load('pay').then((response) => {
         const { data } = response
-        this.form = data
+        if (data){
+          this.form = data
+        }
       }).catch((error) => {
         console.log(error);
       });
@@ -66,7 +72,7 @@
       onSubmit() {
         this.$refs.form.validate((valid) => {
           if (valid) {
-            wechat(this.form).then((response) => {
+            pay(this.form).then((response) => {
               console.log(response)
               this.$message({
                 type: 'info',

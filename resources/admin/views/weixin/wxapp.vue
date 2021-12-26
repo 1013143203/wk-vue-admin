@@ -41,7 +41,9 @@
     created() {
       load('wxapp').then((response) => {
         const { data } = response
-        this.form = data
+        if(data){
+          this.form = data
+        }
       }).catch((error) => {
         console.log(error);
       });

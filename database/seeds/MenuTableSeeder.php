@@ -14,7 +14,7 @@ class MenuTableSeeder extends Seeder
         $menu = [
             [
                 'name'=>'权限管理',
-                'icon'=>'el-icon-cpu',
+                'icon'=>'lock',
                 'path'=>'/auth',
                 'component'=>'#',
                 'redirect'=>'/auth/menu',
@@ -31,13 +31,6 @@ class MenuTableSeeder extends Seeder
                         'type'=>2,
                         'status'=>1,
                         "children"=>[
-                            [
-                                'name'=>'列表',
-                                'icon'=>'',
-                                'permission'=>'user:index',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
                             [
                                 'name'=>'添加',
                                 'icon'=>'',
@@ -92,13 +85,6 @@ class MenuTableSeeder extends Seeder
                         'status'=>1,
                         "children"=>[
                             [
-                                'name'=>'列表',
-                                'icon'=>'',
-                                'permission'=>'role:index',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
-                            [
                                 'name'=>'添加',
                                 'icon'=>'',
                                 'permission'=>'role:create',
@@ -151,13 +137,6 @@ class MenuTableSeeder extends Seeder
                         'type'=>2,
                         'status'=>1,
                         "children"=>[
-                            [
-                                'name'=>'列表',
-                                'icon'=>'',
-                                'permission'=>'menu:index',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
                             [
                                 'name'=>'添加',
                                 'icon'=>'',
@@ -225,207 +204,13 @@ class MenuTableSeeder extends Seeder
                         'type'=>2,
                         'status'=>1,
                         "children"=>[
-                            [
-                                'name'=>'列表',
-                                'icon'=>'',
-                                'permission'=>'actionlog:index',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
                         ]
                     ],
                 ],
             ],
             [
-                'name'=>'常规管理',
-                'icon'=>'el-icon-s-tools',
-                'path'=>'/system',
-                'component'=>'#',
-                'redirect'=>'/config/menu',
-                'permission'=>'config',
-                'type'=>1,
-                'status'=>1,
-                "children"=>[
-                    [
-                        'name'=>'区域',
-                        'icon'=>'',
-                        'path'=>'region',
-                        'permission'=>'region',
-                        'component'=>'system/region',
-                        'type'=>2,
-                        'status'=>1,
-                        "children"=>[
-                            [
-                                'name'=>'列表',
-                                'icon'=>'',
-                                'permission'=>'region:index',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
-                            [
-                                'name'=>'添加',
-                                'icon'=>'',
-                                'permission'=>'region:create',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
-                            [
-                                'name'=>'查看',
-                                'icon'=>'',
-                                'permission'=>'region:edit',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
-                            [
-                                'name'=>'保存',
-                                'icon'=>'',
-                                'permission'=>'region:update',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
-                            [
-                                'name'=>'删除',
-                                'icon'=>'',
-                                'permission'=>'region:delete',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
-                        ],
-                    ],
-                    [
-                        'name'=>'系统设置',
-                        'icon'=>'',
-                        'path'=>'settings',
-                        'permission'=>'settings',
-                        'component'=>'system/settings',
-                        'type'=>2,
-                        'status'=>1,
-                        "children"=>[
-                            [
-                                'name'=>'列表',
-                                'icon'=>'',
-                                'permission'=>'settings:index',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
-                            [
-                                'name'=>'添加',
-                                'icon'=>'',
-                                'permission'=>'settings:create',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
-                            [
-                                'name'=>'查看',
-                                'icon'=>'',
-                                'permission'=>'settings:edit',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
-                            [
-                                'name'=>'保存',
-                                'icon'=>'',
-                                'permission'=>'settings:update',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
-                            [
-                                'name'=>'删除',
-                                'icon'=>'',
-                                'permission'=>'settings:delete',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
-                        ]
-                    ],
-                    [
-                        'name'=>'代码生成',
-                        'icon'=>'',
-                        'path'=>'code',
-                        'permission'=>'code',
-                        'component'=>'system/code',
-                        'type'=>2,
-                        'status'=>1,
-                        "children"=>[
-                            [
-                                'name'=>'保存',
-                                'icon'=>'',
-                                'permission'=>'code:update',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
-                        ]
-                    ],
-                ]
-            ],
-            [
-                'name'=>'运维管理',
-                'icon'=>'',
-                'path'=>'/operation',
-                'permission'=>'operation',
-                'redirect'=>'/operation/crontab',
-                'component'=>'#',
-                'type'=>1,
-                'status'=>1,
-                "children"=>[
-                    [
-                        'name'=>'定时任务',
-                        'icon'=>'',
-                        'path'=>'crontab',
-                        'permission'=>'crontab',
-                        'component'=>'crontab/index',
-                        'type'=>2,
-                        'status'=>1,
-                        "children"=>[
-                            [
-                                'name'=>'列表',
-                                'icon'=>'',
-                                'permission'=>'crontab:index',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
-                            [
-                                'name'=>'添加',
-                                'icon'=>'',
-                                'permission'=>'crontab:create',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
-                            [
-                                'name'=>'查看',
-                                'icon'=>'',
-                                'permission'=>'crontab:edit',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
-                            [
-                                'name'=>'保存',
-                                'icon'=>'',
-                                'permission'=>'crontab:update',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
-                            [
-                                'name'=>'删除',
-                                'icon'=>'',
-                                'permission'=>'crontab:delete',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
-                            [
-                                'name'=>'状态',
-                                'icon'=>'',
-                                'permission'=>'crontab:status',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
-                        ]
-                    ],
-                ]
-            ],
-            [
                 'name'=>'用户管理',
-                'icon'=>'fa fa-user-circle',
+                'icon'=>'user',
                 'path'=>'/member',
                 'permission'=>'',
                 'redirect'=>'/member/index',
@@ -442,13 +227,6 @@ class MenuTableSeeder extends Seeder
                         'type'=>2,
                         'status'=>1,
                         "children"=>[
-                            [
-                                'name'=>'列表',
-                                'icon'=>'',
-                                'permission'=>'member:index',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
                             [
                                 'name'=>'添加',
                                 'icon'=>'',
@@ -489,13 +267,6 @@ class MenuTableSeeder extends Seeder
                         'status'=>1,
                         "children"=>[
                             [
-                                'name'=>'列表',
-                                'icon'=>'',
-                                'permission'=>'memberLevel:index',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
-                            [
                                 'name'=>'添加',
                                 'icon'=>'',
                                 'permission'=>'memberLevel:create',
@@ -535,71 +306,248 @@ class MenuTableSeeder extends Seeder
                 ]
             ],
             [
-                'name'=>'微信配置',
-                'icon'=>'fa fa-user-circle',
-                'path'=>'/weixin',
-                'permission'=>'weixin',
-                'redirect'=>'/weixin/wechat',
+                'name'=>'应用',
+                'icon'=>'component',
+                'path'=>'/app',
+                'redirect'=>'/app/code',
                 'component'=>'#',
                 'type'=>1,
                 'status'=>1,
                 "children"=>[
                     [
-                        'name'=>'公众号配置',
+                        'name'=>'代码生成',
                         'icon'=>'',
-                        'path'=>'wechat',
-                        'permission'=>'weixin:wechat',
-                        'component'=>'weixin/wechat',
+                        'path'=>'code',
+                        'permission'=>'code',
+                        'component'=>'app/code',
                         'type'=>2,
                         'status'=>1,
                         "children"=>[
                             [
                                 'name'=>'保存',
                                 'icon'=>'',
-                                'permission'=>'weixin:wechat:update',
+                                'permission'=>'code:update',
                                 'type'=>3,
                                 'status'=>1,
                             ],
                         ]
                     ],
                     [
-                        'name'=>'小程序配置',
+                        'name'=>'定时任务',
                         'icon'=>'',
-                        'path'=>'wxapp',
-                        'permission'=>'weixin:wxapp:index',
-                        'component'=>'weixin/wxapp',
+                        'path'=>'crontab',
+                        'permission'=>'crontab',
+                        'component'=>'app/crontab/index',
                         'type'=>2,
                         'status'=>1,
                         "children"=>[
                             [
+                                'name'=>'添加',
+                                'icon'=>'',
+                                'permission'=>'crontab:create',
+                                'type'=>3,
+                                'status'=>1,
+                            ],
+                            [
+                                'name'=>'查看',
+                                'icon'=>'',
+                                'permission'=>'crontab:edit',
+                                'type'=>3,
+                                'status'=>1,
+                            ],
+                            [
                                 'name'=>'保存',
                                 'icon'=>'',
-                                'permission'=>'weixin:wxapp:update',
+                                'permission'=>'crontab:update',
+                                'type'=>3,
+                                'status'=>1,
+                            ],
+                            [
+                                'name'=>'删除',
+                                'icon'=>'',
+                                'permission'=>'crontab:delete',
+                                'type'=>3,
+                                'status'=>1,
+                            ],
+                            [
+                                'name'=>'状态',
+                                'icon'=>'',
+                                'permission'=>'crontab:status',
                                 'type'=>3,
                                 'status'=>1,
                             ],
                         ]
                     ],
                     [
-                        'name'=>'支付配置',
+                        'name'=>'区域',
                         'icon'=>'',
-                        'path'=>'pay',
-                        'permission'=>'weixin:pay:index',
-                        'component'=>'weixin/pay',
+                        'path'=>'region',
+                        'permission'=>'region',
+                        'component'=>'app/region',
                         'type'=>2,
                         'status'=>1,
                         "children"=>[
                             [
-                                'name'=>'保存',
+                                'name'=>'添加',
                                 'icon'=>'',
-                                'permission'=>'weixin:pay:update',
+                                'permission'=>'region:create',
                                 'type'=>3,
                                 'status'=>1,
                             ],
-                        ]
-                    ]
+                            [
+                                'name'=>'查看',
+                                'icon'=>'',
+                                'permission'=>'region:edit',
+                                'type'=>3,
+                                'status'=>1,
+                            ],
+                            [
+                                'name'=>'保存',
+                                'icon'=>'',
+                                'permission'=>'region:update',
+                                'type'=>3,
+                                'status'=>1,
+                            ],
+                            [
+                                'name'=>'删除',
+                                'icon'=>'',
+                                'permission'=>'region:delete',
+                                'type'=>3,
+                                'status'=>1,
+                            ],
+                        ],
+                    ],
                 ]
-            ]
+            ],
+            [
+                'name'=>'设置',
+                'icon'=>'el-icon-setting',
+                'path'=>'/system',
+                'component'=>'#',
+                'type'=>1,
+                'status'=>1,
+                "children"=>[
+                    [
+                        'name'=>'微信配置',
+//                        'icon'=>'wechat',
+                        'path'=>'weixin',
+                        'permission'=>'weixin',
+                        'redirect'=>'/system/weixin/wechat',
+                        'type'=>2,
+                        'status'=>1,
+                        'component'=>'##',
+                        "children"=>[
+                            [
+                                'name'=>'公众号配置',
+                                'icon'=>'',
+                                'path'=>'wechat',
+                                'permission'=>'weixin:wechat',
+                                'component'=>'weixin/wechat',
+                                'type'=>2,
+                                'status'=>1,
+                                "children"=>[
+                                    [
+                                        'name'=>'保存',
+                                        'icon'=>'',
+                                        'type'=>3,
+                                        'status'=>1,
+                                    ],
+                                ]
+                            ],
+                            [
+                                'name'=>'小程序配置',
+                                'icon'=>'',
+                                'path'=>'wxapp',
+                                'permission'=>'weixin:wxapp',
+                                'component'=>'weixin/wxapp',
+                                'type'=>2,
+                                'status'=>1,
+                                "children"=>[
+                                    [
+                                        'name'=>'保存',
+                                        'icon'=>'',
+                                        'type'=>3,
+                                        'status'=>1,
+                                    ],
+                                ]
+                            ],
+                            [
+                                'name'=>'支付配置',
+                                'icon'=>'',
+                                'path'=>'pay',
+                                'permission'=>'weixin:pay',
+                                'component'=>'weixin/pay',
+                                'type'=>2,
+                                'status'=>1,
+                                "children"=>[
+                                    [
+                                        'name'=>'保存',
+                                        'icon'=>'',
+                                        'type'=>3,
+                                        'status'=>1,
+                                    ],
+                                ]
+                            ]
+                        ]
+                    ],
+                    [
+                        'name'=>'上传设置',
+                        'icon'=>'',
+                        'path'=>'attachment',
+                        'permission'=>'attachment',
+                        'component'=>'system/attachment',
+                        'type'=>2,
+                        'status'=>1,
+                        "children"=>[
+                            [
+                                'name'=>'保存',
+                                'icon'=>'',
+                                'type'=>3,
+                                'status'=>1,
+                            ],
+                        ]
+                    ],
+                    [
+                        'name'=>'系统设置',
+                        'icon'=>'',
+                        'path'=>'settings',
+                        'permission'=>'settings',
+                        'component'=>'system/settings',
+                        'type'=>2,
+                        'status'=>1,
+                        "children"=>[
+                            [
+                                'name'=>'添加',
+                                'icon'=>'',
+                                'permission'=>'settings:create',
+                                'type'=>3,
+                                'status'=>1,
+                            ],
+                            [
+                                'name'=>'查看',
+                                'icon'=>'',
+                                'permission'=>'settings:edit',
+                                'type'=>3,
+                                'status'=>1,
+                            ],
+                            [
+                                'name'=>'保存',
+                                'icon'=>'',
+                                'permission'=>'settings:update',
+                                'type'=>3,
+                                'status'=>1,
+                            ],
+                            [
+                                'name'=>'删除',
+                                'icon'=>'',
+                                'permission'=>'settings:delete',
+                                'type'=>3,
+                                'status'=>1,
+                            ],
+                        ]
+                    ],
+                ]
+            ],
         ];
         $menu = $this->recursion($menu);
         foreach ($menu as $m){

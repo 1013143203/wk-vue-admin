@@ -41,6 +41,7 @@
       </el-form-item>
       <el-form-item label="组件" prop="component" v-if="type!=3">
         <el-input v-model="formData.component" autocomplete="off"></el-input>
+        <div class="desc">#代表Layout ##代表RouterView</div>
       </el-form-item>
       <el-form-item label="重定向" prop="redirect" v-if="type!=3">
         <el-input v-model="formData.redirect" autocomplete="off"></el-input>
@@ -142,9 +143,9 @@
               trigger: 'blur',
             },
           ],
-          permission: [
-            {required: true, message: "请填写权限标识"},
-          ],
+          // permission: [
+          //   {required: true, message: "请填写权限标识"},
+          // ],
           pid: [
             {required: true, message: "请选择上级菜单"},
           ],

@@ -132,11 +132,10 @@
             v-model="formData[col.prop]"
           >
             <el-radio
-              :label="options.label"
-              :value="options.value"
+              :label="options.value"
               v-for="options in col.options"
               :key="options.value"
-            >
+            >{{options.label}}
             </el-radio>
           </el-radio-group>
           <!-- checkbox复选框 -->
@@ -176,6 +175,7 @@
             lang="zh"
           >
           </vue-json-editor>
+          <div v-if="col.desc" class="desc">{{col.desc}}</div>
         </el-form-item>
       </div>
       <el-form-item>

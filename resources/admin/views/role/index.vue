@@ -12,7 +12,6 @@
       </wk-table-btn>
       <el-row :gutter="15">
         <wk-table
-          v-auth="'role:index'"
           :total="table.total"
           :cols="table.cols"
           :lst="table.lst"
@@ -71,10 +70,12 @@ export default {
                     edit(item.id)
                       .then((response) => {
                         const { data } = response;
-                        this.form.data.name = data.name;
-                        this.form.data.status = data.status;
-                        this.form.data.id = item.id;
-                        this.form.data.permission=data.menu
+                        this.form.data = {
+                          name:data.name,
+                          status:data.status,
+                          id:item.id,
+                          permission:data.menu,
+                        }
                       })
                       .catch((error) => {
                         console.log(error);

@@ -12,7 +12,6 @@ return [
      * 菜单节点
      */
     'menus_nodes' => [
-        ['id'=>1,'name'=>'列表','data'=>'index'],
         ['id'=>2,'name'=>'添加','data'=>'create'],
         ['id'=>3,'name'=>'详情','data'=>'edit'],
         ['id'=>4,'name'=>'保存','data'=>'update'],

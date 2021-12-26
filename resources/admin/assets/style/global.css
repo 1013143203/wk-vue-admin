@@ -4,3 +4,7 @@
 .el-scrollbar__wrap{
   overflow-x: hidden;
 }
+.desc{
+  color: #999;
+  font-size: 12px;
+}

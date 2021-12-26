@@ -9,21 +9,21 @@ export function load(name) {
 export function wechat(data) {
   return request({
     url: 'weixin/wechat',
-    method: 'post',
+    method: 'put',
     data
   })
 }
 export function wxapp(data) {
   return request({
     url: 'weixin/wxapp',
-    method: 'post',
+    method: 'put',
     data
   })
 }
 export function pay(data) {
   return request({
     url: 'weixin/pay',
-    method: 'post',
+    method: 'put',
     data
   })
 }

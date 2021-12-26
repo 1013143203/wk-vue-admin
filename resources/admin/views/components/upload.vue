@@ -21,8 +21,8 @@
       v-el-drag-dialog
       :visible.sync="lstVisible"
       center
-      width="90%"
-      :modal="false"
+      width="60%"
+      :append-to-body='true'
     >
       <el-card class="show">
         <div slot="header" class="clearfix">
@@ -59,7 +59,7 @@
       :title="dialog.name"
       :visible.sync="detailVisible"
       center
-      :modal="false"
+      :append-to-body='true'
     >
       <div v-if="type=='video'">
         <video :src="dialog.url" style="width: 100%;height: 100%"></video>

@@ -285,7 +285,7 @@
 <style scoped lang="scss">
   #global-uploader {
     position: fixed;
-    z-index: 2002;
+    z-index: 3000;
     right: 15px;
     bottom: 15px;
     .uploader-app {

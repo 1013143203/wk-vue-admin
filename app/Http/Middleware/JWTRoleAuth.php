@@ -82,7 +82,7 @@ class JWTRoleAuth
     {
         $actions = $request->route()->getAction();
         if (!empty($actions['permission'])) {
-            return $actions['permission'];
+            return is_array($actions['permission'])?end($actions['permission']):$actions['permission'];
         }
         return false;
     }

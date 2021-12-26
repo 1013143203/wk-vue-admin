@@ -11,7 +11,6 @@
       >
       </wk-table-btn>
       <wk-table
-        v-auth="'menu:index'"
         :cols="table.cols"
         :lst="table.lst"
         :options="table.options"

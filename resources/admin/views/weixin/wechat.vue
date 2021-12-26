@@ -71,7 +71,9 @@
     created() {
       load('wechat').then((response) => {
         const { data } = response
-        this.form = data
+        if(data){
+          this.form = data
+        }
       }).catch((error) => {
         console.log(error);
       });
@@ -97,8 +99,5 @@
 </script>
 
 <style scoped>
-.desc{
-  color: #999;
-  font-size: 12px;
-}
+
 </style>

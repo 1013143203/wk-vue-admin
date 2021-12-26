@@ -12,7 +12,6 @@
       </wk-table-btn>
       <el-row :gutter="15">
         <wk-table
-          v-auth="'user:index'"
           :total="table.total"
           :cols="table.cols"
           :lst="table.lst"
@@ -129,10 +128,12 @@ export default {
                       .then((response) => {
                         const { data } = response;
                         this.form.cols.username.disabled = true;
-                        this.form.data.username = data.username;
-                        this.form.data.status = data.status;
-                        this.form.data.id = item.id;
-                        this.form.data.role=data.role
+                        this.form.data = {
+                          id:item.id,
+                          role:data.role,
+                          status:data.status,
+                          username:data.username,
+                        }
                         this.form.cols.password.rules=[]
                       })
                       .catch((error) => {

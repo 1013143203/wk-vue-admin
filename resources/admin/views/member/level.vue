@@ -12,7 +12,6 @@
       </wk-table-btn>
       <el-row :gutter="15">
         <wk-table
-          v-auth="'memberLevel:index'"
           :total="table.total"
           :cols="table.cols"
           :lst="table.lst"

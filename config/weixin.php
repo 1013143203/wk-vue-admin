@@ -1,6 +1,6 @@
 <?php 
  return array (
-  'wechat' => 
+  'wechat' =>
   array (
     'appid' => '2222222222222222',
     'appsecret' => '22222222222222222222222222222222',
@@ -12,8 +12,7 @@
   array (
     'wxapp' => 
     array (
-      'appid' => '1111111',
-      'appsecret' => '111111111111111',
+
     ),
   ),
 );
