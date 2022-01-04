@@ -2,7 +2,7 @@
 
 Route::post('login', 'Admin\AuthController@login')->name('login');
 
-Route::group(['middleware'=>'admin'], function () {
+Route::group(['middleware'=>'adminss'], function () {
 //    Route::group(['middleware'=>['jwt.role:admin', 'jwt.auth']], function () {
     Route::group(['prefix'=>'auth'], function ($router) {
         Route::post('logout', ['uses'=>'Admin\AuthController@logout','permission'=>'logout']);
