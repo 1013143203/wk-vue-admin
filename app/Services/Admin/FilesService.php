@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Storage;
 
 class FilesService extends BaseService
 {
-    public function __construct(Files $file_systems)
+    public function __construct(Files $files)
     {
-        $this->model = $file_systems;
+        $this->model = $files;
     }
 
     public function lists(array $input)
@@ -27,7 +27,7 @@ class FilesService extends BaseService
                     $query->whereBetween('created_at', $input['date']);
                 }
             })
-            ->sortQ([['file_id', 'desc']])
+            ->sortQ(['file_id'=>'desc'])
             ->paginate(PAGE,LIMIT)
             ->getAll();
         foreach ($res['lst'] as &$v){

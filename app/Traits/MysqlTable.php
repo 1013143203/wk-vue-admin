@@ -14,7 +14,7 @@ trait MysqlTable
     private $selectQ = ['*'];
     private $withQ = [];
     private $withCountQ = [];
-    private $sortQ = [['id', 'desc']];
+    private $sortQ = ['id'=>'desc'];
     private $pageQ;
     private $limitQ;
 
@@ -99,8 +99,8 @@ trait MysqlTable
         }
 
         $model->when($this->sortQ, function ($query, $sort) {
-            foreach ($sort as $v) {
-                $query->orderBy($v[0], $v[1]);
+            foreach ($sort as $k => $v) {
+                $query->orderBy($k, $v);
             }
         });
 
