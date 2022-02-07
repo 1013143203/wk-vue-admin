@@ -40,7 +40,6 @@ export default {
             type: "input",
             disabled:false,
             label: "用户名", //字段
-            prop: "username", //字段名
             placeholder: "请填写用户名", //提示内容
             rules: [
               { required: true, message: "请输入用户名", trigger: "blur" },
@@ -54,7 +53,6 @@ export default {
           },
           password:{
             label: "密码",
-            prop: "password",
             type: "password",
             rules: [
               { required: true, message: "请输入密码", trigger: "blur" },
@@ -68,14 +66,12 @@ export default {
           },
           role:{
             label: "角色",
-            prop: "role",
             type: "select",
             multiple: true,
             options: [],
           },
           status:{
             label: "状态",
-            prop: "status",
             type: "switch",
             active: 1,
             inactive: 2,
@@ -189,10 +185,10 @@ export default {
       },
       search:{
         query:{},
-        cols:[
-          {type:'input',label:'名称',prop:'username',placeholder:'请输入名称'},
-          {type:'date',prop:'date'},
-        ],
+        cols: {
+          username: {type: 'input', label: '名称', placeholder: '请输入名称'},
+          date: {type: 'date'},
+        },
       },
     };
   },

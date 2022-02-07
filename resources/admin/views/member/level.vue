@@ -41,7 +41,6 @@
             name:{
               type: "input",
               label: "名称", //字段
-              prop: "name", //字段名
               placeholder: "请填写名称", //提示内容
               rules: [
                 { required: true, message: "请输入名称", trigger: "blur" },
@@ -55,7 +54,6 @@
             },
             level:{
               label: "等级",
-              prop: "level",
               type: "number",
               rules: [
                 { required: true, message: "请输入等级", trigger: "blur" },
@@ -155,10 +153,10 @@
         },
         search:{
           query:{},
-          cols:[
-            {type:'input',label:'名称',prop:'query',placeholder:'请输入名称'},
-            {type:'date',prop:'date'},
-          ],
+          cols:{
+            query:{type:'input',label:'名称',placeholder:'请输入名称'},
+            date:{type:'date'},
+          },
         },
       }
     },

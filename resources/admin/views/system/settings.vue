@@ -92,7 +92,6 @@
             name:{
               type: "input",
               label: "配置名称", //字段
-              prop: "name", //字段名
               placeholder: "请填写配置名称", //提示内容,
               rules: [
                 { required: true, message: "请输入配置名称", trigger: "blur" },
@@ -107,7 +106,6 @@
             value:{
               type: "json-editor",
               label: "配置内容", //字段
-              prop: "value", //字段名
               rules: [
                 { required: true, message: "请输入JSON数据", trigger: "blur" },
                 { validator: validatorJSON, trigger: 'change'},
@@ -116,7 +114,6 @@
             description:{
               type: "input",
               label: "配置描述", //字段
-              prop: "description", //字段名
               placeholder: "请填写配置描述", //提示内容,
               rules: [
                 {

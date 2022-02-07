@@ -120,7 +120,6 @@ export default {
           name:{
             type: "input",
             label: "角色", //字段
-            prop: "name", //字段名
             placeholder: "请填写角色名", //提示内容
             rules: [
               { required: true, message: "请输入角色名", trigger: "blur" },
@@ -134,13 +133,11 @@ export default {
           },
           permission:{
             label: "权限",
-            prop: "permission",
             type: "tree",
             data: [],
           },
           status:{
             label: "状态",
-            prop: "status",
             type: "switch",
             active: 1,
             inactive: 2,
@@ -156,10 +153,10 @@ export default {
       search:{
         query:{
         },
-        cols:[
-          {type:'input',label:'角色',prop:'name',placeholder:'请输入角色'},
-          {type:'date',prop:'date'},
-        ],
+        cols: {
+          name: {type: 'input', label: '角色', placeholder: '请输入角色'},
+          date: {type: 'date'},
+        },
       },
     }
   },

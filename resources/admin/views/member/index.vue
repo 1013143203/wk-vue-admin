@@ -48,7 +48,6 @@
             avatar:{
               type: "upload",
               label: "头像", //字段
-              prop: "avatar", //字段名
               fileType: 'image',
               current:(item)=>{
                 this.form.data.avatar = item.url;
@@ -60,7 +59,6 @@
             nickname:{
               type: "input",
               label: "昵称", //字段
-              prop: "nickname", //字段名
               placeholder: "请填写名称", //提示内容
               rules: [
                 { required: true, message: "请输入昵称", trigger: "blur" },
@@ -75,7 +73,6 @@
             realname:{
               type: "input",
               label: "真实姓名", //字段
-              prop: "realname", //字段名
               placeholder: "请填写名称", //提示内容
               rules: [
                 {
@@ -89,18 +86,15 @@
             agentid:{
               type: "select",
               label: "上级用户", //字段
-              prop: "agentid", //字段名
             },
             level:{
               type: "select",
               label: "等级", //字段
-              prop: "level", //字段名
               options:[],
             },
             mobile:{
               type: "input",
               label: "手机号", //字段
-              prop: "mobile", //字段名
               placeholder: "请填写手机号", //提示内容
               rules: [
                 { required: true, message: "请输入手机号", trigger: "blur" },
@@ -110,7 +104,6 @@
             password:{
               label: "密码",
               prop: "password",
-              type: "password",
               rules: [
                 { required: true, message: "请输入密码", trigger: "blur" },
                 {
@@ -124,24 +117,20 @@
             credit1:{
               type: "input",
               label: "积分", //字段
-              prop: "credit1", //字段名
             },
             credit2:{
               type: "input",
               label: "余额", //字段
-              prop: "credit2", //字段名
             },
             sex:{
               type: "switch",
               label: "性别", //字段
-              prop: "sex", //字段名
               active: 1,
               inactive: 2,
             },
             region:{
               type: "region",
               label: "省市区", //字段
-              prop: 'region', //字段名
               current:(item)=>{
                 this.form.data.pid = item.pid;
                 this.form.data.cid = item.cid;
@@ -153,12 +142,10 @@
             address_info:{
               type: "input",
               label: "具体地址", //字段
-              prop: "address_info", //字段名
             },
             status:{
               type: "switch",
               label: "状态", //字段
-              prop: "status", //字段名
               active: 1,
               inactive: 2,
             },
@@ -207,10 +194,10 @@
         },
         search:{
           query:{},
-          cols:[
-            {type:'input',label:'名称',prop:'query',placeholder:'请输入名称'},
-            {type:'date',prop:'date'},
-          ],
+          cols:{
+            query:{type:'input',label:'名称',prop:'',placeholder:'请输入名称'},
+            date:{type:'date'},
+          },
         },
       }
     },

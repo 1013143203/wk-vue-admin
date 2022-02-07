@@ -5,24 +5,24 @@
     :width="dialogWidth"
   >
     <el-form :model="formData" ref="ruleForm" label-width="80px">
-      <div v-for="(col, index) in cols">
-        <el-form-item :label="col.label" :prop="col.prop" :rules="col.rules">
+      <div v-for="(col, prop) in cols">
+        <el-form-item :label="col.label" :prop="prop" :rules="col.rules">
           <input
             type="hidden"
-            v-model="formData[col.prop]"
+            v-model="formData[prop]"
             v-if="col.type === 'hidden'"
           />
           <!-- inupt输入框 -->
           <el-input
             v-if="col.type == 'input'"
             :disabled="col.disabled ? col.disabled : false"
-            v-model="formData[col.prop]"
+            v-model="formData[prop]"
             :placeholder="col.placeholder"
           ></el-input>
           <!-- 上传图片 -->
           <upload
             v-if="col.type == 'upload'"
-            v-model="formData[col.prop]"
+            v-model="formData[prop]"
             :type="col.fileType"
             @current = "(res) => col.current(res)"
           ></upload>
@@ -30,7 +30,7 @@
           <el-input
             v-if="col.type === 'password'"
             :disabled="col.disabled ? col.disabled : false"
-            v-model="formData[col.prop]"
+            v-model="formData[prop]"
             show-password
             autocomplete="off"
           ></el-input>
@@ -38,7 +38,7 @@
           <el-input-number
             v-if="col.type === 'number'"
             :disabled="col.disabled ? col.disabled : false"
-            v-model="formData[col.prop]"
+            v-model="formData[prop]"
             :min="col.min"
             :max="col.max"
             onKeypress="return (/[\d\.]/.test(String.fromCharCode(event.keyCode)))"
@@ -48,20 +48,20 @@
             type="textarea"
             v-if="col.type == 'textarea'"
             :disabled="col.disabled ? col.disabled : false"
-            v-model="formData[col.prop]"
+            v-model="formData[prop]"
             :placeholder="col.placeholder"
           ></el-input>
           <!-- 上传图片 -->
           <region
             v-if="col.type == 'region'"
-            v-model="formData[col.prop]"
+            v-model="formData[prop]"
             @current = "(res) => col.current(res)"
           ></region>
           <!-- select选择器 -->
           <el-select
             v-if="col.type == 'select'"
             :disabled="col.disabled ? col.disabled : false"
-            v-model="formData[col.prop]"
+            v-model="formData[prop]"
             :placeholder="col.placeholder"
             :multiple='col.multiple'
           >
@@ -78,7 +78,7 @@
             value-format="HH:mm:ss"
             v-if="col.type == 'timePicker'"
             :disabled="col.disabled ? col.disabled : false"
-            v-model="formData[col.prop]"
+            v-model="formData[prop]"
             :placeholder="col.placeholder"
             :picker-options="col.options"
           >
@@ -89,7 +89,7 @@
             is-range
             v-if="col.type == 'timePickerIsRange'"
             :disabled="col.disabled ? col.disabled : false"
-            v-model="formData[col.prop]"
+            v-model="formData[prop]"
             range-separator="至"
             start-placeholder="开始时间"
             end-placeholder="结束时间"
@@ -100,7 +100,7 @@
             value-format="yyyy-MM-dd HH:mm:ss"
             v-if="col.type == 'datePicker'"
             :disabled="col.disabled ? col.disabled : false"
-            v-model="formData[col.prop]"
+            v-model="formData[prop]"
             :placeholder="col.placeholder"
           >
           </el-date-picker>
@@ -110,7 +110,7 @@
             type="daterange"
             v-if="col.type == 'datePickerIsRange'"
             :disabled="col.disabled ? col.disabled : false"
-            v-model="formData[col.prop]"
+            v-model="formData[prop]"
             :placeholder="col.placeholder"
             range-separator="至"
             start-placeholder="开始日期"
@@ -122,14 +122,14 @@
             :disabled="col.disabled ? col.disabled : false"
             :active-value="col.active"
             :inactive-value="col.inactive"
-            v-model="formData[col.prop]"
+            v-model="formData[prop]"
           >
           </el-switch>
           <!-- radio单选框 -->
           <el-radio-group
             v-if="col.type == 'radio'"
             :disabled="col.disabled ? col.disabled : false"
-            v-model="formData[col.prop]"
+            v-model="formData[prop]"
           >
             <el-radio
               :label="options.value"
@@ -142,7 +142,7 @@
           <el-checkbox-group
             v-if="col.type == 'checkbox'"
             :disabled="col.disabled ? col.disabled : false"
-            v-model="formData[col.prop]"
+            v-model="formData[prop]"
           >
             <el-checkbox
               :label="options.label"
@@ -157,20 +157,20 @@
             show-checkbox
             default-expand-all
             node-key="id"
-            :ref="col.prop"
+            :ref="prop"
             check-strictly
-            @check="(data, check) => handleCheck(data, check, col.prop)"
-            @check-change="(data, check) => handleCheckChange(data, check, col.prop)"
+            @check="(data, check) => handleCheck(data, check, prop)"
+            @check-change="(data, check) => handleCheckChange(data, check, prop)"
             highlight-current
-            :default-checked-keys="formData[col.prop]"
+            :default-checked-keys="formData[prop]"
             >
           </el-tree>
 
-          <e-icon-picker v-model="formData[col.prop]" v-if="col.type == 'icon'" />
+          <e-icon-picker v-model="formData[prop]" v-if="col.type == 'icon'" />
 
           <vue-json-editor
             v-if="col.type == 'json-editor'"
-            v-model="formData[col.prop]"
+            v-model="formData[prop]"
             :mode="'code'"
             lang="zh"
           >

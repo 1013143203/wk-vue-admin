@@ -139,9 +139,9 @@ export default {
       search:{
         query:{
         },
-        cols:[
-          {type:'input',label:'菜单',prop:'name',width:'180px',placeholder:'请输入菜单名称'},
-        ],
+        cols:{
+          name:{type:'input',label:'菜单',width:'180px',placeholder:'请输入菜单名称'},
+        },
       },
       menus_nodes:[],
       menus_types:[],
