@@ -12,11 +12,11 @@ class JSSDK
         $this->appSecret = $appSecret;
         if ($enterprise){
             //如果是企业号
-            $this->ticketUri = 'https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket?access_token={{ACCESSTOKEN}}';
-            $this->tokenUri = 'https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={{APPID}}&corpsecret={{APPSECRET}}';
+            $this->ticketUri = "https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket?access_token={{ACCESSTOKEN}}";
+            $this->tokenUri = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={{APPID}}&corpsecret={{APPSECRET}}";
         }else{
-            $this->ticketUri = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token={{ACCESSTOKEN}}';
-            $this->tokenUri = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={{APPID}}&secret={{APPSECRET}}';
+            $this->ticketUri = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token={{ACCESSTOKEN}}";
+            $this->tokenUri = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={{APPID}}&secret={{APPSECRET}}";
         }
     }
 

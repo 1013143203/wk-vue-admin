@@ -40,10 +40,7 @@
           query:{
           },
           cols:[
-            {
-              type:'date',
-              prop:'date'
-            },
+            {prop:'date',type:'date'},
           ],
         },
       }

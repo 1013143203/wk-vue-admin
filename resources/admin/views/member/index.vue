@@ -194,10 +194,10 @@
         },
         search:{
           query:{},
-          cols:{
-            query:{type:'input',label:'名称',prop:'',placeholder:'请输入名称'},
-            date:{type:'date'},
-          },
+          cols:[
+            {type:'input',label:'名称',prop:'query',placeholder:'请输入名称'},
+            {type:'date',prop:'date'},
+          ],
         },
       }
     },

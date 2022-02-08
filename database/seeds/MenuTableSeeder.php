@@ -445,14 +445,6 @@ class MenuTableSeeder extends Seeder
                                 'component'=>'weixin/wechat',
                                 'type'=>2,
                                 'status'=>1,
-                                "children"=>[
-                                    [
-                                        'name'=>'保存',
-                                        'icon'=>'',
-                                        'type'=>3,
-                                        'status'=>1,
-                                    ],
-                                ]
                             ],
                             [
                                 'name'=>'小程序配置',
@@ -462,14 +454,6 @@ class MenuTableSeeder extends Seeder
                                 'component'=>'weixin/wxapp',
                                 'type'=>2,
                                 'status'=>1,
-                                "children"=>[
-                                    [
-                                        'name'=>'保存',
-                                        'icon'=>'',
-                                        'type'=>3,
-                                        'status'=>1,
-                                    ],
-                                ]
                             ],
                             [
                                 'name'=>'支付配置',
@@ -479,14 +463,6 @@ class MenuTableSeeder extends Seeder
                                 'component'=>'weixin/pay',
                                 'type'=>2,
                                 'status'=>1,
-                                "children"=>[
-                                    [
-                                        'name'=>'保存',
-                                        'icon'=>'',
-                                        'type'=>3,
-                                        'status'=>1,
-                                    ],
-                                ]
                             ]
                         ]
                     ],
@@ -498,14 +474,6 @@ class MenuTableSeeder extends Seeder
                         'component'=>'system/attachment',
                         'type'=>2,
                         'status'=>1,
-                        "children"=>[
-                            [
-                                'name'=>'保存',
-                                'icon'=>'',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
-                        ]
                     ],
                     [
                         'name'=>'系统设置',

@@ -19,20 +19,16 @@
         ></wk-table>
       </el-row>
     </el-card>
-    <wk-edit-form
-      ref="form"
-      @submit="submit"
-      :cols="form.cols"
-      :data="form.data"
-      @close="close"
-    ></wk-edit-form>
+    <edit-form ref="edit" :data="formData" :permission="permission"></edit-form>
   </div>
 </template>
 <script>
-import { index, status, edit, update, create ,del} from "@/api/role";
+import { index, status, edit, del} from "@/api/role";
 import { confirm } from "@/utils/message-box.js";
+import editForm from "../role/components/edit-form";
 export default {
   inject:['reload'],
+  components: {editForm},
   data() {
     return {
       table: {
@@ -70,7 +66,7 @@ export default {
                     edit(item.id)
                       .then((response) => {
                         const { data } = response;
-                        this.form.data = {
+                        this.formData = {
                           name:data.name,
                           status:data.status,
                           id:item.id,
@@ -110,53 +106,25 @@ export default {
             label:'添加',
             auth:'role:create',
             click:()=>{
-              this.form.data = {};
+              this.formData = {};
             }
           },
         ]
       },
-      form: {
-        cols: {
-          name:{
-            type: "input",
-            label: "角色", //字段
-            placeholder: "请填写角色名", //提示内容
-            rules: [
-              { required: true, message: "请输入角色名", trigger: "blur" },
-              {
-                min: 3,
-                max: 10,
-                message: "长度在 3 到 10 个字符",
-                trigger: 'blur',
-              },
-            ],
-          },
-          permission:{
-            label: "权限",
-            type: "tree",
-            data: [],
-          },
-          status:{
-            label: "状态",
-            type: "switch",
-            active: 1,
-            inactive: 2,
-          },
-        },
-        data: {
-          name: "",
-          permission: [],
-          status: 2,
-          id:0
-        },
-      },
       search:{
         query:{
         },
-        cols: {
-          name: {type: 'input', label: '角色', placeholder: '请输入角色'},
-          date: {type: 'date'},
-        },
+        cols:[
+          {prop:'query',type:'input',label:'名称',placeholder:'请输入角色'},
+          {prop:'date',type:'date'},
+        ],
+      },
+      permission:[],
+      formData: {
+        name: "",
+        permission: [],
+        status: 2,
+        id:0
       },
     }
   },
@@ -164,9 +132,6 @@ export default {
     this.index();
   },
   methods: {
-    close(){
-        this.$refs.form.$refs.permission[0].setCheckedKeys([])
-    },
     index() {
       index(this.search.query)
         .then((response) => {
@@ -175,7 +140,7 @@ export default {
           this.table.lst = lst;
           this.table.total = total;
 
-          this.form.cols.permission.data= permission;
+          this.permission = permission;
         })
         .catch((error) => {
           console.log(error);
@@ -184,18 +149,6 @@ export default {
     pageChange(val) {
       this.search.query.page = val
       this.index()
-    },
-    submit(form) {
-      const l = form.id ? update(form) : create(form);
-      l.then((response) => {
-        this.$message({
-          type: 'success',
-          message: response.msg
-        });
-        this.reload('global');
-      }).catch((error) => {
-        console.log(error);
-      });
     },
     queryClick(query){
       this.search.query=query

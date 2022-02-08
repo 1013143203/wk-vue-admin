@@ -14,7 +14,6 @@ class MenuUpdateRequest extends Base
     {
         $rules = [
             'name' => 'required|max:50',
-            'permission' => 'required|max:50',
             'type' => 'required|numeric|in:1,2,3',
             'id' => 'required|exists:menu,id|numeric',
         ];

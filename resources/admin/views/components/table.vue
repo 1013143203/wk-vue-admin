@@ -42,8 +42,10 @@
             :key="`v.label${k}`"
             :prop="v.prop"
           >
-            <template slot-scope="scope">
-              <i :class="scope.row.icon + ' sub-el-icon'" />
+            <template slot-scope="scope" v-if="scope.row.icon">
+              <i v-if="iconLoad(scope.row.icon,'el-icon')" :class="scope.row.icon + ' sub-el-icon'" />
+              <i v-else-if="iconLoad(scope.row.icon,'fa fa-')" :class="scope.row.icon + ' sub-el-icon'" />
+              <svg-icon :icon-class=scope.row.icon v-else/>
             </template>
           </el-table-column>
           <!-- 状态switch -->
@@ -179,6 +181,11 @@ export default {
     };
   },
   methods: {
+    iconLoad(icon,c){
+      if (icon){
+        return icon.includes(c)
+      }
+    },
     cellClick(row, column, cell, event) {},
     rowClick(row, column, cell, event) {
       this.$emit("rowClick", row, column, cell, event);
@@ -194,3 +201,10 @@ export default {
   },
 };
 </script>
+<style scoped>
+  .sub-el-icon {
+    color: currentColor;
+    width: 1em;
+    height: 1em;
+  }
+</style>
