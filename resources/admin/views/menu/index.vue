@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-import { index, status, edit ,del} from "@/api/menu";
+import { index, status, edit ,del, loadEdit} from "@/api/menu";
 import editForm from "./components/edit-form";
 import { confirm } from "@/utils/message-box.js";
 export default {
@@ -153,16 +153,24 @@ export default {
     this.index();
   },
   methods: {
+    loadEdit(){
+      loadEdit()
+        .then((response) => {
+          const { data } = response;
+          const { menus_nodes, menus_types ,category} = data;
+          this.menus_nodes = menus_nodes;
+          this.menus_types = menus_types;
+          this.category = category;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     index() {
       index(this.search.query)
         .then((response) => {
           const { data } = response;
-          const { lst, total, menus_nodes, menus_types ,category} = data;
-          this.table.lst = lst;
-          this.table.total = total;
-          this.menus_nodes = menus_nodes;
-          this.menus_types = menus_types;
-          this.category = category;
+          this.table.lst = data;
         })
         .catch((error) => {
           console.log(error);

@@ -114,24 +114,6 @@ trait MysqlTable
         return $lst;
     }
 
-    public function getItemById(int $id)
-    {
-        $data = $this->select($this->selectQ)
-            ->with($this->withQ)
-            ->withCount($this->withCountQ)
-            ->find($id);
-        return $data ? $data->toArray() : false;
-    }
-
-    public function getItem()
-    {
-        $data = $this->select($this->selectQ)
-            ->with($this->withQ)
-            ->withCount($this->withCount)
-            ->where($this->whereQ)
-            ->first();
-        return $data ? $data->toArray() : false;
-    }
 
     /*
      * 过滤移除非当前表的字段参数

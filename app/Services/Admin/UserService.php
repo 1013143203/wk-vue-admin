@@ -17,6 +17,13 @@ class UserService extends BaseService
     {
         $this->model = $user;
     }
+    public function loadEdit()
+    {
+        //角色
+        return Role::where(function ($query){
+            $query->where('status',1);
+        })->get(['id as value','name as label']);
+    }
     public function lists(array $input)
     {
         $res = $this->model
@@ -43,36 +50,24 @@ class UserService extends BaseService
             }
             $v['role']=trim($role,' |');
         }
-
-        //角色
-        $roleModel = new Role();
-        $rolelst = $roleModel->selectQ(['id as value','name as label'])
-            ->whereQ(function ($query){
-                $query->where('status',1);
-            })
-            ->getAll(false);
-
-        $res['rolelst'] = $rolelst;
         return $res;
     }
     public function edit($id)
     {
-        $res = $this->model->withQ(['role'=>function($query){
+        $res = $this->model->with(['role'=>function($query){
             $query->where('status',1);
-        }])->whereQ(['id'=>$id])->getItem();
+        }])->find($id)->toArray();
         $res['role']=array_column($res['role'], 'id');
 
         return $res;
     }
-    public function role($id,$role){
-        $roleModel = new Role();
+    protected function role($id,$role){
         $userRoleModel = new UserRole();
-        $rolelst = $roleModel->selectQ(['id as value','id','name as label'])->getAll(false);
+        $rolelst = Role::get(['id'])->toArray();
         $role_ids = array_column($rolelst, 'id');
 
         $role_intersect=array_intersect($role_ids,$role);
         $role_diff=array_diff($role_ids,$role);
-
         //处理选中的(交接)
         foreach ($role_intersect as $r_i){
             if(!$userRoleModel->whereUserId($id)->whereRoleId($r_i)->first()){

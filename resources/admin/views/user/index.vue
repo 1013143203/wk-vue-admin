@@ -28,7 +28,7 @@
   </div>
 </template>
 <script>
-import { index, status, edit, update, create, del } from "@/api/user";
+import { index, status, edit, update, create, del, loadEdit } from "@/api/user";
 import { confirm } from "@/utils/message-box.js";
 export default {
   inject:['reload'],
@@ -120,6 +120,7 @@ export default {
                 click:(index , item)=>{
                   const that = this;
                   if (item.id) {
+                    this.loadEdit()
                     edit(item.id)
                       .then((response) => {
                         const { data } = response;
@@ -168,6 +169,7 @@ export default {
             label:'添加',
             auth:'user:create',
             click:()=>{
+              this.loadEdit()
               this.form.cols.username.disabled = false;
               this.form.cols.password.rules=[
                 { required: true, message: "请输入密码", trigger: "blur" },
@@ -196,14 +198,23 @@ export default {
     this.index();
   },
   methods: {
+    loadEdit(){
+      loadEdit()
+        .then((response) => {
+          const { data } = response;
+          this.form.cols.role.options = data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     index() {
       index(this.search.query)
         .then((response) => {
           const { data } = response;
-          const { lst, total, rolelst} = data;
+          const { lst, total } = data;
           this.table.lst = lst;
           this.table.total = total;
-          this.form.cols.role.options=rolelst
         })
         .catch((error) => {
           console.log(error);

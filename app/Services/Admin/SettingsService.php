@@ -14,7 +14,7 @@ class SettingsService extends BaseService
     }
     public function lists()
     {
-        return $this->model->getAll(false);
+        return $this->model->get();
     }
     public function create(array $input)
     {

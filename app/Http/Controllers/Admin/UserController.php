@@ -11,15 +11,15 @@ class UserController extends Base
     public function __construct(UserService $userService)
     {
         parent::__construct();
-        
+
         $this->service = $userService;
     }
-    
+
     public function edit($id)
     {
         return success($this->service->edit($id));
     }
-    
+
     public function create(UserCreateRequest $request){
         return success($this->service->create($request->input()));
     }

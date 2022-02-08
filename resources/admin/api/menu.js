@@ -40,3 +40,9 @@ export function del(id) {
     method: 'delete',
   })
 }
+export function loadEdit() {
+  return request({
+    url: 'menu/load/edit',
+    get: 'get',
+  })
+}

@@ -46,7 +46,7 @@ class MemberService extends BaseService
     public function edit($id)
     {
 
-        $res['data'] = $this->model->getItemById($id);
+        $res['data'] = $this->model->find($id)->toArray();
         $res['data']['region'] = [
             'pid' => $res['data']['pid'],
             'cid' => $res['data']['cid'],

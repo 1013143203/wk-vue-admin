@@ -69,12 +69,12 @@ class RegionPickerService extends BaseService
             ]
         ];
         $current = $arr[$type];
-        $res = $current['model']->whereQ(function ($query) use ($code,$current){
+        $res = $current['model']->where(function ($query) use ($code,$current){
             if($code && $current['code']){
                 $query -> where($current['code'], $code);
             }
         })
-        ->getAll(false);
+        ->get();
         foreach ($res as &$l){
             if ($type<3) {
                 $l['hasChildren']=true;

@@ -11,16 +11,22 @@ class MenuService extends BaseService
     {
         $this->model = $menu;
     }
+    public function loadEdit()
+    {
+        $res['menus_nodes']=config('admin.menus_nodes');
+        $res['menus_types']=config('admin.menus_types');
+        $category = $this->model->where('type','<',3)->get()->toArray();
+        array_unshift($category, ['name'=>'顶级分类','id'=>0]);
+        $res['category']=$category;
+    }
     public static function Menus($input = []){
-        $model = new Menu();
-        $menu = $model
-            ->whereQ(function ($query){
+        $menu = Menu::where(function ($query){
                 if(isset($input['name'])){
                     $query -> where('name', 'like', '%'.$input['name'].'%');
                 }
             })
-            ->selectQ(['id','name as label','pid','type','status','icon','permission','path'])
-            ->getAll(false);
+            ->get(['id','name as label','pid','type','status','icon','permission','path'])
+            ->toArray();
         foreach ($menu as &$m){
             if ($m['type']==3){
                 $m['hidden']=true;
@@ -30,14 +36,7 @@ class MenuService extends BaseService
     }
     public function lists(array $input)
     {
-        $res['lst'] =self::getAllMenus(self::Menus($input));
-        $res['menus_nodes']=config('admin.menus_nodes');
-        $res['menus_types']=config('admin.menus_types');
-
-        $category = $this->model->where('type','<',3)->get()->toArray();
-        array_unshift($category, ['name'=>'顶级分类','id'=>0]);
-        $res['category']=$category;
-        return $res;
+        return self::getAllMenus(self::Menus($input));
     }
     public static function getAllMenus($array, $pid =0){
         $arr = array();
@@ -156,7 +155,7 @@ class MenuService extends BaseService
     }
     protected function children($id){
         global $ids;
-        $res = $this->model->selectQ('id')->whereQ(['pid'=>$id])->getAll(false);
+        $res = $this->model->where(['pid'=>$id])->get(['id']);
         if ($res){
             foreach ($res as $v){
                 $ids[] = $v['id'];

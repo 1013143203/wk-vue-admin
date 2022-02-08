@@ -29,9 +29,12 @@ class RoleService extends BaseService
                 $v['hidden'] = true;
             }
         }
-        //权限
-        $res['permission'] = MenuService::getAllMenus(MenuService::Menus($input));
+
         return $res;
+    }
+    public function loadEdit()
+    {
+        return MenuService::getAllMenus(MenuService::Menus());
     }
     public function create(array $input)
     {
@@ -41,7 +44,7 @@ class RoleService extends BaseService
             }
         }
     }
-    public function permission($id,$permission){
+    protected function permission($id,$permission){
         $roleMenuModel = new RoleMenu();
 
         $menu_ids = array_column(MenuService::Menus(), 'id');
@@ -68,11 +71,11 @@ class RoleService extends BaseService
     public function edit($id)
     {
         $data = $this->model
-            ->whereQ(function ($query) use ($id){
+            ->where(function ($query) use ($id){
                 $query->where('id',$id);
             })
-            ->withQ('menu')
-            ->getItem();
+            ->with('menu')
+            ->first()->toArray();
         $data['menu']=array_column($data['menu'], 'id')??[];
         return $data;
     }

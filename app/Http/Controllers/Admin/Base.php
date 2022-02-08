@@ -17,6 +17,11 @@ class Base extends Controller
         $this->initConfig();
     }
 
+    public function loadEdit()
+    {
+        return success($this->service->loadEdit(request()->input()));
+    }
+
     public function initConfig()
     {
         // 请求参数

@@ -13,7 +13,7 @@ class BaseService
 
     public function edit($id)
     {
-        return $this->model->getItemById($id);
+        return $this->model->find($id)->toArray();
     }
 
     /*

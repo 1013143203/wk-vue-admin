@@ -44,8 +44,7 @@ class MemberLevelService extends BaseService
 
     public function delete($id)
     {
-        $member = new Member();
-        if (!$member->whereQ(['level'=>$id])->getItem()){
+        if (!Member::where(['level'=>$id])->first()->toArray()){
             return $this->model->delItem($id);
         }else{
             throw new AdminException(201,'该等级存在会员');

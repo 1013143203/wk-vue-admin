@@ -23,7 +23,7 @@
   </div>
 </template>
 <script>
-import { index, status, edit, del} from "@/api/role";
+import { index, status, edit, del, loadEdit} from "@/api/role";
 import { confirm } from "@/utils/message-box.js";
 import editForm from "../role/components/edit-form";
 export default {
@@ -63,6 +63,7 @@ export default {
                 auth:'role:edit' ,
                 click:(index , item)=>{
                   if (item.id) {
+                    this.loadEdit()
                     edit(item.id)
                       .then((response) => {
                         const { data } = response;
@@ -106,6 +107,7 @@ export default {
             label:'添加',
             auth:'role:create',
             click:()=>{
+              this.loadEdit()
               this.formData = {};
             }
           },
@@ -132,15 +134,23 @@ export default {
     this.index();
   },
   methods: {
+    loadEdit(){
+      loadEdit()
+        .then((response) => {
+          const { data } = response;
+          this.permission = data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     index() {
       index(this.search.query)
         .then((response) => {
           const { data } = response;
-          const { lst, total , permission} = data;
+          const { lst, total } = data;
           this.table.lst = lst;
           this.table.total = total;
-
-          this.permission = permission;
         })
         .catch((error) => {
           console.log(error);

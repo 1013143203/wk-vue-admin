@@ -70,3 +70,9 @@ export function del(id) {
     method: 'delete',
   })
 }
+export function loadEdit() {
+  return request({
+    url: 'user/load/edit',
+    get: 'get',
+  })
+}
