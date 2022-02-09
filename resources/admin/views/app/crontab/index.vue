@@ -64,6 +64,7 @@
               btn:[
                 {
                   label:'编辑',
+                  icon:"el-icon-edit",
                   auth:'crontab:edit',
                   click:(index , item)=>{
                     edit(item.id).then((response) => {
@@ -75,7 +76,7 @@
                       });
                   }
                 },
-                {label: "删除" ,type: "danger" , auth:'menu:delete'},
+                {label: "删除" ,icon:"el-icon-delete" , auth:'menu:delete'},
               ], width:250,
             },
           ],

@@ -62,6 +62,7 @@ export default {
             btn:[
               {
                 label:'编辑',
+                icon:"el-icon-edit",
                 auth:'menu:edit',
                 click:(index , item)=>{
                   edit(item.id).then((response) => {
@@ -74,7 +75,7 @@ export default {
                 }
               },
               {
-                label: "删除" ,type: "danger" , auth:'menu:delete',
+                label: "删除" ,icon:"el-icon-delete" , auth:'menu:delete',
                 click:(index , item)=>{
                   let fn = () => {
                     del(item.id).then((response) => {
@@ -92,7 +93,7 @@ export default {
               },
               {
                 label: "添加" ,
-                type: "primary" ,
+                icon: "el-icon-plus" ,
                 auth:'menu:create',
                 click:(index , item)=>{
                   const obj={}

@@ -24,6 +24,10 @@ class RoleController extends Base
     {
         return success($this->service->edit($id));
     }
+    public function permission($id)
+    {
+        return success($this->service->permission($id));
+    }
 
     public function update(RoleUpdateRequest $request)
     {

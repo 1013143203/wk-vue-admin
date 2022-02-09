@@ -40,9 +40,9 @@ export function del(id) {
     method: 'delete',
   })
 }
-export function loadEdit() {
+export function permission(id) {
   return request({
-    url: 'role/load/edit',
+    url: 'role/permission/'+id,
     get: 'get',
   })
 }

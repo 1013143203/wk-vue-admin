@@ -116,7 +116,7 @@
                   },
                 },
                 {
-                  label: "删除" ,type: "danger",auth:'memberLevel:delete',
+                  label: "删除" ,icon:"el-icon-delete",auth:'memberLevel:delete',
                   click:(index , item)=>{
                     const that = this
                     let fn = () => {

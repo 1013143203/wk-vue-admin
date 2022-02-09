@@ -39,7 +39,7 @@ class MenuTableSeeder extends Seeder
                                 'status'=>1,
                             ],
                             [
-                                'name'=>'查看',
+                                'name'=>'编辑',
                                 'icon'=>'',
                                 'permission'=>'user:edit',
                                 'type'=>3,
@@ -92,9 +92,16 @@ class MenuTableSeeder extends Seeder
                                 'status'=>1,
                             ],
                             [
-                                'name'=>'查看',
+                                'name'=>'编辑',
                                 'icon'=>'',
                                 'permission'=>'role:edit',
+                                'type'=>3,
+                                'status'=>1,
+                            ],
+                            [
+                                'name'=>'分配权限',
+                                'icon'=>'',
+                                'permission'=>'role:permission',
                                 'type'=>3,
                                 'status'=>1,
                             ],
@@ -145,7 +152,7 @@ class MenuTableSeeder extends Seeder
                                 'status'=>1,
                             ],
                             [
-                                'name'=>'查看',
+                                'name'=>'编辑',
                                 'icon'=>'',
                                 'permission'=>'menu:edit',
                                 'type'=>3,
@@ -235,7 +242,7 @@ class MenuTableSeeder extends Seeder
                                 'status'=>1,
                             ],
                             [
-                                'name'=>'查看',
+                                'name'=>'编辑',
                                 'icon'=>'',
                                 'permission'=>'member:edit',
                                 'type'=>3,
@@ -274,7 +281,7 @@ class MenuTableSeeder extends Seeder
                                 'status'=>1,
                             ],
                             [
-                                'name'=>'查看',
+                                'name'=>'编辑',
                                 'icon'=>'',
                                 'permission'=>'memberLevel:edit',
                                 'type'=>3,
@@ -349,7 +356,7 @@ class MenuTableSeeder extends Seeder
                                 'status'=>1,
                             ],
                             [
-                                'name'=>'查看',
+                                'name'=>'编辑',
                                 'icon'=>'',
                                 'permission'=>'crontab:edit',
                                 'type'=>3,
@@ -395,7 +402,7 @@ class MenuTableSeeder extends Seeder
                                 'status'=>1,
                             ],
                             [
-                                'name'=>'查看',
+                                'name'=>'编辑',
                                 'icon'=>'',
                                 'permission'=>'region:edit',
                                 'type'=>3,
@@ -492,7 +499,7 @@ class MenuTableSeeder extends Seeder
                                 'status'=>1,
                             ],
                             [
-                                'name'=>'查看',
+                                'name'=>'编辑',
                                 'icon'=>'',
                                 'permission'=>'settings:edit',
                                 'type'=>3,

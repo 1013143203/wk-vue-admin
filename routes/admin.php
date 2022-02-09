@@ -21,7 +21,7 @@ Route::group(['middleware'=>'admin'], function () {
 
     Route::group(['prefix'=>'role'], function ($router) {
         Route::get('index', ['uses'=>'Admin\RoleController@index']);
-        Route::get('load/edit', ['uses'=>'Admin\RoleController@loadEdit']);
+        Route::get('permission/{id}', ['uses'=>'Admin\RoleController@permission','permission'=>'role:permission']);
         Route::post('create', ['uses'=>'Admin\RoleController@create','permission'=>'role:create']);
         Route::put('status/{id}/{status}', ['uses'=>'Admin\RoleController@status','permission'=>'role:status']);
         Route::get('edit/{id}', ['uses'=>'Admin\RoleController@edit','permission'=>'role:edit']);

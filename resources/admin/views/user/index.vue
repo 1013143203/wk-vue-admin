@@ -117,6 +117,7 @@ export default {
               {
                 label:'编辑',
                 auth:'user:edit',
+                icon:"el-icon-edit",
                 click:(index , item)=>{
                   const that = this;
                   if (item.id) {
@@ -140,7 +141,7 @@ export default {
                 },
                 hidden:true
               },
-              {label: "删除" ,type: "danger",auth:'user:delete',
+              {label: "删除" ,icon:"el-icon-delete",auth:'user:delete',
                 click:(index , item)=>{
                   const that = this
                   let fn = () => {

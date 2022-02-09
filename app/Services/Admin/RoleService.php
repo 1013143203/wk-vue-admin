@@ -32,19 +32,24 @@ class RoleService extends BaseService
 
         return $res;
     }
-    public function loadEdit()
+    public function permission($id)
     {
-        return MenuService::getAllMenus(MenuService::Menus());
+        $res = $this->edit($id);
+        return [
+            'permission_list'=>MenuService::getAllMenus(MenuService::Menus()),
+            'permission'=>$res['menu']
+        ];
     }
+
     public function create(array $input)
     {
         if($id = parent::create($input)){
             if ($permission=$input['permission']){
-                self::permission($id,$permission);
+                self::updatePermission($id,$permission);
             }
         }
     }
-    protected function permission($id,$permission){
+    protected function updatePermission($id,$permission){
         $roleMenuModel = new RoleMenu();
 
         $menu_ids = array_column(MenuService::Menus(), 'id');
@@ -65,7 +70,7 @@ class RoleService extends BaseService
     public function update(array $input)
     {
         $permission = isset($input['permission']) ? $input['permission'] : [];
-        self::permission($input['id'],$permission);
+        self::updatePermission($input['id'],$permission);
         parent::update($input);
     }
     public function edit($id)

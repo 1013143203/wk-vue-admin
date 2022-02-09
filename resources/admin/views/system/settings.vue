@@ -51,6 +51,7 @@
               btn:[
                 {
                   label:'编辑',
+                  icon:"el-icon-edit",
                   auth:'settings:edit',
                   click:(index , item)=>{
                     edit(item.id).then((response) => {
@@ -63,7 +64,7 @@
                       });
                   }
                 },
-                {label: "删除" ,type: "danger" , auth:'settings:delete',
+                {label: "删除" ,icon:"el-icon-delete" , auth:'settings:delete',
                   click:(index , item)=>{
                     var that = this
                     let fn = () => {

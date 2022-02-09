@@ -19,16 +19,17 @@
         ></wk-table>
       </el-row>
     </el-card>
-    <edit-form ref="edit" :data="formData" :permission="permission"></edit-form>
+    <wk-edit-form ref="form"
+                  @submit="submit"
+                  :cols="form.cols"
+                  :data="form.data"></wk-edit-form>
   </div>
 </template>
 <script>
-import { index, status, edit, del, loadEdit} from "@/api/role";
+import { index, status, edit, del, update, create, permission} from "@/api/role";
 import { confirm } from "@/utils/message-box.js";
-import editForm from "../role/components/edit-form";
 export default {
   inject:['reload'],
-  components: {editForm},
   data() {
     return {
       table: {
@@ -60,18 +61,19 @@ export default {
             btn:[
               {
                 label:'编辑',
+                icon:"el-icon-edit",
                 auth:'role:edit' ,
+                icon:"el-icon-edit",
                 click:(index , item)=>{
                   if (item.id) {
-                    this.loadEdit()
+                    this.form.cols = this.form.option1
                     edit(item.id)
                       .then((response) => {
                         const { data } = response;
-                        this.formData = {
+                        this.form.data = {
                           name:data.name,
                           status:data.status,
                           id:item.id,
-                          permission:data.menu,
                         }
                       })
                       .catch((error) => {
@@ -81,7 +83,28 @@ export default {
                 },
                 hidden:true
               },
-              {label: "删除" ,type: "danger" , auth:'role:delete',
+              {
+                label: "分配权限" ,
+                icon:"el-icon-finished",
+                auth:'role:permission',
+                click:(index , item)=>{
+                  this.form.cols = this.form.option2
+                  permission(item.id)
+                    .then((response) => {
+                      const { data } = response;
+                      this.form.cols.role.data = data.permission_list;
+                      this.form.data = {}
+                      this.form.data.permission = data.permission
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
+                },hidden:true
+              },
+              {
+                label: "删除" ,
+                icon:"el-icon-delete",
+                auth:'role:delete',
                 click:(index , item)=>{
                   let fn = () => {
                     del(item.id).then((response) => {
@@ -97,7 +120,7 @@ export default {
                   confirm("是否永久删除该数据？", fn);
                 },hidden:true
               },
-            ], width:150
+            ], width:300
           },
         ],
         lst: [],
@@ -107,11 +130,48 @@ export default {
             label:'添加',
             auth:'role:create',
             click:()=>{
-              this.loadEdit()
-              this.formData = {};
+              this.form.cols = this.form.option1
+              this.form.data = {}
             }
           },
         ]
+      },
+      form:{
+        cols:{},
+        option2:{
+          role:{
+            label: "权限",
+            type: "tree",
+            data: [],
+          },
+        },
+        option1: {
+          name:{
+            type: "input",
+            label: "角色", //字段
+            placeholder: "请填写角色", //提示内容
+            rules: [
+              { required: true, message: "请输入角色", trigger: "blur" },
+              {
+                min: 3,
+                max: 10,
+                message: "长度在 3 到 10 个字符",
+                trigger: 'blur',
+              },
+            ],
+          },
+          status:{
+            label: "状态",
+            type: "switch",
+            active: 1,
+            inactive: 2,
+          },
+        },
+        data: {
+          name: "",
+          permission: [],
+          status: 2,
+        },
       },
       search:{
         query:{
@@ -121,28 +181,23 @@ export default {
           {prop:'date',type:'date'},
         ],
       },
-      permission:[],
-      formData: {
-        name: "",
-        permission: [],
-        status: 2,
-        id:0
-      },
     }
   },
   created() {
     this.index();
   },
   methods: {
-    loadEdit(){
-      loadEdit()
-        .then((response) => {
-          const { data } = response;
-          this.permission = data;
-        })
-        .catch((error) => {
-          console.log(error);
+    submit(form) {
+      const l = form.id ? update(form) : create(form);
+      l.then((response) => {
+        this.$message({
+          type: 'success',
+          message: response.msg
         });
+        this.reload('global');
+      }).catch((error) => {
+        console.log(error);
+      });
     },
     index() {
       index(this.search.query)

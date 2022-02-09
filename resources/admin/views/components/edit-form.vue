@@ -306,4 +306,19 @@ export default {
   .jsoneditor-poweredBy{
     display: none;
   }
+  .el-dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 0 !important;
+    transform: translate(-50%, -50%);
+    max-height: calc(100% - 30px);
+    max-width: calc(100% - 30px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .el-dialog__body {
+    overflow: auto;
+  }
 </style>

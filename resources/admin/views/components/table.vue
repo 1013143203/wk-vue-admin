@@ -93,17 +93,16 @@
           >
             <!-- 处理自定义操作中的按钮 -->
             <template slot-scope="scope">
-              <el-button
+              <el-link
                 v-for="(item, index) in v.btn"
                 :key="`item.label${index}`"
-                :size="item.size || 'mini'"
-                class="operateLink"
-                :type="item.type"
+                type="primary"
+                :icon="item.icon"
                 v-auth="item.auth ? item.auth : ''"
                 v-if="!(scope.row.hidden && item.hidden)"
+                :underline="false"
                 @click="item.click(scope.$index, scope.row)"
-              >{{ item.label }}</el-button
-              >
+              >{{ item.label }}</el-link>
             </template>
           </el-table-column>
         </template>
@@ -206,5 +205,8 @@ export default {
     color: currentColor;
     width: 1em;
     height: 1em;
+  }
+  .el-link+.el-link{
+    margin-left: 10px;
   }
 </style>

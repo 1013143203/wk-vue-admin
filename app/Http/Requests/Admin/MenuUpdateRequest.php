@@ -31,7 +31,6 @@ class MenuUpdateRequest extends Base
             'name.required' => '菜单名称不能为空',
             'pid.required' => '上级菜单不能为空',
             'pid.exists' => '上级菜单不能存在',
-            'permission.required' => '权限标识不能为空',
             'type.required' => '类型不能为空',
             'type.numeric' => '类型错误',
             'type.in' => '类型错误',
