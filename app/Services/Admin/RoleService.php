@@ -43,13 +43,11 @@ class RoleService extends BaseService
 
     public function create(array $input)
     {
-        if($id = parent::create($input)){
-            if ($permission=$input['permission']){
-                self::updatePermission($id,$permission);
-            }
-        }
+        parent::create($input);
     }
-    protected function updatePermission($id,$permission){
+    public function savePermission($input){
+        $permission = $input['permission'];
+        $id = $input['id'];
         $roleMenuModel = new RoleMenu();
 
         $menu_ids = array_column(MenuService::Menus(), 'id');
@@ -69,8 +67,6 @@ class RoleService extends BaseService
     }
     public function update(array $input)
     {
-        $permission = isset($input['permission']) ? $input['permission'] : [];
-        self::updatePermission($input['id'],$permission);
         parent::update($input);
     }
     public function edit($id)

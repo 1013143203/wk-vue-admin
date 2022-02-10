@@ -158,9 +158,9 @@
             default-expand-all
             node-key="id"
             :ref="prop"
-            check-strictly
+            @check-change="(data, check) => checkChange(data, check, prop)"
             @check="(data, check) => handleCheck(data, check, prop)"
-            @check-change="(data, check) => handleCheckChange(data, check, prop)"
+            check-strictly
             highlight-current
             :default-checked-keys="formData[prop]"
             >
@@ -258,6 +258,42 @@ export default {
       this.dialogVisible = false
       this.$emit('close')
     },
+    checkChange(data, check, ref) {
+      let $data = this.$refs[ref][0]
+      // 父节点操作
+      if (data.pid) {
+        if (check === true) {
+          // 如果选中，设置父节点为选中
+          $data.setChecked(data.pid, true);
+        } else {
+          // 如果取消选中，检查父节点是否该取消选中（可能仍有子节点为选中状态）
+          var parentNode = $data.getNode(data.pid);
+
+          var parentHasCheckedChild = false;
+          for (
+            var i = 0, parentChildLen = parentNode.childNodes.length;
+            i < parentChildLen;
+            i++
+          ) {
+            if (parentNode.childNodes[i].checked === true) {
+              parentHasCheckedChild = true;
+              break;
+            }
+          }
+          if (!parentHasCheckedChild)
+            $data.setChecked(data.pid, false);
+        }
+      }
+      // 子节点操作，如果取消选中，取消子节点选中
+      if (data.children != null && check === false) {
+        for (var j = 0, len = data.children.length; j < len; j++) {
+          var childNode = $data.getNode(data.children[j].id);
+          if (childNode.checked === true) {
+            $data.setChecked(childNode.data.id, false);
+          }
+        }
+      }
+    },
     selectChildren(data,ref) {
       data && data.children && data.children.map(item => {
         this.$refs[ref][0].setChecked(item.id, true);
@@ -273,28 +309,29 @@ export default {
         //如果当前节点有子集
         this.selectChildren(data,ref);
       }
-      this.formData[ref] = this.$refs[ref][0].getCheckedKeys();
+      let $data = this.$refs[ref][0]
+      this.formData[ref] = $data.getCheckedKeys().concat($data.getHalfCheckedKeys());
 
     },
     handleCheckChange(data, checked, ref) {
       // 节点所对应的对象、节点本身是否被选中、节点的子树中是否有被选中的节点
       //如果为取消
-      if (checked === false) {
-        //如果当前节点有子集
-        if (data.children) {
-          //循环子集将他们的选中取消
-          data.children.map(item => {
-            this.$refs[ref][0].setChecked(item.id, false);
-          });
-        }
-      } else {
-        //否则(为选中状态)
-        //判断父节点id是否为空
-        if (data.parentId !== 0) {
-          //如果不为空则将其选中
-          this.$refs[ref][0].setChecked(data.parentId, true);
-        }
-      }
+      // if (checked === false) {
+      //   //如果当前节点有子集
+      //   if (data.children) {
+      //     //循环子集将他们的选中取消
+      //     data.children.map(item => {
+      //       this.$refs[ref][0].setChecked(item.id, false);
+      //     });
+      //   }
+      // } else {
+      //   //否则(为选中状态)
+      //   //判断父节点id是否为空
+      //   if (data.pid !== 0) {
+      //     //如果不为空则将其选中
+      //     this.$refs[ref][0].setChecked(data.pid, true);
+      //   }
+      // }
     },
   },
 };

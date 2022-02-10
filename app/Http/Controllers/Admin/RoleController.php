@@ -28,6 +28,10 @@ class RoleController extends Base
     {
         return success($this->service->permission($id));
     }
+    public function savePermission(RoleUpdateRequest $request)
+    {
+        return success($this->service->savePermission($request->only(['id','permission'])));
+    }
 
     public function update(RoleUpdateRequest $request)
     {

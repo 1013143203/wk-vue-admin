@@ -63,10 +63,10 @@ export default {
                 label:'编辑',
                 icon:"el-icon-edit",
                 auth:'role:edit' ,
-                icon:"el-icon-edit",
                 click:(index , item)=>{
                   if (item.id) {
                     this.form.cols = this.form.option1
+                    this.form.type = 1
                     edit(item.id)
                       .then((response) => {
                         const { data } = response;
@@ -89,12 +89,14 @@ export default {
                 auth:'role:permission',
                 click:(index , item)=>{
                   this.form.cols = this.form.option2
+                  this.form.type = 2
                   permission(item.id)
                     .then((response) => {
                       const { data } = response;
-                      this.form.cols.role.data = data.permission_list;
+                      this.form.cols.permission.data = data.menus;
                       this.form.data = {}
                       this.form.data.permission = data.permission
+                      this.form.data.id = item.id
                     })
                     .catch((error) => {
                       console.log(error);
@@ -131,15 +133,17 @@ export default {
             auth:'role:create',
             click:()=>{
               this.form.cols = this.form.option1
+              this.form.type = 1
               this.form.data = {}
             }
           },
         ]
       },
       form:{
+        type:1,
         cols:{},
         option2:{
-          role:{
+          permission:{
             label: "权限",
             type: "tree",
             data: [],
