@@ -25,14 +25,14 @@ class AuthController extends Base
         return success([
             'token'=>$this->service->login()
         ]);
-        
+
     }
     public function logout(){
-        
+
         return $this->service->logout();
-        
+
     }
-    public function fetchMenuList(Request $request){
-        return success($this->service->getMenusList($request->user->id));
+    public function getRouters(Request $request){
+        return success($this->service->getRouters($request->user->id));
     }
 }

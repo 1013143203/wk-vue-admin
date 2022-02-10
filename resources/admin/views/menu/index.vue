@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-import { index, status, edit ,del, loadEdit} from "@/api/menu";
+import { index, status, edit ,del, loadedit } from "@/api/menu";
 import editForm from "./components/edit-form";
 import { confirm } from "@/utils/message-box.js";
 export default {
@@ -65,6 +65,7 @@ export default {
                 icon:"el-icon-edit",
                 auth:'menu:edit',
                 click:(index , item)=>{
+                  this.loadedit()
                   edit(item.id).then((response) => {
                     const { data } = response;
                     this.formData = data
@@ -98,6 +99,7 @@ export default {
                 click:(index , item)=>{
                   const obj={}
                   if(item){
+                    this.loadedit()
                     obj.permission=item.permission
                     obj.pid=item.id
                   }
@@ -117,6 +119,7 @@ export default {
             label:'添加',
             auth:'menu:create',
             click:()=>{
+              this.loadedit()
               this.formData = {}
             }
           },
@@ -154,11 +157,11 @@ export default {
     this.index();
   },
   methods: {
-    loadEdit(){
-      loadEdit()
+    loadedit(){
+      loadedit()
         .then((response) => {
           const { data } = response;
-          const { menus_nodes, menus_types ,category} = data;
+          const { menus_nodes, menus_types ,category } = data;
           this.menus_nodes = menus_nodes;
           this.menus_types = menus_types;
           this.category = category;

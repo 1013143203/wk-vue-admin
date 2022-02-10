@@ -1,5 +1,5 @@
 import { asyncRoutes, constantRoutes } from '@/router'
-import { fetchMenuList } from '@/api/user'
+import { getRouters } from '@/api/user'
 import Layout from '@/layout'
 import { Message } from "element-ui";
 
@@ -91,7 +91,7 @@ const actions = {
     return new Promise(resolve => {
       const loadMenuData = []
       // 先查询后台并返回左侧菜单数据并把数据添加到路由
-      fetchMenuList(state.token).then(response => {
+      getRouters(state.token).then(response => {
         const { data } = response
         if (response.code !== 200) {
           Message({

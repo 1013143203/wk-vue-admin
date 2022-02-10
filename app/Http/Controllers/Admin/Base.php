@@ -17,9 +17,9 @@ class Base extends Controller
         $this->initConfig();
     }
 
-    public function loadEdit()
+    public function loadedit()
     {
-        return success($this->service->loadEdit(request()->input()));
+        return success($this->service->loadedit(request()->input()));
     }
 
     public function initConfig()

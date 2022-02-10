@@ -311,27 +311,6 @@ export default {
       }
       let $data = this.$refs[ref][0]
       this.formData[ref] = $data.getCheckedKeys().concat($data.getHalfCheckedKeys());
-
-    },
-    handleCheckChange(data, checked, ref) {
-      // 节点所对应的对象、节点本身是否被选中、节点的子树中是否有被选中的节点
-      //如果为取消
-      // if (checked === false) {
-      //   //如果当前节点有子集
-      //   if (data.children) {
-      //     //循环子集将他们的选中取消
-      //     data.children.map(item => {
-      //       this.$refs[ref][0].setChecked(item.id, false);
-      //     });
-      //   }
-      // } else {
-      //   //否则(为选中状态)
-      //   //判断父节点id是否为空
-      //   if (data.pid !== 0) {
-      //     //如果不为空则将其选中
-      //     this.$refs[ref][0].setChecked(data.pid, true);
-      //   }
-      // }
     },
   },
 };

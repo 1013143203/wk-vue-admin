@@ -17,7 +17,7 @@ class UserService extends BaseService
     {
         $this->model = $user;
     }
-    public function loadEdit()
+    public function loadedit()
     {
         //角色
         return Role::where(function ($query){

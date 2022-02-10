@@ -23,9 +23,9 @@ export function logout() {
   })
 }
 
-export function fetchMenuList() {
+export function getRouters() {
   return request({
-    url: 'auth/fetchMenuList',
+    url: 'auth/getRouters',
     method: 'post'
   })
 }
@@ -70,9 +70,9 @@ export function del(id) {
     method: 'delete',
   })
 }
-export function loadEdit() {
+export function loadedit() {
   return request({
-    url: 'user/load/edit',
+    url: 'user/loadedit',
     get: 'get',
   })
 }

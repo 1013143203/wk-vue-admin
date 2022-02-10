@@ -46,3 +46,10 @@ export function permission(id) {
     get: 'get',
   })
 }
+export function savePermission(data) {
+  return request({
+    url: 'role/savePermission/'+data.id,
+    method: 'put',
+    data
+  })
+}

@@ -11,18 +11,22 @@ class MenuService extends BaseService
     {
         $this->model = $menu;
     }
-    public function loadEdit()
+    public function loadedit()
     {
         $res['menus_nodes']=config('admin.menus_nodes');
         $res['menus_types']=config('admin.menus_types');
-        $category = $this->model->where('type','<',3)->get()->toArray();
-        array_unshift($category, ['name'=>'顶级分类','id'=>0]);
+        $category = MenuService::getAllMenus(MenuService::Menus(['type'=>3]));
+        array_unshift($category, ['label'=>'顶级分类','id'=>0]);
         $res['category']=$category;
+        return $res;
     }
     public static function Menus($input = []){
-        $menu = Menu::where(function ($query){
+        $menu = Menu::where(function ($query) use ($input){
                 if(isset($input['name'])){
                     $query -> where('name', 'like', '%'.$input['name'].'%');
+                }
+                if(isset($input['type'])){
+                    $query -> where('type', '<', 3);
                 }
             })
             ->get(['id','name as label','pid','type','status','icon','permission','path'])

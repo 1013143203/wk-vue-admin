@@ -36,7 +36,7 @@ class RoleService extends BaseService
     {
         $res = $this->edit($id);
         return [
-            'permission_list'=>MenuService::getAllMenus(MenuService::Menus()),
+            'menus'=>MenuService::getAllMenus(MenuService::Menus()),
             'permission'=>$res['menu']
         ];
     }

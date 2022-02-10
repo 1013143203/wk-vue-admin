@@ -7,11 +7,11 @@ Route::group(['middleware'=>'admin'], function () {
     Route::group(['prefix'=>'auth'], function ($router) {
         Route::post('logout', ['uses'=>'Admin\AuthController@logout','permission'=>'logout']);
         Route::get('info', 'Admin\AuthController@info');
-        Route::post('fetchMenuList', 'Admin\AuthController@fetchMenuList');
+        Route::post('getRouters', 'Admin\AuthController@getRouters');
     });
     Route::group(['prefix'=>'user'], function ($router) {
         Route::get('index', ['uses'=>'Admin\UserController@index']);
-        Route::get('load/edit', ['uses'=>'Admin\UserController@loadEdit']);
+        Route::get('loadedit', ['uses'=>'Admin\UserController@loadEdit']);
         Route::put('status/{id}/{status}', ['uses'=>'Admin\UserController@status','permission'=>'user:status']);
         Route::get('edit/{id}', ['uses'=>'Admin\UserController@edit','permission'=>'user:edit']);
         Route::post('create', ['uses'=>'Admin\UserController@create','permission'=>'user:create']);
@@ -22,6 +22,8 @@ Route::group(['middleware'=>'admin'], function () {
     Route::group(['prefix'=>'role'], function ($router) {
         Route::get('index', ['uses'=>'Admin\RoleController@index']);
         Route::get('permission/{id}', ['uses'=>'Admin\RoleController@permission','permission'=>'role:permission']);
+        Route::put('savePermission/{id}', ['uses'=>'Admin\RoleController@savePermission','permission'=>'role:permission']);
+
         Route::post('create', ['uses'=>'Admin\RoleController@create','permission'=>'role:create']);
         Route::put('status/{id}/{status}', ['uses'=>'Admin\RoleController@status','permission'=>'role:status']);
         Route::get('edit/{id}', ['uses'=>'Admin\RoleController@edit','permission'=>'role:edit']);
@@ -31,7 +33,7 @@ Route::group(['middleware'=>'admin'], function () {
 
     Route::group(['prefix' => 'menu'], function () {
         Route::get('index', ['uses'=>'Admin\MenuController@index']);
-        Route::get('load/edit', ['uses'=>'Admin\MenuController@loadEdit']);
+        Route::get('loadedit', ['uses'=>'Admin\MenuController@loadEdit']);
         Route::post('create', ['uses'=>'Admin\MenuController@create','permission'=>'menu:create']);
         Route::put('status/{id}/{status}', ['uses'=>'Admin\MenuController@status','permission'=>'menu:status']);
         Route::get('edit/{id}', ['uses'=>'Admin\MenuController@edit','permission'=>'menu:edit']);

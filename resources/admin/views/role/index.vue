@@ -26,7 +26,7 @@
   </div>
 </template>
 <script>
-import { index, status, edit, del, update, create, permission} from "@/api/role";
+import { index, status, edit, del, update, create, permission, savePermission} from "@/api/role";
 import { confirm } from "@/utils/message-box.js";
 export default {
   inject:['reload'],
@@ -192,7 +192,12 @@ export default {
   },
   methods: {
     submit(form) {
-      const l = form.id ? update(form) : create(form);
+      let l
+      if ( this.form.type ==1 ){
+        l = form.id ? update(form) : create(form);
+      }else{
+        l = savePermission(form);
+      }
       l.then((response) => {
         this.$message({
           type: 'success',

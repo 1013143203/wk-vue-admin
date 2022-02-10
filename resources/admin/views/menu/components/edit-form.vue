@@ -9,14 +9,23 @@
         <el-input v-model="formData.name" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item prop="pid" label="上级">
-        <el-select v-model="formData.pid" placeholder="请选择父级" autocomplete="off">
-          <el-option
-            v-for="item in category"
-            :key="item.id"
-            :checked="item.id == formData.pid"
-            :label="item.name"
-            :value="item.id"
-          />
+<!--        <el-select v-model="formData.pid" placeholder="请选择父级" autocomplete="off">-->
+<!--          <el-option-->
+<!--            v-for="item in category"-->
+<!--            :key="item.id"-->
+<!--            :checked="item.id == formData.pid"-->
+<!--            :label="item.name"-->
+<!--            :value="item.id"-->
+<!--          />-->
+<!--        </el-select>-->
+        <el-select v-model="formData.pid" placeholder="请选择父级" ref="selectReport">
+          <el-option hidden :value="formData.pid" :label="category_name">
+          </el-option>
+          <el-tree
+            :data="category"
+            node-key="id"
+            :props="formData.pid"
+          ></el-tree>
         </el-select>
       </el-form-item>
       <el-form-item label="icon" v-if="type!=3">
@@ -80,7 +89,7 @@
 </template>
 
 <script>
-  import {update, create} from "@/api/menu";
+  import {update, create } from "@/api/menu";
   export default {
     inject:['reload'],
     name: "edit",
@@ -143,9 +152,6 @@
               trigger: 'blur',
             },
           ],
-          // permission: [
-          //   {required: true, message: "请填写权限标识"},
-          // ],
           pid: [
             {required: true, message: "请选择上级菜单"},
           ],
@@ -171,10 +177,10 @@
             },
           ],
         },
+        category_name:''
       }
     },
     mounted() {
-      const that=this
       window.onresize = () => {
         return (() => {
           this.setDialogWidth()

@@ -47,7 +47,7 @@ class AuthService extends BaseService
             ->get()->toArray()
         ;
     }
-    public function getMenusList(int $id){
+    public function getRouters(int $id){
         $res = self::selectSql($id,'*',3);
         $menu_ids=[];
         $menu=[];
