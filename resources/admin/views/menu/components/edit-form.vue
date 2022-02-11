@@ -24,7 +24,11 @@
           <el-tree
             :data="category"
             node-key="id"
-            :props="formData.pid"
+            :default-checked-keys="[formData.pid]"
+            :expand-on-click-node="false"
+            :check-on-click-node="true"
+            @check-change="handleNodeClick"
+            ref="selectUpResId"
           ></el-tree>
         </el-select>
       </el-form-item>
@@ -118,6 +122,7 @@
             this.formData = val
             this.type = val.type
           })
+          console.log(val)
           this.dialogFormVisible=true
         },
       }
@@ -188,6 +193,13 @@
       }
     },
     methods: {
+      handleNodeClick(data) {
+        // 这里主要配置树形组件点击节点后，设置选择器的值；自己配置的数据，仅供参考
+        this.category_name = data.label
+        this.formData.pid = data.id
+        // 选择器执行完成后，使其失去焦点隐藏下拉框的效果
+        // this.$refs.selectUpResId.blur()
+      },
       setDialogWidth() {
         var val = document.body.clientWidth
         const def = 450 // 默认宽度
