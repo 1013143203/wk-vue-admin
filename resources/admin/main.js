@@ -25,8 +25,6 @@ import WkEditForm from './views/components/edit-form.vue';//详情
 Vue.component('wk-edit-form',WkEditForm)
 import Wksearch from './views/components/search.vue';//搜索
 Vue.component('wk-search',Wksearch)
-import WktableBtn from './views/components/table-btn.vue';//列表按钮
-Vue.component('wk-table-btn',WktableBtn)
 import Wkpagination from './views/components/pagination.vue';//列表按钮
 Vue.component('wk-pagination',Wkpagination)
 

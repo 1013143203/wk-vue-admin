@@ -6,14 +6,9 @@
         :cols = "search.cols"
         @queryClick="queryClick"
       ></wk-search>
-      <wk-table-btn
-        :btn = "table.btn"
-      >
-      </wk-table-btn>
       <wk-table
         :cols="table.cols"
         :lst="table.lst"
-        :options="table.options"
         :expand="table.expand"
         ref="table"
       ></wk-table>
@@ -112,8 +107,6 @@ export default {
         ],
         lst: [],
         total: 0,
-        options:{
-        },
         btn:[
           {
             label:'添加',

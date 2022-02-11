@@ -18,17 +18,17 @@
 <!--            :value="item.id"-->
 <!--          />-->
 <!--        </el-select>-->
-        <el-select v-model="formData.pid" placeholder="请选择父级" ref="selectReport">
+        <el-select v-model="formData.pid" placeholder="请选择父级" ref="selectPId">
           <el-option hidden :value="formData.pid" :label="category_name">
           </el-option>
           <el-tree
             :data="category"
             node-key="id"
             :default-checked-keys="[formData.pid]"
-            :expand-on-click-node="false"
-            :check-on-click-node="true"
-            @check-change="handleNodeClick"
-            ref="selectUpResId"
+            :expand-on-click-node="true"
+            highlight-current
+            @node-click="handleNodeClick"
+            ref="selectTree"
           ></el-tree>
         </el-select>
       </el-form-item>
@@ -119,10 +119,10 @@
       data:{
         handler(val, oldVal){
           this.$nextTick(() => {
+            this.category_name = this.$refs.selectTree.getNode(val.pid).data.label
             this.formData = val
             this.type = val.type
           })
-          console.log(val)
           this.dialogFormVisible=true
         },
       }
@@ -195,10 +195,13 @@
     methods: {
       handleNodeClick(data) {
         // 这里主要配置树形组件点击节点后，设置选择器的值；自己配置的数据，仅供参考
+        console.log( data)
         this.category_name = data.label
         this.formData.pid = data.id
         // 选择器执行完成后，使其失去焦点隐藏下拉框的效果
-        // this.$refs.selectUpResId.blur()
+        this.$nextTick(function () {
+        this.$refs.selectPId.blur()
+        })
       },
       setDialogWidth() {
         var val = document.body.clientWidth

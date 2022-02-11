@@ -6,16 +6,11 @@
         :cols = "search.cols"
         @queryClick="queryClick"
       ></wk-search>
-      <wk-table-btn
-        :btn = "table.btn"
-      >
-      </wk-table-btn>
       <wk-table
         v-auth="'crontab:index'"
         :total="table.total"
         :cols="table.cols"
         :lst="table.lst"
-        :options="table.options"
         ref="table"
       ></wk-table>
     </el-card>

@@ -6,10 +6,6 @@
         :cols = "search.cols"
         @queryClick="queryClick"
       ></wk-search>
-      <wk-table-btn
-        :btn = "table.btn"
-      >
-      </wk-table-btn>
       <el-row :gutter="15">
         <wk-table
           :total="table.total"

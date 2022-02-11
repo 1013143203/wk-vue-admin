@@ -6,23 +6,20 @@
         :cols = "search.cols"
         @queryClick="queryClick"
       ></wk-search>
-      <wk-table-btn
-        :btn = "table.btn"
-      >
-      </wk-table-btn>
       <el-row :gutter="15">
         <wk-table
           :total="table.total"
           :cols="table.cols"
           :lst="table.lst"
+          :btn="table.btn"
           @pageChange="pageChange"
         ></wk-table>
       </el-row>
     </el-card>
     <wk-edit-form ref="form"
-                  @submit="submit"
-                  :cols="form.cols"
-                  :data="form.data"></wk-edit-form>
+      @submit="submit"
+      :cols="form.cols"
+      :data="form.data"></wk-edit-form>
   </div>
 </template>
 <script>

@@ -33,7 +33,7 @@
           <el-switch v-if="item.type==='switch'" v-model="query[index]" ></el-switch>
         </el-form-item>
         <el-form-item v-for='item in searchClick' :key="item.label">
-          <el-button :type="item.type" @click='item.click()'>{{item.label}}</el-button>
+          <el-button :icon="item.icon" :type="item.type" @click='item.click()'>{{item.label}}</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -60,13 +60,22 @@
     data () {
       return {
         searchClick:[
-          {label:'查询',type:'primary',click:()=>{
+          {
+            label:'查询',
+            type:'primary',
+            icon:'el-icon-search',
+            click:()=>{
               this.query.page = 1
               this.$emit("queryClick", this.query);
-          }},
-          {label:'重置',type:'primary',click:()=>{
+            }
+          },
+          {
+            label:'重置',
+            icon:'el-icon-refresh',
+            click:()=>{
               this.$emit("queryClick", {});
-          }}
+            }
+          }
         ]
       };
     },

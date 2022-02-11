@@ -1,5 +1,22 @@
 <template>
-  <el-card class="show">
+  <div slot="header" class="clearfix">
+    <el-row class="table-tool" style="padding: 5px 0;">
+      <el-col :span="1.5" v-for="(item, index) in btn">
+        <el-button size="mini" type="danger" icon="el-icon-delete" plain>{{ item.label }}</el-button>
+      </el-col>
+
+      <div class="tool">
+        <div class="item">
+          <el-icon class="el-icon-refresh-right circle"></el-icon>
+        </div>
+        <div class="item">
+          <el-icon class="el-icon-menu circle"></el-icon>
+        </div>
+        <div class="item">
+          <el-icon class="el-icon-setting circle"></el-icon>
+        </div>
+      </div>
+    </el-row>
     <el-row :gutter="15">
       <el-table
         :data="lst"
@@ -117,7 +134,7 @@
         </wk-pagination>
       </div>
     </el-row>
-  </el-card>
+  </div>
 </template>
 
 <script>
@@ -125,22 +142,13 @@
 export default {
   name: "wk-table",
   props: {
+    btn:{
+      type:Array,
+      default:()=>[]
+    },
     lst: {
       type: Array,
       default: () => [],
-    },
-    options: {
-      type: Object,
-      default: (data) => {
-        return (data = {
-          mutiSelect: false, //boolean 是否多选
-          isindex: false, //boolean 是否展示序列号
-          stripe: true, //boolean 斑马纹
-          border: true, //boolean 纵向边框
-          size: "medium", //String  medium / small / mini  table尺寸
-          fit: true, //自动撑开
-        });
-      },
     },
     currentPage: {
       type: Number,
@@ -176,7 +184,15 @@ export default {
   data() {
     return {
       expands:false,
-      refreshTable:true
+      refreshTable:true,
+      options: {
+        mutiSelect: true, //boolean 是否多选
+        isindex: false, //boolean 是否展示序列号
+        stripe: true, //boolean 斑马纹
+        border: true, //boolean 纵向边框
+        size: "medium", //String  medium / small / mini  table尺寸
+        fit: true, //自动撑开
+      },
     };
   },
   methods: {
@@ -208,5 +224,23 @@ export default {
   }
   .el-link+.el-link{
     margin-left: 10px;
+  }
+  .table-tool .el-col{
+    float: left;
+    margin-right: 6px;
+  }
+  .table-tool .tool{
+    float: right;
+  }
+  .table-tool .tool .item{
+    font-size: 16px;
+    padding: 5px 6px;
+    border-radius: 2px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 6px;;
   }
 </style>
