@@ -7,10 +7,7 @@
         @queryClick="queryClick"
       ></wk-search>
       <wk-table
-        v-auth="'crontab:index'"
-        :total="table.total"
-        :cols="table.cols"
-        :lst="table.lst"
+        :table="table"
         ref="table"
       ></wk-table>
     </el-card>
@@ -80,6 +77,8 @@
           btn:[
             {
               label:'添加',
+              type:'primary',
+              icon:'el-icon-plus',
               auth:'crontab:create',
               click:()=>{
                 this.form.data = {}

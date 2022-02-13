@@ -7,9 +7,7 @@
         @queryClick="queryClick"
       ></wk-search>
       <wk-table
-        :cols="table.cols"
-        :lst="table.lst"
-        :expand="table.expand"
+        :table="table"
         ref="table"
       ></wk-table>
     </el-card>
@@ -110,6 +108,8 @@ export default {
         btn:[
           {
             label:'添加',
+            type:'primary',
+            icon:'el-icon-plus',
             auth:'menu:create',
             click:()=>{
               this.loadedit()

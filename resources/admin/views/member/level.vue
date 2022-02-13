@@ -6,14 +6,10 @@
         :cols = "search.cols"
         @queryClick="queryClick"
       ></wk-search>
-      <el-row :gutter="15">
-        <wk-table
-          :total="table.total"
-          :cols="table.cols"
-          :lst="table.lst"
-          @pageChange="pageChange"
-        ></wk-table>
-      </el-row>
+      <wk-table
+        :table="table"
+        @pageChange="pageChange"
+      ></wk-table>
     </el-card>
     <wk-edit-form
       ref="form"
@@ -139,6 +135,8 @@
           btn:[
             {
               label:'添加',
+              type:'primary',
+              icon:'el-icon-plus',
               auth:'memberLevel:create',
               click:()=>{
                 this.form.cols.level.disabled = false;

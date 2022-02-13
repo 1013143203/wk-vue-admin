@@ -2,7 +2,7 @@
   <el-pagination
     @size-change="sizeChange"
     @current-change="currentChange"
-    :current-page.sync ="currentPage"
+    :current-page="currentPage"
     :page-size="pageSize"
     :layout="layout"
     :total="total"

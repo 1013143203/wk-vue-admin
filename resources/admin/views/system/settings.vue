@@ -1,18 +1,9 @@
 <template>
   <div class="app-container">
     <el-card class="show">
-      <el-row :gutter="15" class="row">
-        <el-button
-          @click="(form.data={},form.data.value={})"
-          v-auth="'settings:create'"
-        >添加</el-button>
-      </el-row>
-      <el-row :gutter="15" class="row">
-        <wk-table
-          :cols="table.cols"
-          :lst="table.lst"
-        ></wk-table>
-      </el-row>
+      <wk-table
+        :table="table"
+      ></wk-table>
     </el-card>
     <wk-edit-form
       ref="form"
@@ -83,6 +74,18 @@
                   }
                 }
               ], width:150
+            },
+          ],
+          btn:[
+            {
+              label:'添加',
+              auth:'settings:create',
+              type:'primary',
+              icon:'el-icon-plus',
+              click:()=>{
+                this.form.data={}
+                this.form.data.value={}
+              }
             },
           ],
           lst: [],

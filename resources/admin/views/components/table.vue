@@ -1,50 +1,66 @@
 <template>
   <div slot="header" class="clearfix">
     <el-row class="table-tool" style="padding: 5px 0;">
-      <el-col :span="1.5" v-for="(item, index) in btn">
-        <el-button size="mini" type="danger" icon="el-icon-delete" plain>{{ item.label }}</el-button>
+      <el-col :span="1.5" :key="index" v-for="(item,index) in table.btn">
+        <el-button @click="item.click()" v-auth="item.auth?item.auth:''" size="mini" :type="item.type" :icon="item.icon" plain>{{ item.label }}</el-button>
       </el-col>
-
       <div class="tool">
         <div class="item">
-          <el-icon class="el-icon-refresh-right circle"></el-icon>
+          <el-button size="mini" icon="el-icon-refresh-right" round circle @click="getTable()"></el-button>
         </div>
-        <div class="item">
-          <el-icon class="el-icon-menu circle"></el-icon>
-        </div>
-        <div class="item">
-          <el-icon class="el-icon-setting circle"></el-icon>
-        </div>
+        <el-popover
+          placement="top"
+          width="160"
+          v-model="popoverVisible">
+          <div style="width: 20px;display: inline-block;"></div>
+          <el-checkbox
+            v-model="cols.all"
+            @change="(val) => colsChange(val,'all')"
+            :indeterminate="cols.isIndeterminate"
+          >全选</el-checkbox>
+          <el-divider></el-divider>
+          <el-checkbox-group
+            v-model="cols.data"
+            @change="(value) => colsChange(value)"
+          >
+            <draggable @update="draggableSort">
+              <div class="colsbox">
+                <div class="icon">::</div>
+                <el-checkbox :label="'列选项'">列选项</el-checkbox>
+              </div>
+              <div class="colsbox" v-for="col in cols.lst">
+                <div class="icon">::</div>
+                <el-checkbox :label="col.label" :key="col.label">{{col.label}}</el-checkbox>
+              </div>
+            </draggable>
+          </el-checkbox-group>
+          <div class="item" slot="reference">
+            <el-button size="mini" icon="el-icon-setting" round circle></el-button>
+          </div>
+        </el-popover>
       </div>
     </el-row>
     <el-row :gutter="15">
       <el-table
-        :data="lst"
+        :data="table.lst"
         size="medium"
         @cell-click="cellClick"
         @row-click="rowClick"
         row-key="id"
         :default-expand-all="expands"
-        v-if="refreshTable"
+        v-if="refreshTable && cols.lst.length > 0 "
       >
         <!-- 是否多选 -->
         <el-table-column
           type="selection"
-          v-if="options.mutiSelect"
+          v-if="options.mutiSelect && cols.data.indexOf('列选项') > -1"
         ></el-table-column>
-        <!-- 是否展示序列号 -->
-        <el-table-column
-          type="index"
-          v-if="options.isindex"
-          :index="indexMethod"
-        ></el-table-column>
-        <template v-for="(v, k) in cols">
+        <template v-for="(v, k) in cols.lst">
           <!-- 常规列数据 -->
           <el-table-column
-            show-overflow-tooltip
             :label="v.label"
             :width="v.width"
-            v-if="!v.type"
+            v-if="!v.type && v.show"
             :key="`v.label${k}`"
             :prop="v.prop"
             :formatter="v.formatter"
@@ -52,10 +68,9 @@
           </el-table-column>
           <!-- icon -->
           <el-table-column
-            show-overflow-tooltip
             :label="v.label"
             :width="v.width"
-            v-if="v.type == 'icon'"
+            v-if="v.type == 'icon' && v.show"
             :key="`v.label${k}`"
             :prop="v.prop"
           >
@@ -69,7 +84,7 @@
           <el-table-column
             :label="v.label"
             :width="v.width"
-            v-if="v.type == 'switch'"
+            v-if="v.type == 'switch' && v.show"
             :key="`v.type${k}`"
           >
             <template slot-scope="scope">
@@ -88,7 +103,7 @@
           <el-table-column
             :label="v.label"
             :width="v.width"
-            v-if="v.type == 'image'"
+            v-if="v.type == 'image' && v.show"
             :key="`v.label${k}`"
           >
             <template slot-scope="scope" :formatter="v.format">
@@ -104,7 +119,7 @@
           <el-table-column
             :label="v.label"
             :width="v.width"
-            v-if="v.type == 'btn'"
+            v-if="v.type == 'btn' && v.show"
             :key="`v.type${k}`"
             fixed="right"
           >
@@ -124,11 +139,11 @@
           </el-table-column>
         </template>
       </el-table>
-      <div class="block"  v-if="total > 0">
+      <div class="block"  v-if="table.total > 0">
         <!--是否有分页-->
         <wk-pagination
           @pageChange="pageChange"
-          :total="total"
+          :total="table.total"
           :currentPage="currentPage"
         >
         </wk-pagination>
@@ -138,31 +153,18 @@
 </template>
 
 <script>
-
+import draggable from 'vuedraggable'
 export default {
   name: "wk-table",
+  components: { draggable },
   props: {
+    table:{
+      type:Object,
+      default:()=>{}
+    },
     btn:{
       type:Array,
       default:()=>[]
-    },
-    lst: {
-      type: Array,
-      default: () => [],
-    },
-    currentPage: {
-      type: Number,
-      default: 1,
-    },
-    total: {
-      type: Number,
-      default: 0,
-    },
-    cols: {
-      type: Array,
-      default: function () {
-        return [];
-      },
     },
     expand: {
       type: Boolean,
@@ -179,12 +181,32 @@ export default {
         })
       },
       deep:true //true 深度监听
+    },
+    table:{
+      handler(val, oldVal){
+        let data = ['列选项']
+        for (let item of val.cols) {
+          item.show = true
+          data.push(item.label);
+        }
+        this.cols.data = data;
+        this.cols.lst = val.cols
+      },
+      deep:true //true 深度监听
     }
   },
   data() {
     return {
+      cols:{
+        data:[],
+        lst:[],
+        all: true,
+        isIndeterminate:false,
+      },
+      currentPage:1,
       expands:false,
       refreshTable:true,
+      popoverVisible:false,
       options: {
         mutiSelect: true, //boolean 是否多选
         isindex: false, //boolean 是否展示序列号
@@ -196,6 +218,35 @@ export default {
     };
   },
   methods: {
+    colsChange(val,flag=''){
+      let data = []
+      if (flag=='all'){
+        if (val){
+          console.log(val)
+          data = ['列选项']
+          for (let item of this.cols.lst) {
+            item.show = true
+            data.push(item.label);
+          }
+        }else{
+          for (let item of this.cols.lst) {
+            item.show = false
+          }
+        }
+        this.cols.isIndeterminate = false;
+      }else{
+        let colslength = this.cols.lst.length + 1
+        data = val
+        console.log(data)
+        let checkedCount = val.length;
+        this.cols.all = checkedCount === colslength;
+        this.cols.isIndeterminate = checkedCount > 0 && checkedCount < colslength;
+      }
+      this.cols.data = data
+    },
+    getTable(){
+      this.$parent.$parent.index()
+    },
     iconLoad(icon,c){
       if (icon){
         return icon.includes(c)
@@ -211,36 +262,42 @@ export default {
     },
     // 分页相关
     pageChange(val) {
+      this.currentPage = val
       this.$emit("pageChange", val);
     },
+    draggableSort(e){
+      console.log(e)
+    }
   },
 };
 </script>
 <style scoped>
-  .sub-el-icon {
-    color: currentColor;
-    width: 1em;
-    height: 1em;
-  }
-  .el-link+.el-link{
-    margin-left: 10px;
-  }
-  .table-tool .el-col{
-    float: left;
-    margin-right: 6px;
-  }
-  .table-tool .tool{
-    float: right;
-  }
-  .table-tool .tool .item{
-    font-size: 16px;
-    padding: 5px 6px;
-    border-radius: 2px;
-    border: 1px solid #dcdfe6;
-    box-sizing: border-box;
-    line-height: 1;
-    cursor: pointer;
-    display: inline-block;
-    margin-left: 6px;;
-  }
+.sub-el-icon {
+  color: currentColor;
+  width: 1em;
+  height: 1em;
+}
+.el-link+.el-link{
+  margin-left: 10px;
+}
+.table-tool .el-col{
+  float: left;
+  margin-right: 6px;
+}
+.table-tool .tool{
+  float: right;
+}
+.table-tool .tool .item{
+  display: inline-block;
+  margin-left: 6px;
+}
+.el-divider{
+  margin: 10px 0;
+}
+.colsbox{
+  margin-top: 6px;
+}
+.colsbox .icon{
+  width: 20px;display: inline-block;font-size: 14px;color: #606266;cursor:move;
+}
 </style>

@@ -42,12 +42,11 @@ Vue.component('wk-pagination',Wkpagination)
 // }
 
 const auth = value => {
-  let auth
   if(value){
     if (typeof value === 'string') {
       return store.getters.hasAuthorization(value)
     } else {
-      auth = value.some(item => {
+      value.some(item => {
         return store.getters.hasAuthorization(item)
       })
     }

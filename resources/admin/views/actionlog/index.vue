@@ -1,19 +1,17 @@
 <template>
   <div class="app-container" >
-    <wk-search
-      :query = "search.query"
-      :cols = "search.cols"
-      @queryClick="queryClick"
-    ></wk-search>
-    <wk-table
-      v-auth="'actionlog'"
-      :total="table.total"
-      :currentPage="search.query.page"
-      :cols="table.cols"
-      :lst="table.lst"
-      @pageChange="pageChange"
-      ref="table"
-    ></wk-table>
+    <el-card class="show">
+      <wk-search
+        :query = "search.query"
+        :cols = "search.cols"
+        @queryClick="queryClick"
+      ></wk-search>
+      <wk-table
+        :table="table"
+        @pageChange="pageChange"
+        ref="table"
+      ></wk-table>
+    </el-card>
   </div>
 </template>
 

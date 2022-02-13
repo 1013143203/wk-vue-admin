@@ -6,14 +6,10 @@
         :cols = "search.cols"
         @queryClick="queryClick"
       ></wk-search>
-      <el-row :gutter="15">
-        <wk-table
-          :total="table.total"
-          :cols="table.cols"
-          :lst="table.lst"
-          @pageChange="pageChange"
-        ></wk-table>
-      </el-row>
+      <wk-table
+        :table="table"
+        @pageChange="pageChange"
+      ></wk-table>
     </el-card>
     <wk-edit-form
       ref="form"
@@ -88,6 +84,7 @@ export default {
             label:'状态',
             prop: "status",
             type: "switch" ,
+            auth:'user:ee',
             switchData: {
               active:1,
               inactive:2,
@@ -164,6 +161,8 @@ export default {
         btn:[
           {
             label:'添加',
+            type:'primary',
+            icon:'el-icon-plus',
             auth:'user:create',
             click:()=>{
               this.loadedit()

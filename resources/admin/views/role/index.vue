@@ -6,15 +6,10 @@
         :cols = "search.cols"
         @queryClick="queryClick"
       ></wk-search>
-      <el-row :gutter="15">
-        <wk-table
-          :total="table.total"
-          :cols="table.cols"
-          :lst="table.lst"
-          :btn="table.btn"
-          @pageChange="pageChange"
-        ></wk-table>
-      </el-row>
+      <wk-table
+        :table="table"
+        @pageChange="pageChange"
+      ></wk-table>
     </el-card>
     <wk-edit-form ref="form"
       @submit="submit"
@@ -128,6 +123,8 @@ export default {
           {
             label:'添加',
             auth:'role:create',
+            type:'primary',
+            icon:'el-icon-plus',
             click:()=>{
               this.form.cols = this.form.option1
               this.form.type = 1

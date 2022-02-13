@@ -119,7 +119,9 @@
       data:{
         handler(val, oldVal){
           this.$nextTick(() => {
-            this.category_name = this.$refs.selectTree.getNode(val.pid).data.label
+            if (val.pid){
+              this.category_name = this.$refs.selectTree.getNode(val.pid).data.label
+            }
             this.formData = val
             this.type = val.type
           })
