@@ -12,7 +12,6 @@
           placement="top"
           width="160"
           v-model="popoverVisible">
-          <div style="width: 20px;display: inline-block;"></div>
           <el-checkbox
             v-model="cols.all"
             @change="(val) => colsChange(val,'all')"
@@ -23,19 +22,12 @@
             v-model="cols.data"
             @change="(value) => colsChange(value)"
           >
-            <draggable @update="draggableSort">
-              <div class="colsbox">
-                <div class="icon">::</div>
-                <el-checkbox :label="'列选项'">列选项</el-checkbox>
-              </div>
-              <div class="colsbox" v-for="col in cols.lst">
-                <div class="icon">::</div>
-                <el-checkbox :label="col.label" :key="col.label">{{col.label}}</el-checkbox>
-              </div>
-            </draggable>
+            <div class="colsbox" v-for="col in cols.lst">
+              <el-checkbox :label="col.label" :key="col.label">{{col.label}}</el-checkbox>
+            </div>
           </el-checkbox-group>
           <div class="item" slot="reference">
-            <el-button size="mini" icon="el-icon-setting" round circle></el-button>
+            <el-button size="mini" icon="el-icon-s-operation" round circle></el-button>
           </div>
         </el-popover>
       </div>
@@ -47,15 +39,17 @@
         @cell-click="cellClick"
         @row-click="rowClick"
         row-key="id"
+        ref="dragTable"
         :default-expand-all="expands"
         v-if="refreshTable && cols.lst.length > 0 "
       >
-        <!-- 是否多选 -->
-        <el-table-column
-          type="selection"
-          v-if="options.mutiSelect && cols.data.indexOf('列选项') > -1"
-        ></el-table-column>
         <template v-for="(v, k) in cols.lst">
+          <!-- 是否多选 -->
+          <el-table-column
+            type="selection"
+            :key="`v.label${k}`"
+            v-if="options.mutiSelect && v.type == 'mutiSelect' && v.show"
+          ></el-table-column>
           <!-- 常规列数据 -->
           <el-table-column
             :label="v.label"
@@ -153,10 +147,10 @@
 </template>
 
 <script>
-import draggable from 'vuedraggable'
+  import Sortable from 'sortablejs';
 export default {
   name: "wk-table",
-  components: { draggable },
+  components: { Sortable },
   props: {
     table:{
       type:Object,
@@ -184,16 +178,34 @@ export default {
     },
     table:{
       handler(val, oldVal){
-        let data = ['列选项']
-        for (let item of val.cols) {
+        let data = [],cols = val.cols
+        cols = [{label:'列选项',type:'mutiSelect'}].concat(cols)
+        for (let item of cols) {
           item.show = true
           data.push(item.label);
         }
         this.cols.data = data;
-        this.cols.lst = val.cols
+        this.cols.lst = cols
+
+        const that = this
+        this.$nextTick(() => {
+          const el = that.$refs.dragTable.$el.querySelectorAll('.el-table__header-wrapper tr')[0]
+           Sortable.create(el, {
+           ghostClass:'sortable-ghost',
+             animation: 180,
+             delay: 0,
+             onEnd: evt => {
+              const oldItem = that.cols.lst[evt.oldIndex]
+              that.cols.lst.splice(evt.oldIndex, 1)
+              that.cols.lst.splice(evt.newIndex, 0, oldItem)
+             }
+          })
+        })
       },
       deep:true //true 深度监听
     }
+  },
+  mounted(){
   },
   data() {
     return {
@@ -222,8 +234,6 @@ export default {
       let data = []
       if (flag=='all'){
         if (val){
-          console.log(val)
-          data = ['列选项']
           for (let item of this.cols.lst) {
             item.show = true
             data.push(item.label);
@@ -235,13 +245,16 @@ export default {
         }
         this.cols.isIndeterminate = false;
       }else{
-        let colslength = this.cols.lst.length + 1
-        data = val
-        console.log(data)
+        data = val;
+        let length = this.cols.lst.length
         let checkedCount = val.length;
-        this.cols.all = checkedCount === colslength;
-        this.cols.isIndeterminate = checkedCount > 0 && checkedCount < colslength;
+        for (let item of this.cols.lst){
+          item.show = val.indexOf(item.label) > -1
+        }
+        this.cols.all = checkedCount === length;
+        this.cols.isIndeterminate = checkedCount > 0 && checkedCount < length;
       }
+
       this.cols.data = data
     },
     getTable(){
@@ -265,9 +278,6 @@ export default {
       this.currentPage = val
       this.$emit("pageChange", val);
     },
-    draggableSort(e){
-      console.log(e)
-    }
   },
 };
 </script>

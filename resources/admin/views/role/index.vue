@@ -131,6 +131,17 @@ export default {
               this.form.data = {}
             }
           },
+          {
+            label:'导出',
+            auth:'role:export',
+            type:'warning',
+            icon:'el-icon-download',
+            click:()=>{
+              this.form.cols = this.form.option1
+              this.form.type = 1
+              this.form.data = {}
+            }
+          },
         ]
       },
       form:{
