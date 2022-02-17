@@ -219,11 +219,11 @@
       };
     },
     methods: {
-      expand(e){
+      expand(){
         const that = this
         that.refreshTable = false
         that.$nextTick(() => {
-          that.expandTable = e
+          that.expandTable = !that.expandTable
           that.refreshTable = true
           that.columnDrop(that)
         })

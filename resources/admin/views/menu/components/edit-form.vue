@@ -12,12 +12,13 @@
         <el-select v-model="formData.pid" placeholder="请选择父级" ref="selectPId">
           <el-option hidden :value="formData.pid" :label="category_name">
           </el-option>
+          {{formData.pid}}{{formData.id}}--8888
           <el-tree
+            :indent="18"
+            highlight-current
             :data="category"
             node-key="id"
-            :default-checked-keys="[formData.pid]"
-            :expand-on-click-node="true"
-            highlight-current
+            :default-expanded-keys="expandedKeys"
             @node-click="handleNodeClick"
             ref="selectTree"
           ></el-tree>
@@ -113,9 +114,35 @@
             if (!val.pid){
               val.pid = 0
             }
-            this.category_name = this.$refs.selectTree.getNode(val.pid).data.label
+            const $node = this.$refs.selectTree.getNode(val.pid)
+            this.category_name = $node.data.label
             this.formData = val
             this.type = val.type
+
+            const getTreeParent = function($node,expandedKeys){
+              let $parent = $node.parent
+              console.log($parent)
+              if ($parent){
+                expandedKeys.push($parent.id)
+                return getTreeParent($parent,expandedKeys)
+              }else{
+                console.log(expandedKeys)
+                return expandedKeys;
+              }
+            }
+
+            console.log(getTreeParent($node,[$node.id]))
+            // this.expandedKeys = expandedKeys
+            // console.log(expandedKeys)
+            // if ($node.parent){
+            //   expandedKeys.push($node.id)
+            //   getTreeParent($node.parent)
+            //   this.expandedKeys = expandedKeys
+            //   console.log(expandedKeys)
+            // }
+
+            //
+
           })
           this.dialogFormVisible=true
         },
@@ -130,6 +157,7 @@
           active: 1,
           inactive: 2,
         },
+        expandedKeys:[],
         formData: {
           name: "",
           type: "",

@@ -187,16 +187,9 @@ class MenuTableSeeder extends Seeder
                                 'status'=>1,
                             ],
                             [
-                                'name'=>'全部展开',
+                                'name'=>'展开/折叠',
                                 'icon'=>'',
-                                'permission'=>'menu:expandAll',
-                                'type'=>3,
-                                'status'=>1,
-                            ],
-                            [
-                                'name'=>'全部折叠',
-                                'icon'=>'',
-                                'permission'=>'menu:foldAll',
+                                'permission'=>'menu:expand',
                                 'type'=>3,
                                 'status'=>1,
                             ],
@@ -452,6 +445,25 @@ class MenuTableSeeder extends Seeder
                                 'component'=>'weixin/wechat',
                                 'type'=>2,
                                 'status'=>1,
+                                "children"=>[
+                                    [
+                                        'name'=>'保存',
+                                        'icon'=>'',
+                                        'permission'=>'menu:update',
+                                        'type'=>2,
+                                        'status'=>1,
+                                        "children"=>[
+                                            [
+                                                'name'=>'6666',
+                                                'icon'=>'',
+                                                'permission'=>'menu:update',
+                                                'type'=>3,
+                                                'status'=>1,
+                                            ],
+                                        ]
+                                    ],
+                                ]
+
                             ],
                             [
                                 'name'=>'小程序配置',

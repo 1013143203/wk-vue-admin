@@ -25,6 +25,7 @@ export default {
     return {
       table: {
         cols: [
+          {label:'id', prop: "id"},
           {label:'菜单名称', prop: "label"},
           {label:'图标', prop: "icon" ,type: "icon"},
           {label:'类型', prop: "type_" },
@@ -117,19 +118,12 @@ export default {
             }
           },
           {
-            label: "全部展开" ,
-            auth:'menu:expandAll',
+            label: "展开/折叠" ,
+            auth:'menu:expand',
             click:()=>{
-              this.$refs.table.expand(true)
+              this.$refs.table.expand()
             }
           },
-          {
-            label: "全部折叠" ,
-            auth:'menu:foldAll',
-            click:()=>{
-              this.$refs.table.expand(false)
-            }
-          }
         ],
       },
       search:{

@@ -18,7 +18,6 @@ return [
         ['id'=>5,'name'=>'状态','data'=>'status'],
         ['id'=>6,'name'=>'删除','data'=>'delete'],
         ['id'=>7,'name'=>'批量删除','data'=>'delAll'],
-        ['id'=>8,'name'=>'全部展开','data'=>'expandAll'],
-        ['id'=>9,'name'=>'全部折叠','data'=>'foldAll'],
+        ['id'=>8,'name'=>'展开/折叠','data'=>'expand'],
     ],
 ];
