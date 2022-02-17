@@ -12,8 +12,8 @@
         <el-select v-model="formData.pid" placeholder="请选择父级" ref="selectPId">
           <el-option hidden :value="formData.pid" :label="category_name">
           </el-option>
-          {{formData.pid}}{{formData.id}}--8888
           <el-tree
+            v-if="tree"
             :indent="18"
             highlight-current
             :data="category"
@@ -110,46 +110,39 @@
     watch:{
       data:{
         handler(val, oldVal){
+          const that = this
+          this.tree = false
+          this.expandedKeys = []
           this.$nextTick(() => {
+            this.tree = true
             if (!val.pid){
               val.pid = 0
             }
-            const $node = this.$refs.selectTree.getNode(val.pid)
-            this.category_name = $node.data.label
-            this.formData = val
-            this.type = val.type
+            that.formData = val
+            that.type = val.type
 
-            const getTreeParent = function($node,expandedKeys){
-              let $parent = $node.parent
-              console.log($parent)
-              if ($parent){
-                expandedKeys.push($parent.id)
-                return getTreeParent($parent,expandedKeys)
-              }else{
-                console.log(expandedKeys)
-                return expandedKeys;
+            setTimeout(function (){
+              const selectTree = that.$refs.selectTree
+              const $node = selectTree.getNode(val.pid)
+              selectTree.setCurrentKey(val.pid)
+              that.category_name = $node.data.label
+              const getTreeParent = function($node){
+                let $key = $node.key
+                if ($key){
+                  that.expandedKeys.unshift($key)
+                  getTreeParent($node.parent)
+                }
               }
-            }
-
-            console.log(getTreeParent($node,[$node.id]))
-            // this.expandedKeys = expandedKeys
-            // console.log(expandedKeys)
-            // if ($node.parent){
-            //   expandedKeys.push($node.id)
-            //   getTreeParent($node.parent)
-            //   this.expandedKeys = expandedKeys
-            //   console.log(expandedKeys)
-            // }
-
-            //
-
+              getTreeParent($node)
+            },5)
           })
-          this.dialogFormVisible=true
+          that.dialogFormVisible=true
         },
       }
     },
     data() {
       return {
+        tree:true,
         dialogWidth:'',
         dialogFormVisible: false,
         type: 1,
