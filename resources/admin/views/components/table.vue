@@ -23,8 +23,8 @@
             v-model="cols.data"
             @change="(value) => colsChange(value)"
           >
-            <draggable  filter=".move" @sort="toolColumnSort" :move="toolColumnMove">
-              <div class="colsbox" v-for="col in cols.lst">
+            <draggable  filter=".move" @end="toolColumnSort" animation="300" >
+              <div class="colsbox" v-for="col in cols.lst" :key="col.label">
                 <div class="table-tool-column" :class="(col.type=='btn'?'move':'')">::</div>
                 <el-checkbox :label="col.label" :key="col.label">{{col.label}}</el-checkbox>
               </div>
@@ -235,12 +235,14 @@
     },
     methods: {
       toolColumnSort(evt){
+        evt.preventDefault();
         const $colsLst = this.cols.lst
         const $lst = this.lst
         this.columnSort(this,evt,$colsLst,$lst)
       },
       toolColumnMove(evt){
-        console.log(123)
+        if (evt.relatedContext.element.type == 'btn') return false;
+        return true;
       },
       columnDrop(that){
         const wrapperTr = that.$refs.dragTable.$el.querySelector('.el-table__header-wrapper tr')
