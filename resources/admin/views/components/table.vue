@@ -44,7 +44,7 @@
         @row-click="rowClick"
         row-key="id"
         ref="dragTable"
-        :default-expand-all="expands"
+        :default-expand-all="expandTable"
         v-if="refreshTable && cols.lst.length > 0 "
       >
         <template v-for="(v, k) in cols.lst">
@@ -165,22 +165,8 @@
         type:Array,
         default:()=>[]
       },
-      expand: {
-        type: Boolean,
-        default:false,
-      },
     },
     watch:{
-      expand:{
-        handler(val, oldVal){
-          this.refreshTable = false;
-          this.$nextTick(() => {
-            this.expands=val
-            this.refreshTable = true;
-          })
-        },
-        deep:true //true 深度监听
-      },
       table:{
         handler(val, oldVal){
           let data = [],cols = val.cols
@@ -192,7 +178,6 @@
           this.cols.data = data;
           this.cols.lst = cols
           this.lst = val.lst
-
         },
         deep:true //true 深度监听
       },
@@ -220,7 +205,7 @@
         },
         lst:[],
         currentPage:1,
-        expands:false,
+        expandTable:false,
         refreshTable:true,
         popoverVisible:false,
         options: {
@@ -234,6 +219,15 @@
       };
     },
     methods: {
+      expand(e){
+        const that = this
+        that.refreshTable = false
+        that.$nextTick(() => {
+          that.expandTable = e
+          that.refreshTable = true
+          that.columnDrop(that)
+        })
+      },
       toolColumnSort(evt){
         evt.preventDefault();
         const $colsLst = this.cols.lst
@@ -245,17 +239,19 @@
         return true;
       },
       columnDrop(that){
-        const wrapperTr = that.$refs.dragTable.$el.querySelector('.el-table__header-wrapper tr')
-        const $colsLst = that.cols.lst
-        const $lst = that.lst
+        setTimeout(function () {
+          const wrapperTr = that.$refs.dragTable.$el.querySelector('.el-table__header-wrapper tr')
+          const $colsLst = that.cols.lst
+          const $lst = that.lst
 
-        Sortable.create(wrapperTr, {
-          animation: 180,
-          delay: 0,
-          onEnd: evt => {
-            that.columnSort(that,evt,$colsLst,$lst)
-          }
-        });
+          Sortable.create(wrapperTr, {
+            animation: 180,
+            delay: 0,
+            onEnd: evt => {
+              that.columnSort(that,evt,$colsLst,$lst)
+            }
+          });
+        },5)
       },
       columnSort(that,evt,$colsLst,$lst){
         const oldItem = $colsLst[evt.oldIndex];

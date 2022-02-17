@@ -120,18 +120,17 @@ export default {
             label: "全部展开" ,
             auth:'menu:expandAll',
             click:()=>{
-              this.table.expand = true
+              this.$refs.table.expand(true)
             }
           },
           {
             label: "全部折叠" ,
             auth:'menu:foldAll',
             click:()=>{
-              this.table.expand = false
+              this.$refs.table.expand(false)
             }
           }
         ],
-        expand:false
       },
       search:{
         query:{

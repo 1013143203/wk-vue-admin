@@ -9,15 +9,6 @@
         <el-input v-model="formData.name" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item prop="pid" label="上级">
-<!--        <el-select v-model="formData.pid" placeholder="请选择父级" autocomplete="off">-->
-<!--          <el-option-->
-<!--            v-for="item in category"-->
-<!--            :key="item.id"-->
-<!--            :checked="item.id == formData.pid"-->
-<!--            :label="item.name"-->
-<!--            :value="item.id"-->
-<!--          />-->
-<!--        </el-select>-->
         <el-select v-model="formData.pid" placeholder="请选择父级" ref="selectPId">
           <el-option hidden :value="formData.pid" :label="category_name">
           </el-option>
@@ -119,9 +110,10 @@
       data:{
         handler(val, oldVal){
           this.$nextTick(() => {
-            if (val.pid){
-              this.category_name = this.$refs.selectTree.getNode(val.pid).data.label
+            if (!val.pid){
+              val.pid = 0
             }
+            this.category_name = this.$refs.selectTree.getNode(val.pid).data.label
             this.formData = val
             this.type = val.type
           })
