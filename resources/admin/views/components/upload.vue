@@ -18,7 +18,6 @@
     </div>
 
     <el-dialog
-      v-el-drag-dialog
       :visible.sync="lstVisible"
       center
       width="60%"
@@ -54,6 +53,11 @@
           ></wk-pagination>
         </div>
       </el-card>
+      <wk-uploader
+        target="files/chunk"
+        ref="upload"
+        @fileSuccess="fileSuccess"
+      ></wk-uploader>
     </el-dialog>
     <el-dialog
       :title="dialog.name"
@@ -69,11 +73,6 @@
       </div>
 
     </el-dialog>
-    <wk-uploader
-      target="files/chunk"
-      ref="upload"
-      @fileSuccess="fileSuccess"
-    ></wk-uploader>
 
   </div>
 </template>
@@ -83,9 +82,7 @@
   import { index } from '@/api/upload'
   import video_thumb from '../../assets/upload/video.png'
   import file_thumb from '../../assets/upload/file.png'
-  import elDragDialog from '@/directive/el-drag-dialog'
   export default {
-    directives: { elDragDialog },
     components: {
       WkUploader
     },
@@ -207,5 +204,8 @@
   .demo-image__preview{
     width: 100%;
     margin-top: 5px;
+  }
+  .file-title{
+
   }
 </style>

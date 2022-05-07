@@ -25,6 +25,7 @@ export default {
     return {
       table: {
         cols: [
+          {label:'id', prop: "id"},
           {label:'菜单名称', prop: "label"},
           {label:'图标', prop: "icon" ,type: "icon"},
           {label:'类型', prop: "type_" },

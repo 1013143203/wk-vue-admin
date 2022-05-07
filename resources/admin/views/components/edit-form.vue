@@ -1,10 +1,12 @@
 <template>
   <el-dialog
+    top="1%"
     :visible.sync="dialogVisible"
     @close="(formData= {}), close()"
     :width="dialogWidth"
   >
-    <el-form :model="formData" ref="ruleForm" label-width="80px">
+    <div class="el-dialog-div">
+      <el-form :model="formData" ref="ruleForm" label-width="80px">
       <div v-for="(col, prop) in cols">
         <el-form-item :label="col.label" :prop="prop" :rules="col.rules">
           <input
@@ -14,14 +16,14 @@
           />
           <!-- inupt输入框 -->
           <el-input
-            v-if="col.type == 'input'"
+            v-if="col.type === 'input'"
             :disabled="col.disabled ? col.disabled : false"
             v-model="formData[prop]"
             :placeholder="col.placeholder"
           ></el-input>
           <!-- 上传图片 -->
           <upload
-            v-if="col.type == 'upload'"
+            v-if="col.type === 'upload'"
             v-model="formData[prop]"
             :type="col.fileType"
             @current = "(res) => col.current(res)"
@@ -183,6 +185,8 @@
         <el-button @click="(formData= {}), close()">取消</el-button>
       </el-form-item>
     </el-form>
+    </div>
+
   </el-dialog>
 </template>
 
@@ -315,24 +319,29 @@ export default {
   },
 };
 </script>
-<style>
+<style lang="scss" scoped>
+  .el-dialog-div{
+    height: 80vh;
+    overflow: auto;
+  }
+
   /*.el-select {*/
   /*  width: 100%*/
   /*}*/
   .jsoneditor-poweredBy{
     display: none;
   }
-  .el-dialog {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: 0 !important;
-    transform: translate(-50%, -50%);
-    max-height: calc(100% - 30px);
-    max-width: calc(100% - 30px);
-    display: flex;
-    flex-direction: column;
-  }
+  /*.el-dialog {*/
+  /*  position: absolute;*/
+  /*  top: 50%;*/
+  /*  left: 50%;*/
+  /*  margin: 0 !important;*/
+  /*  transform: translate(-50%, -50%);*/
+  /*  max-height: calc(100% - 30px);*/
+  /*  max-width: calc(100% - 30px);*/
+  /*  display: flex;*/
+  /*  flex-direction: column;*/
+  /*}*/
 
   .el-dialog__body {
     overflow: auto;

@@ -1,9 +1,11 @@
 <template>
   <el-dialog
+    top="1%"
     :visible.sync="dialogFormVisible"
     @close="(dialogFormVisible = false,$refs.form.resetFields())"
     :width="dialogWidth"
   >
+    <div class="el-dialog-div">
     <el-form ref="form" :model="formData" :rules="rules" label-width="80px">
       <el-form-item label="名称" prop="name">
         <el-input v-model="formData.name" autocomplete="off"></el-input>
@@ -81,6 +83,7 @@
       </el-form-item>
 
     </el-form>
+    </div>
   </el-dialog>
 </template>
 
@@ -210,7 +213,6 @@
     methods: {
       handleNodeClick(data) {
         // 这里主要配置树形组件点击节点后，设置选择器的值；自己配置的数据，仅供参考
-        console.log( data)
         this.category_name = data.label
         this.formData.pid = data.id
         // 选择器执行完成后，使其失去焦点隐藏下拉框的效果
@@ -255,6 +257,10 @@
 </script>
 
 <style scoped>
+  .el-dialog-div{
+    height: 80vh;
+    overflow: auto;
+  }
   .el-select {
     width: 100%
   }

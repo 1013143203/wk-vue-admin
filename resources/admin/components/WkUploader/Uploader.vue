@@ -74,7 +74,10 @@
           // 服务器分片校验函数，秒传及断点续传基础
           checkChunkUploadedByResponse: function (chunk, res) {
             let objMessage = JSON.parse(res);
-            const { data } = objMessage
+            const { data , code } = objMessage
+            if (code != 200){
+              location.reload()
+            }
             if (data.skipUpload) {
               return true;
             }
