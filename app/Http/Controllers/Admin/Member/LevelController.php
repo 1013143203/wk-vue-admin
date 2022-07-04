@@ -1,21 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Member;
 
-use App\Services\Admin\MemberLevelService;
-use App\Http\Requests\Admin\MemberLevelCreateRequest;
-use App\Http\Requests\Admin\MemberLevelUpdateRequest;
+use App\Services\Admin\Member\LevelService;
+use App\Http\Requests\Admin\Member\LevelCreateRequest;
+use App\Http\Requests\Admin\Member\LevelUpdateRequest;
+use App\Http\Controllers\Admin\Base;
 
-class MemberLevelController extends Base
+class LevelController extends Base
 {
-    public function __construct(MemberLevelService $memberLevelService)
+    public function __construct(LevelService $memberLevelService)
     {
         parent::__construct();
 
         $this->service = $memberLevelService;
     }
 
-    public function create(MemberLevelCreateRequest $request)
+    public function create(LevelCreateRequest $request)
     {
         return success($this->service->create($request->input()));
     }
@@ -25,7 +26,7 @@ class MemberLevelController extends Base
         return success($this->service->edit($id));
     }
 
-    public function update(MemberLevelUpdateRequest $request)
+    public function update(LevelUpdateRequest $request)
     {
         return success($this->service->update($request->input()));
     }

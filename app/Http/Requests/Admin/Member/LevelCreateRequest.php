@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\Member;
 
-class MemberLevelCreateRequest extends Base
+use App\Http\Requests\Admin\Base;
+
+class LevelCreateRequest extends Base
 {
     /**
      * Get the validation rules that apply to the request.

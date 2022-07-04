@@ -7,8 +7,8 @@
           <!-- 输入框 -->
           <el-input v-if="item.type==='input'" v-model="query[index]" ></el-input>
           <!-- 下拉框 -->
-          <el-select v-if="item.type==='select'" v-model="query[index]" @change="item.change(query[index])">
-            <el-option v-for="op in item.options" :label="op.label" :value="op.value" :key="op.value"></el-option>
+          <el-select v-if="item.type==='select'" v-model="query[index]" @change="$forceUpdate()"tos>
+            <el-option v-for="op in item.options" :label="op.label" :value="op.value" :key="op.value?op.value.toString():op.value"></el-option>
           </el-select>
           <!-- 单选 -->
           <el-radio-group v-if="item.type==='radio'" v-model="query[index]">

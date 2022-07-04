@@ -91,7 +91,26 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-
+  // 例子
+  /*{
+    path: '/community/grid',
+    component: "#",
+    hidden: true,
+    redirect: '/community/grid/index/:roleId(\\d+)',
+    children: [
+      {
+        path: 'index/:roleId(\\d+)',
+        component:"community/grid",
+        hidden: true,
+        name:'新增网格',
+        meta: {
+          title: '新增网格',
+          icon: 'user',
+          auth:["community:grid"]
+        }
+      },
+    ]
+  }*/
 ]
 
 const createRouter = () => new Router({

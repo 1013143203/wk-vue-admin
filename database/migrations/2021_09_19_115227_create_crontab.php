@@ -24,6 +24,9 @@ class CreateCrontab extends Migration
                 $table->integer('day')->default(0);
                 $table->integer('hour')->default(0);
                 $table->integer('minute')->default(0);
+                $table->integer('status')->default(2)->comment('是否显示');
+                $table->integer('create_id')->default(0);
+                $table->integer('update_id')->default(0);
                 $table->softDeletes();
                 $table->timestamps();
             });

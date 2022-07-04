@@ -25,9 +25,12 @@ class CreateMenuTable extends Migration
                 $table->string('redirect')->nullable();
                 $table->integer('type')->default(1)->comment('1是模块 2是菜单 3是节点');
                 $table->string('permission')->nullable()->comment('权限标识');
-                $table->integer('status')->default(1)->comment('是否显示');
+                $table->integer('status')->default(2)->comment('是否显示');
                 $table->integer('is_public')->default(2)->comment('1公共菜单');
                 $table->string('description')->nullable();
+                $table->integer('create_id')->default(0);
+                $table->integer('update_id')->default(0);
+
                 $table->timestamps();
             });
             \DB::statement("ALTER TABLE `menu` comment'菜单表'"); // 表注释

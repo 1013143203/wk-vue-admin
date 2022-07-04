@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Models\Admin;
+namespace App\Models\Admin\Log;
 
-class UserActionLog extends Base
+use App\Models\Admin\Base;
+
+class UserAction extends Base
 {
     protected $table         = 'user_action_log';		                // 为模型指定表名
     protected $primaryKey    = 'id';
@@ -13,18 +15,17 @@ class UserActionLog extends Base
      * @var array
      */
     protected $fillable = [
-        'user_id', 'title', 'ip', 'action', 'timing', 'method', 'url', 'params', 'user_agent'
+        'user_id', 'title', 'ip', 'action', 'timing', 'method', 'url', 'params', 'user_agent',"user_name"
     ];
-    public function user(){
-        return $this->hasOne(User::Class,'id','user_id');
-    }
     /**
      * 记录行为日志
      * @author 喂喂喂
      */
-    public static function record($user_id, $title = '')
+    public static function record($title = '')
     {
-        $route=request()->route();
+        $route = request()->route();
+        $user = request("user");
+        $user_id = $user->id;
         if ($user_id) {
             $action = $route->getAction();
             $params = request()->all()??[];
@@ -32,6 +33,7 @@ class UserActionLog extends Base
              // 日志数据
              $data = [
                  'user_id' => $user_id,
+                 'user_name' => $user->username,
                  'action' => $action['controller'],
                  'method' => request()->method(),
                  'url' => request()->url(true), // 获取完成URL

@@ -19,6 +19,9 @@ class CreateSettings extends Migration
                 $table->string('name')->unique();
                 $table->text('value')->nullable();
                 $table->string('description')->nullable();
+                $table->integer('status')->default(2)->comment('是否显示');
+                $table->integer('create_id')->default(0);
+                $table->integer('update_id')->default(0);
                 $table->timestamps();
                 $table->softDeletes();
             });

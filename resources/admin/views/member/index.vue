@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import { index ,update ,edit } from "@/api/member";
+  import { index ,update ,edit } from "@/api/member/index";
   import { validateMobile } from "@/utils/validate.js";
   const validatorMobile=(rule, value, callback)=>{
     if (validateMobile(value)){
@@ -42,7 +42,7 @@
               label: "头像", //字段
               fileType: 'image',
               current:(item)=>{
-                this.form.data.avatar = item.url;
+                this.$set(this.form.data,"avatar",item.url)
               },
               rules: [
                 { required: true, message: "请选择头像", trigger: "blur" },
@@ -186,10 +186,10 @@
         },
         search:{
           query:{},
-          cols:[
-            {type:'input',label:'名称',prop:'query',placeholder:'请输入名称'},
-            {type:'date',prop:'date'},
-          ],
+          cols: {
+            query: {type: 'input', label: '名称', placeholder: '请输入名称'},
+            date: {type: 'date'},
+          },
         },
       }
     },

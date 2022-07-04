@@ -25,16 +25,25 @@ class BaseService
      */
     public function update(array $params)
     {
+        if (request("user")->id){
+            $params["update_id"] = request("user")->id;
+        }
         return $this->model->updateItem($params);
     }
 
     public function status(array $params)
     {
+        if (request("user")->id){
+            $params["update_id"] = request("user")->id;
+        }
         return $this->model->updateItem($params);
     }
 
     public function create(array $params)
     {
+        if (request("user")->id){
+            $params["create_id"] = request("user")->id;
+        }
         return $this->model->createItem($params);
     }
     public function delete($id)

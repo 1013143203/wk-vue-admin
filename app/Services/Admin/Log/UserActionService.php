@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Services\Admin;
+namespace App\Services\Admin\Log;
 
 use App\Exceptions\Exception;
-use App\Models\Admin\UserActionLog;
+use App\Models\Admin\Log\UserAction;
+use App\Services\Admin\BaseService;
 
-class UserActionLogService extends BaseService
+class UserActionService extends BaseService
 {
-    public function __construct(UserActionLog $user_action_log)
+    public function __construct(UserAction $user_action_log)
     {
         $this->model = $user_action_log;
     }
@@ -17,9 +18,7 @@ class UserActionLogService extends BaseService
             if (!empty($input['date'])){
                 $query->whereBetween('created_at', $input['date']);
             }
-        })->withQ(['user' => function($query){
-            $query->select(['username','id']);
-        }])->paginate(PAGE,LIMIT)->getAll();
+        })->paginate(PAGE,LIMIT)->getAll();
         foreach ($res['lst'] as &$v){
             $v['username']=$v['user']['username'];
         }

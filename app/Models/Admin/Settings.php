@@ -12,6 +12,6 @@ class Settings extends Base
     protected $datas = ['deleted_at'];
 
     protected $fillable = [
-        'name', 'value', 'desc', 'description'
+        'name', 'value', 'desc', 'description','create_id'
     ];
 }

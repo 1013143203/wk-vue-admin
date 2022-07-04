@@ -12,10 +12,10 @@ class User extends Authenticatable implements JWTSubject
 {
     use MysqlTable;
     use Notifiable;
-    
+
     protected $table         = 'user';		                // 为模型指定表名
     protected $primaryKey    = 'id';
-    
+
     public function role(){
         return $this->belongsToMany(Role::class, 'user_role','user_id','role_id');
     }
@@ -25,7 +25,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'username', 'password', 'status',
+        'username', 'password', 'status','create_id'
     ];
 
     /**

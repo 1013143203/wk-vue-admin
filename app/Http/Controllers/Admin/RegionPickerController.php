@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Services\Admin\RegionPickerService;
+use App\Services\Common\RegionPickerService;
 
 class RegionPickerController extends Base
 {

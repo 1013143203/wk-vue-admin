@@ -183,10 +183,10 @@ export default {
       },
       search:{
         query:{},
-        cols:[
-          {prop:'query',type:'input',label:'名称',placeholder:'请输入名称'},
-          {prop:'date',type:'date'},
-        ],
+        cols: {
+          query: {type: 'input', label: '名称', placeholder: '请输入名称'},
+          date: {type: 'date'},
+        },
       },
     };
   },

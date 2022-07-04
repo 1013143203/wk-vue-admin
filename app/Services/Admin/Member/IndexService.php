@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Services\Admin;
+namespace App\Services\Admin\Member;
 
 use App\Exceptions\Exception;
 use App\Exceptions\AdminException;
-use App\Models\Admin\Member;
-use App\Models\Admin\MemberLevel;
+use App\Models\Admin\Member\Index as Member;
+use App\Models\Admin\Member\Level;
+use App\Services\Admin\BaseService;
 
 
-class MemberService extends BaseService
+class IndexService extends BaseService
 {
     public function __construct(Member $member)
     {
@@ -53,7 +54,7 @@ class MemberService extends BaseService
             'aid' => $res['data']['aid'],
             'sid' => $res['data']['sid'],
         ];
-        $level = (new MemberLevelService(new MemberLevel()))->lists(['status'=>1]);
+        $level = (new LevelService(new Level()))->lists(['status'=>1]);
         $res['level'] = $level['lst'];
 
         return $res;

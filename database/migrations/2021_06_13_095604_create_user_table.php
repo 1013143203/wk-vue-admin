@@ -18,7 +18,10 @@ class CreateUserTable extends Migration
                 $table->increments('id');
                 $table->string('username')->unique();
                 $table->string('password');
-                $table->integer('status')->default(1);
+                $table->integer('status')->default(2);
+                $table->integer('create_id')->default(0);
+                $table->integer('update_id')->default(0);
+
                 $table->timestamps();
             });
             \DB::statement("ALTER TABLE `user` comment'管理表'"); // 表注释

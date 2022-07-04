@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import { index, status, edit, update, create ,del} from "@/api/member-level";
+  import { index, status, edit, update, create ,del} from "@/api/member/level";
   import { confirm } from "@/utils/message-box.js";
   export default {
     name: "level",
@@ -92,7 +92,7 @@
               btn:[
                 {
                   label:'查看',
-                  auth:'memberLevel:edit',
+                  auth:'member:level:edit',
                   click:(index , item)=>{
                     if (item.id) {
                       edit(item.id)
@@ -108,7 +108,7 @@
                   },
                 },
                 {
-                  label: "删除" ,icon:"el-icon-delete",auth:'memberLevel:delete',
+                  label: "删除" ,icon:"el-icon-delete",auth:'member:level:delete',
                   click:(index , item)=>{
                     const that = this
                     let fn = () => {
@@ -137,7 +137,7 @@
               label:'添加',
               type:'primary',
               icon:'el-icon-plus',
-              auth:'memberLevel:create',
+              auth:'member:level:create',
               click:()=>{
                 this.form.cols.level.disabled = false;
                 this.form.data = {} ;
@@ -147,10 +147,10 @@
         },
         search:{
           query:{},
-          cols:[
-            {prop:'query',type:'input',label:'名称',placeholder:'请输入名称'},
-            {prop:'date',type:'date'},
-          ],
+          cols: {
+            query: {type: 'input', label: '名称', placeholder: '请输入名称'},
+            date: {type: 'date'},
+          },
         },
       }
     },

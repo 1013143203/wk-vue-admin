@@ -17,8 +17,8 @@ class CreateUserActionLogsTable extends Migration
             Schema::create('user_action_log', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('title', 20)->nullable();
-                $table->integer('user_id')->unsigned()->index();
-                $table->foreign('user_id')->references('id')->on('user');
+                $table->integer('user_id')->unsigned();
+                $table->string('user_name', 20)->nullable();
                 $table->string('ip', 20)->nullable();
                 $table->string('action', 100)->nullable()->comment('方法');
                 $table->string('method', 20)->nullable()->comment('请求方式');

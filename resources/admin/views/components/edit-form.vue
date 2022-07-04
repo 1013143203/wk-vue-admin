@@ -66,6 +66,11 @@
             v-model="formData[prop]"
             :placeholder="col.placeholder"
             :multiple='col.multiple'
+            :remote-method="(query) => col.remoteMethod(query)"
+            :remote="col.remote?col.remote:false"
+            :reserve-keyword="col.reserveKeyword?col.reserveKeyword:false"
+            :filterable="col.filterable?col.filterable:false"
+            @change="$forceUpdate()"
           >
             <el-option
               :label="option.label"
@@ -321,7 +326,7 @@ export default {
 </script>
 <style lang="scss" scoped>
   .el-dialog-div{
-    height: 80vh;
+    max-height: 80vh;
     overflow: auto;
   }
 

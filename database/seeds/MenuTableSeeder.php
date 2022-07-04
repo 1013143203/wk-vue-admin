@@ -195,17 +195,6 @@ class MenuTableSeeder extends Seeder
                             ],
                         ]
                     ],
-                    [
-                        'name'=>'日志管理',
-                        'icon'=>'',
-                        'path'=>'actionlog',
-                        'permission'=>'actionlog',
-                        'component'=>'actionlog/index',
-                        'type'=>2,
-                        'status'=>1,
-                        "children"=>[
-                        ]
-                    ],
                 ],
             ],
             [
@@ -261,7 +250,7 @@ class MenuTableSeeder extends Seeder
                         'name'=>'用户等级',
                         'icon'=>'',
                         'path'=>'level',
-                        'permission'=>'memberLevel',
+                        'permission'=>'member:level',
                         'component'=>'member/level',
                         'type'=>2,
                         'status'=>1,
@@ -269,35 +258,35 @@ class MenuTableSeeder extends Seeder
                             [
                                 'name'=>'添加',
                                 'icon'=>'',
-                                'permission'=>'memberLevel:create',
+                                'permission'=>'member:level:create',
                                 'type'=>3,
                                 'status'=>1,
                             ],
                             [
                                 'name'=>'编辑',
                                 'icon'=>'',
-                                'permission'=>'memberLevel:edit',
+                                'permission'=>'member:level:edit',
                                 'type'=>3,
                                 'status'=>1,
                             ],
                             [
                                 'name'=>'删除',
                                 'icon'=>'',
-                                'permission'=>'memberLevel:delete',
+                                'permission'=>'member:level:delete',
                                 'type'=>3,
                                 'status'=>1,
                             ],
                             [
                                 'name'=>'保存',
                                 'icon'=>'',
-                                'permission'=>'memberLevel:update',
+                                'permission'=>'member:level:update',
                                 'type'=>3,
                                 'status'=>1,
                             ],
                             [
                                 'name'=>'状态',
                                 'icon'=>'',
-                                'permission'=>'memberLevel:status',
+                                'permission'=>'member:level:status',
                                 'type'=>3,
                                 'status'=>1,
                             ],
@@ -450,7 +439,7 @@ class MenuTableSeeder extends Seeder
                                         'name'=>'保存',
                                         'icon'=>'',
                                         'permission'=>'menu:update',
-                                        'type'=>2,
+                                        'type'=>3,
                                         'status'=>1,
                                         "children"=>[
                                             [
@@ -532,6 +521,26 @@ class MenuTableSeeder extends Seeder
                                 'status'=>1,
                             ],
                         ]
+                    ],
+                ]
+            ],
+            [
+                'name'=>'日志管理',
+                'icon'=>'log',
+                'path'=>'/log',
+                'redirect'=>'/log/userAction',
+                'component'=>'#',
+                'type'=>1,
+                'status'=>1,
+                "children"=>[
+                    [
+                        'name'=>'行为日志',
+                        'icon'=>'',
+                        'path'=>'index',
+                        'permission'=>'log:userAction',
+                        'component'=>'log/userAction',
+                        'type'=>2,
+                        'status'=>1,
                     ],
                 ]
             ],

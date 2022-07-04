@@ -129,9 +129,10 @@ export default {
       search:{
         query:{
         },
-        cols:[
-          {prop:'query',type:'input',label:'名称',placeholder:'请输入菜单名称'},
-        ],
+        cols: {
+          query: {type: 'input', label: '名称', placeholder: '请输入菜单名称'},
+          date: {type: 'date'},
+        },
       },
       menus_nodes:[],
       menus_types:[],

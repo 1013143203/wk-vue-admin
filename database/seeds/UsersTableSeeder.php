@@ -15,6 +15,7 @@ class UsersTableSeeder extends Seeder
     {
         User::create([
             'username' => 'weikeai',
+            'status' => 1,
             'password' => Hash::make('1013143203..'),
         ]);
         // 角色

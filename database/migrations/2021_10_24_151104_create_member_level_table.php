@@ -18,7 +18,9 @@ class CreateMemberLevelTable extends Migration
                 $table->increments('id');
                 $table->string('name')->nullable();
                 $table->integer('level')->unique();
-                $table->integer('status')->default(1)->nullable();
+                $table->integer('status')->default(2);
+                $table->integer('create_id')->default(0);
+                $table->integer('update_id')->default(0);
                 $table->softDeletes();
                 $table->timestamps();
             });

@@ -185,10 +185,10 @@ export default {
       search:{
         query:{
         },
-        cols:[
-          {prop:'query',type:'input',label:'名称',placeholder:'请输入角色'},
-          {prop:'date',type:'date'},
-        ],
+        cols: {
+          query: {type: 'input', label: '名称', placeholder: '请输入角色'},
+          date: {type: 'date'},
+        },
       },
     }
   },

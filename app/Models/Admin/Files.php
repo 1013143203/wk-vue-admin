@@ -9,7 +9,7 @@ class Files extends Base
     protected $datas = ['deleted_at'];
 
     protected $fillable = [
-        'create_id', 'url','type', 'name', 'ext', 'md5', 'size' , 'storage',
+        'create_id', 'url','type', 'name', 'ext', 'md5', 'size' , 'storage'
     ];
     public function user(){
         return $this->hasOne(User::class, 'id', 'create_id');

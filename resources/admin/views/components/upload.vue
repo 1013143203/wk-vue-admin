@@ -90,16 +90,23 @@
       value:{
         handler(val, oldVal){
           this.$nextTick(() => {
-            if (val != null){
-              if (typeof val == 'object'){
-                val = [val]
-              }else if (typeof val == 'string'){
-                val = [{thumb:val}]
-              }
-              if (val){
-                this.values = val
-              }else{
-                this.values = []
+            this.values = []
+            if(!val || val == null || val == undefined) return
+
+            if (Array.isArray(val)){
+              this.values = val
+            }else{
+              if (val != null){
+                if (typeof val == 'object'){
+                  val = [val]
+                }else if (typeof val == 'string'){
+                  val = [{thumb:val}]
+                }else if (typeof val == 'string'){
+                  val = [{thumb:val}]
+                }
+                if (val){
+                  this.values = val
+                }
               }
             }
           })

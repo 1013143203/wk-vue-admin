@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\Member;
+use App\Http\Requests\Admin\Base;
 
-class MemberLevelUpdateRequest extends Base
+class LevelUpdateRequest extends Base
 {
 
     /**

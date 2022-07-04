@@ -3,10 +3,9 @@
 namespace App\Services\Admin;
 
 use App\Exceptions\AdminException;
-use App\Models\Admin\Menu;
 use App\Models\Admin\User;
 use App\Models\Admin\UserRole;
-use App\Models\Admin\UserActionLog;
+use App\Models\Admin\Log\UserAction;
 
 class AuthService extends BaseService
 {
@@ -24,7 +23,7 @@ class AuthService extends BaseService
         if($user['status']==2){
             throw new AdminException(203);
         }
-        UserActionLog::record($user->id,'登陆成功');
+        UserAction::record('登陆成功');
 
         return $token;
     }
@@ -36,7 +35,7 @@ class AuthService extends BaseService
         }
         return $auths;
     }
-    protected function selectSql($id , $field="*" ,$type=0){
+    public static function selectSql($id , $field="*" ,$type=0){
         return UserRole::select('menu.'.$field)
             ->where('user_role.user_id',$id)
             ->where('menu.type','<>',$type)

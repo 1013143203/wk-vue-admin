@@ -91,8 +91,8 @@
                 :inactive-value="v.switchData.inactive"
                 v-model="scope.row.status"
                 v-auth="v.auth ? v.auth : ''"
-                v-if="!scope.row.hidden"
-                @change="v.switch($event, scope.row.id)"
+                v-if="!(scope.row.hidden && v.hidden)"
+                @change="v.switch($event, scope.row.id,scope.$index)"
               >
               </el-switch>
             </template>
@@ -131,7 +131,7 @@
                 v-auth="item.auth ? item.auth : ''"
                 v-if="!(scope.row.hidden && item.hidden)"
                 :underline="false"
-                @click="item.click(scope.$index, scope.row)"
+                @click="item.click(scope.$index, scope.row,scope.$index)"
               >{{ item.label }}</el-link>
             </template>
           </el-table-column>

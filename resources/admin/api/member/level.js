@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function index(params) {
   return request({
-    url: 'memberLevel/index',
+    url: 'member/level/index',
     method: 'get',
     params: params
   })
@@ -10,33 +10,33 @@ export function index(params) {
 
 export function status(status,id) {
   return request({
-    url: 'memberLevel/status/'+id+'/'+status,
+    url: 'member/level/status/'+id+'/'+status,
     method: 'put',
   })
 }
 export function edit(id) {
   return request({
-    url: 'memberLevel/edit/'+id,
+    url: 'member/level/edit/'+id,
     method: 'get',
   })
 }
 export function update(data) {
   return request({
-    url: 'memberLevel/update/'+data.id,
+    url: 'member/level/update/'+data.id,
     method: 'put',
     data
   })
 }
 export function create(data) {
   return request({
-    url: 'memberLevel/create',
+    url: 'member/level/create',
     method: 'post',
     data
   })
 }
 export function del(id) {
   return request({
-    url: 'memberLevel/delete/'+id,
+    url: 'member/level/delete/'+id,
     method: 'delete',
   })
 }

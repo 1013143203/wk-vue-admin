@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Admin\UserActionLog;
+use App\Models\Admin\Log\UserAction;
 use App\Models\Admin\UserRole;
 use Closure;
 use JWTAuth;
@@ -75,7 +75,7 @@ class JWTRoleAuth
         }else{
             return false;
         }
-        UserActionLog::record($user->id,$name);
+        UserAction::record($name);
         return true;
     }
     protected function getPermission($request)

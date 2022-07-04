@@ -6,9 +6,9 @@ class Role extends Base
 {
     protected $table         = 'role';		                // 为模型指定表名
     protected $primaryKey    = 'id';
-    
+
     protected $fillable = [
-        'name', 'status' ,'description'
+        'name', 'status' ,'description','create_id'
     ];
 
     public function menu(){

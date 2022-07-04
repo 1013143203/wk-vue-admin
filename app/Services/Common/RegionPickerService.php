@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Admin;
+namespace App\Services\Common;
 
 use App\Exceptions\Exception;
 use App\Exceptions\AdminException;
@@ -74,7 +74,7 @@ class RegionPickerService extends BaseService
                 $query -> where($current['code'], $code);
             }
         })
-        ->get();
+        ->get()->toArray();
         foreach ($res as &$l){
             if ($type<3) {
                 $l['hasChildren']=true;

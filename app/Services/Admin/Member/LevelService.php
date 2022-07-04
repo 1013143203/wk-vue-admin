@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Services\Admin;
+namespace App\Services\Admin\Member;
 
 use App\Exceptions\Exception;
 use App\Exceptions\AdminException;
-use App\Models\Admin\Member;
-use App\Models\Admin\MemberLevel;
+use App\Models\Admin\Member\Index as Member;
+use App\Models\Admin\Member\Level;
+use App\Services\Admin\BaseService;
 
 
-class MemberLevelService extends BaseService
+class LevelService extends BaseService
 {
-    public function __construct(MemberLevel $member_level)
+    public function __construct(Level $member_level)
     {
         $this->model = $member_level;
     }

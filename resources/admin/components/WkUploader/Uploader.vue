@@ -278,9 +278,6 @@
       }
     },
     watch: {},
-    destroyed() {
-      this.$off('openUploader');
-    },
     components: {}
   }
 </script>

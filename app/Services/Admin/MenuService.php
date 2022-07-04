@@ -21,12 +21,22 @@ class MenuService extends BaseService
         return $res;
     }
     public static function Menus($input = []){
+        $ids = AuthService::selectSql($input["user"]->id,"id");
+        $auth_ids = [];
+        foreach ($ids as $r){
+            $auth_ids[]=$r['id'];
+        }
         $menu = Menu::where(function ($query) use ($input){
                 if(isset($input['name'])){
                     $query -> where('name', 'like', '%'.$input['name'].'%');
                 }
                 if(isset($input['type'])){
                     $query -> where('type', '<', 3);
+                }
+            })
+            ->where(function ($query) use ($auth_ids){
+                if ($auth_ids){
+                    $query->whereIn("id", $auth_ids);
                 }
             })
             ->get(['id','name as label','pid','type','status','icon','permission','path'])
@@ -91,7 +101,7 @@ class MenuService extends BaseService
             $input['permission'] = $permission.':'.request('permission');
         }
 
-        $id = parent::create($this->model->setFilterFields($input));
+        $id = parent::create($input);
         $this->role_menu_create($id);
 
         if($input['type']==2 && isset($input['node_fun'])){//如果节点存在

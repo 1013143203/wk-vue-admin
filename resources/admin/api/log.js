@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function index(params) {
+export function userAction(params) {
   return request({
-    url: 'actionlog',
+    url: 'log/userAction',
     method: 'get',
     params:params
   })

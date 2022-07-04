@@ -8,7 +8,7 @@ class Menu extends Base
     protected $primaryKey    = 'id';
 
     protected $fillable = [
-        'name', 'pid', 'icon', 'path', 'type', 'component' , 'redirect' , 'permission' ,'status' ,'is_public' ,'description'
+        'name', 'pid', 'icon', 'path', 'type', 'component' , 'redirect' , 'permission' ,'status' ,'is_public' ,'description','create_id'
     ];
 
     public function role(){

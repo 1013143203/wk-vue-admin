@@ -47,8 +47,9 @@ Route::group(['middleware'=>'admin'], function () {
         Route::put('update/{id}', ['uses'=>'Admin\SettingsController@update','permission'=>'settings:update']);
         Route::delete('delete/{id}', ['uses'=>'Admin\SettingsController@delete','permission'=>'settings:delete']);
     });
-    Route::get('actionlog', ['uses'=>'Admin\ActionLogController@index','permission'=>'actionlog']);
-
+    Route::group(['prefix' => 'log'], function () {
+        Route::get('userAction', ['uses'=>'Admin\Log\UserActionController@index','permission'=>'log:userAction']);
+    });
     Route::group(['prefix' => 'region'], function () {
         Route::get('lists/{code}/{type}', ['uses'=>'Admin\RegionPickerController@lists']);
         Route::get('loadProvince', ['uses'=>'Admin\RegionPickerController@loadProvince']);
@@ -65,19 +66,20 @@ Route::group(['middleware'=>'admin'], function () {
         Route::delete('delete/{id}', ['uses'=>'Admin\CrontabController@delete','permission'=>'crontab:delete']);
     });
     Route::group(['prefix'=>'member'], function ($router) {
-        Route::get('index', ['uses'=>'Admin\MemberController@index','permission'=>'member']);
-        Route::post('create', ['uses'=>'Admin\MemberController@create','permission'=>'member:create']);
-        Route::put('status/{id}/{status}', ['uses'=>'Admin\MemberController@status','permission'=>'member:status']);
-        Route::get('edit/{id}', ['uses'=>'Admin\MemberController@edit','permission'=>'member:edit']);
-        Route::put('update/{id}', ['uses'=>'Admin\MemberController@update','permission'=>'member:update']);
-    });
-    Route::group(['prefix'=>'memberLevel'], function ($router) {
-        Route::get('index', ['uses'=>'Admin\MemberLevelController@index','permission'=>'memberLevel']);
-        Route::post('create', ['uses'=>'Admin\MemberLevelController@create','permission'=>'memberLevel:create']);
-        Route::put('status/{id}/{status}', ['uses'=>'Admin\MemberLevelController@status','permission'=>'memberLevel:status']);
-        Route::get('edit/{id}', ['uses'=>'Admin\MemberLevelController@edit','permission'=>'memberLevel:edit']);
-        Route::put('update/{id}', ['uses'=>'Admin\MemberLevelController@update','permission'=>'memberLevel:update']);
-        Route::delete('delete/{id}', ['uses'=>'Admin\MemberLevelController@delete','permission'=>'memberLevel:delete']);
+        Route::get('index', ['uses'=>'Admin\Member\IndexController@index','permission'=>'member']);
+        Route::post('create', ['uses'=>'Admin\Member\IndexController@create','permission'=>'member:create']);
+        Route::put('status/{id}/{status}', ['uses'=>'Admin\Member\IndexController@status','permission'=>'member:status']);
+        Route::get('edit/{id}', ['uses'=>'Admin\Member\IndexController@edit','permission'=>'member:edit']);
+        Route::put('update/{id}', ['uses'=>'Admin\Member\IndexController@update','permission'=>'member:update']);
+
+        Route::group(['prefix'=>'level'], function ($router) {
+            Route::get('index', ['uses'=>'Admin\Member\LevelController@index','permission'=>'member:level']);
+            Route::post('create', ['uses'=>'Admin\Member\LevelController@create','permission'=>'member:level:create']);
+            Route::put('status/{id}/{status}', ['uses'=>'Admin\Member\LevelController@status','permission'=>'member:level:status']);
+            Route::get('edit/{id}', ['uses'=>'Admin\Member\LevelController@edit','permission'=>'member:level:edit']);
+            Route::put('update/{id}', ['uses'=>'Admin\Member\LevelController@update','permission'=>'member:level:update']);
+            Route::delete('delete/{id}', ['uses'=>'Admin\Member\LevelController@delete','permission'=>'member:level:delete']);
+        });
     });
     Route::group(['prefix'=>'files'], function ($router) {
         Route::get('index', ['uses'=>'Admin\FilesController@index']);

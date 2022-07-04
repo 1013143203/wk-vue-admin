@@ -8,7 +8,7 @@ class Crontab extends Base
     protected $primaryKey    = 'id';
 
     protected $fillable = [
-        'name', 'sType', 'sBody', 'tType', 'week', 'day' , 'hour' ,'minute'
+        'name', 'sType', 'sBody', 'tType', 'week', 'day' , 'hour' ,'minute','create_id'
     ];
 
 }

@@ -18,7 +18,10 @@ class CreateRolesTable extends Migration
                 $table->increments('id');
                 $table->string('name')->unique();
                 $table->string('description')->nullable();
-                $table->integer('status')->default(1);
+                $table->integer('status')->default(2);
+                $table->integer('create_id')->default(0);
+                $table->integer('update_id')->default(0);
+
                 $table->timestamps();
             });
             \DB::statement("ALTER TABLE `role` comment'角色表'"); // 表注释

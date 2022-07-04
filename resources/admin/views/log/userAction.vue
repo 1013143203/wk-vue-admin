@@ -16,14 +16,14 @@
 </template>
 
 <script>
-  import { index } from "@/api/actionlog";
+  import { userAction } from "@/api/log";
   export default {
     name: "index",
     data() {
       return {
         table: {
           cols: [
-            {label:'操作用户', prop: "username"},
+            {label:'操作用户', prop: "user_name"},
             {label:'日志标题', prop: "title"},
             {label:'URL地址', prop: "url"},
             {label:'请求方式', prop: "method" },
@@ -37,9 +37,9 @@
         search:{
           query:{
           },
-          cols:[
-            {prop:'date',type:'date'},
-          ],
+          cols: {
+            date: {type: 'date'},
+          },
         },
       }
     },
@@ -48,7 +48,7 @@
     },
     methods: {
       index() {
-        index(this.search.query)
+        userAction(this.search.query)
           .then((response) => {
             const { data } = response;
             const { lst, total } = data;
